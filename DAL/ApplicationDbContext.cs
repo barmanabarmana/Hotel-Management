@@ -8,23 +8,24 @@ namespace DAL
 {
     public class ApplicationDbContext : IdentityDbContext<Customer, Role, int>
     {
+        private string _connectionString;
         public ApplicationDbContext()
                : base()
         {
         }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(string connectionString)
+            : base()
         {
+            _connectionString = connectionString;
         }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
-        public string? ConnectionString { get; private set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string constring = null;
-            if (ConnectionString == null)
+            if (_connectionString == null)
             {
                 var builder = new ConfigurationBuilder();
 
@@ -38,7 +39,7 @@ namespace DAL
             }
             else
             {
-                constring = ConnectionString;
+                constring = _connectionString;
             }
 
             optionsBuilder
