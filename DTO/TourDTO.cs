@@ -10,7 +10,7 @@ namespace DTO
     public class TourDTO
     {
         public TourDTO() { }
-        public TourDTO(string Name, int Price, string Type, string Country, string City, int Duration, string Description)
+        public TourDTO(string Name, decimal Price, string Type, string Country, string City, int Duration, string Description)
         {
             this.Name = Name;
             this.Price = Price;
@@ -23,7 +23,7 @@ namespace DTO
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public string Type { get; set; }
         public string Country { get; set; }
         public string City { get; set; }

@@ -58,7 +58,7 @@ namespace BLL.Services
                 .GetAll());
         }
 
-        public IEnumerable<TourDTO> FindTourTemplatesByPrice(IEnumerable<TourDTO> tours, int MinPrice, int MaxPrice)
+        public IEnumerable<TourDTO> FindTourTemplatesByPrice(IEnumerable<TourDTO> tours, decimal MinPrice, decimal MaxPrice)
         {
             return tours
                 .Where(t => 
@@ -75,6 +75,13 @@ namespace BLL.Services
                 t.Country == SeachElem ||
                 t.Name == SeachElem);
         }
+        public IEnumerable<TourDTO> FindTourTemplatesByType(IEnumerable<TourDTO> tours, string Type)
+        {
+            return tours
+                .Where(t =>
+                t.Type == Type);
+        }
+
 
         public IEnumerable<TourDTO> FindTourTemplatesByCity(IEnumerable<TourDTO> tours, string City)
         {
