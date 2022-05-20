@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 using Entities.Users;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,13 +15,35 @@ builder.Services.AddDbContext<ManagementDbContext>(options =>
     options.UseSqlServer(connectionString)
     .UseLazyLoadingProxies());
 
-builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<ManagementDbContext>();;
+builder.Services.AddIdentity<Customer, Role>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ManagementDbContext>()
+    .AddDefaultUI()
+    .AddTokenProvider<DataProtectorTokenProvider<Customer>>(TokenOptions.DefaultProvider);
 
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options => //CookieAuthenticationOptions
+               {
+                   options.LoginPath = new PathString("/Account/Login");
+               });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Administrator",
+        authBuilder =>
+        {
+            authBuilder.RequireRole("Administrator");
+        });
+    options.AddPolicy("Manager",
+        authBuilder =>
+        {
+            authBuilder.RequireRole("Administrator,Manager");
+        });
+});
 
 var app = builder.Build();
 
