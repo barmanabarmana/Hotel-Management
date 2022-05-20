@@ -5,7 +5,7 @@ using Entities;
 using BLL.Ninject;
 using DTO;
 
-namespace Logic
+namespace BLL.Services
 {
     public class TourService : ITourService
     {

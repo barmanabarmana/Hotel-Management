@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DTO.Hotels;
-using Logic.DTOs;
+﻿using DTO.Hotels;
+
 namespace BLL.Interfaces
 {
     public interface IHotelService

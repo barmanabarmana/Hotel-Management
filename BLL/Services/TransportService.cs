@@ -5,13 +5,13 @@ using BLL.Interfaces;
 using Entities.Transports;
 using DTO.Transports;
 
-namespace Logic
+namespace BLL.Services
 {
-    public class TransportLogic : ITransportService
+    public class TransportService : ITransportService
     {
         IUnitOfWork UoW;
 
-        public TransportLogic(IUnitOfWork UoW)
+        public TransportService(IUnitOfWork UoW)
         {
             TransportLogicMapper = new MapperConfiguration(cfg =>
             {
@@ -25,7 +25,7 @@ namespace Logic
 
         IMapper TransportLogicMapper;
 
-        public TransportLogic()
+        public TransportService()
         {
             TransportLogicMapper = new MapperConfiguration(cfg =>
                 {

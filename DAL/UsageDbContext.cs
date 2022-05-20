@@ -39,7 +39,7 @@ namespace DAL
 
                 var config = builder.Build();
 
-                constring = config.GetConnectionString("DefaultConnection");
+                constring = config.GetConnectionString("UsageConnection");
             }
             else
             {

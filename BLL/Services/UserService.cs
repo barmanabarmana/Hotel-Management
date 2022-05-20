@@ -7,10 +7,11 @@ using DTO.User;
 using Entities.Transports;
 using DTO.Hotels;
 using Entities;
-using Entities.Transports;
 using Exceptions;
 using DTO;
 using DTO.Transports;
+using DTO.Hotels.Times;
+using Entities.Hotels.Times;
 
 namespace BLL.Services
 {
@@ -113,21 +114,21 @@ namespace BLL.Services
             Customer user = UoW.Customers.GetAll(u => u.Id == UserId, u => u.HotelRoomReservations).FirstOrDefault();
             HotelRoom hotelroom = UoW.Hotels.GetAll(h => h.Id == HotelId, h => h.Rooms).FirstOrDefault().Rooms.FirstOrDefault(r => r.Id == HotelRoomId);
 
-            foreach (DateTimeOffset d in hotelroom.BookedDays)
+            foreach (var d in hotelroom.BookedDays)
             {
                 DateTimeOffset FakeArrival = ArrivalDate;
                 DateTimeOffset FakeDeparture = DepartureDate;
                 while (FakeArrival.CompareTo(FakeDeparture) < 0)
                 {
-                    if (d.Date.CompareTo(FakeArrival.Date) == 0)
-                        throw new AlreadyBookedItemException("Room is not availible for " + d.Day + "." + d.Month + "." + d.Year);
+                    if (d.Time.Date.CompareTo(FakeArrival.Date) == 0)
+                        throw new AlreadyBookedItemException("Room is not availible for " + d.Time.Day + "." + d.Time.Month + "." + d.Time.Year);
                     FakeArrival = FakeArrival.AddDays(1);
                 }
             }
             var reserv = new HotelRoomReservation(hotelroom, user.FirstName, user.LastName, ArrivalDate.Date, DepartureDate.Date);
             while (ArrivalDate.CompareTo(DepartureDate) < 0)
             {
-                hotelroom.BookedDays.Add(ArrivalDate.Date);
+                hotelroom.BookedDays.Add(new DTOffset { Time = ArrivalDate.Date});
                 ArrivalDate = ArrivalDate.AddDays(1);
             }
             UoW.HotelsRooms.Modify(hotelroom.Id, hotelroom);

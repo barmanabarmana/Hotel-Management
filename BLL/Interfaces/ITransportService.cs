@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DTO.Transports;
-using Logic.DTOs;
+﻿using DTO.Transports;
 
 namespace BLL.Interfaces
 {
