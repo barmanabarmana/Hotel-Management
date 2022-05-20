@@ -6,7 +6,7 @@ using System;
 
 namespace DAL.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(ManagementDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     public partial class CreateIdentitySchema : Migration
     {

@@ -1,26 +1,30 @@
 ﻿using Entities;
+using Entities.Hotels;
+using Entities.Transports;
 using Entities.Users;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
-    public class ApplicationDbContext : IdentityDbContext<Customer, Role, int>
+    public class UsageDbContext : DbContext
     {
         private string _connectionString;
-        public ApplicationDbContext()
+        public UsageDbContext()
                : base()
         {
+            Database.EnsureCreated();
         }
-        public ApplicationDbContext(string connectionString)
+        public UsageDbContext(string connectionString)
             : base()
         {
             _connectionString = connectionString;
         }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Hotel> Hotels { get; set; }
+
+        public DbSet<Customer> Users { get; set; }
+        public DbSet<HotelRoomReservation> HotelRoomReservations { get; set; }
+        public DbSet<TransportTicket> TransportTickets { get; set; }
+        public DbSet<Tour> OrderedTours { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -48,3 +52,4 @@ namespace DAL
         }
     }
 }
+

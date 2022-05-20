@@ -1,5 +1,6 @@
 ﻿using DAL;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,74 +10,72 @@ using System.Threading.Tasks;
 
 namespace Repositories.Generic
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        internal ApplicationDbContext _context;
-        internal DbSet<TEntity> _dbSet;
-
-        public GenericRepository(ApplicationDbContext context)
+        private DbContext Context;
+        private DbSet<TEntity> DbSet;
+        public GenericRepository(DbContext Context)
         {
-            _context = context;
-            _dbSet = context.Set<TEntity>();
+            this.Context = Context;
+            DbSet = Context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+        public void Clear()
         {
-            IQueryable<TEntity> query = _dbSet;
+            DbSet.RemoveRange(DbSet);
+            Context.SaveChanges();
 
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            else
-            {
-                return query.ToList();
-            }
+        }
+        public void Delete(int Id)
+        {
+            DbSet.Remove(DbSet.Find(Id));
+            Context.SaveChanges();
+        }
+        public void Delete(TEntity Item)
+        {
+            Context.Entry(Item).State = EntityState.Deleted;
+            Context.SaveChanges();
+        }
+        public void Add(TEntity Item)
+        {
+            DbSet.Add(Item);
+            Context.SaveChanges();
+        }
+        public void Modify(int Id, TEntity Item)
+        {
+            Context.Entry(Context.Set<TEntity>().Find(Id)).CurrentValues.SetValues(Item);
+            Context.SaveChanges();
+        }
+        public TEntity Get(int Id)
+        {
+            return DbSet.Find(Id);
         }
 
-        public virtual TEntity Get(int id)
+        public TEntity GetByPosition(int Position)
         {
-            return _dbSet.Find(id);
+            return DbSet.ToList()[Position];
         }
 
-        public virtual void Create(TEntity entity)
+        public List<TEntity> GetAll()
         {
-            _dbSet.Add(entity);
+            return DbSet.AsNoTracking().ToList();
         }
 
-        public virtual void Delete(object id)
+        public List<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            TEntity entityToDelete = _dbSet.Find(id);
-            Delete(entityToDelete);
+            IQueryable<TEntity> query = DbSet;
+            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty)).ToList();
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public List<TEntity> GetAll(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            if (_context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                _dbSet.Attach(entityToDelete);
-            }
-            _dbSet.Remove(entityToDelete);
+            var query = DbSet.Where(predicate).AsQueryable();
+            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty)).ToList();
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public void Dispose()
         {
-            _dbSet.Attach(entityToUpdate);
-            _context.Entry(entityToUpdate).State = EntityState.Modified;
+            GC.SuppressFinalize(this);
         }
     }
 }
