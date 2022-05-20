@@ -14,11 +14,13 @@ namespace BLL.Interfaces
         IEnumerable<TourDTO> GetAllToursTemplates();
         TourDTO GetTour(int Id);
         void DeleteTour(int Id);
-        IEnumerable<TourDTO> FindTourTemplatesByPrice(int MinPrice, int MaxPrice);
-        IEnumerable<TourDTO> FindTourTemplates(string SeachElem);
-        IEnumerable<TourDTO> FindTourTemplatesByDuration(int MinDuration, int MaxDuration);
-        IEnumerable<TourDTO> GetAllToursTemplatesOrderedByPrice();
-        IEnumerable<TourDTO> GetAllToursTemplatesOrderedByDuration();
-        IEnumerable<TourDTO> GetAllToursTemplatesOrderedByCountry();
+        IEnumerable<TourDTO> FindTourTemplatesByPrice(IEnumerable<TourDTO> tours, int MinPrice, int MaxPrice);
+        IEnumerable<TourDTO> FindTourTemplates(IEnumerable<TourDTO> tours, string SeachElem);
+        IEnumerable<TourDTO> FindTourTemplatesByDuration(IEnumerable<TourDTO> tours, int MinDuration, int MaxDuration);
+        IEnumerable<TourDTO> FindTourTemplatesByCity(IEnumerable<TourDTO> tours, string City);
+        IEnumerable<TourDTO> FindTourTemplatesByCountry(IEnumerable<TourDTO> tours, string Country);
+        IEnumerable<TourDTO> GetAllToursTemplatesOrderedByPrice(IEnumerable<TourDTO> tours = null);
+        IEnumerable<TourDTO> GetAllToursTemplatesOrderedByDuration(IEnumerable<TourDTO> tours = null);
+        IEnumerable<TourDTO> GetAllToursTemplatesOrderedByCountry(IEnumerable<TourDTO> tours = null);
     }
 }

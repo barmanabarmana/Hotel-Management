@@ -3,7 +3,6 @@ using BLL.Interfaces;
 using BLL.Ninject;
 using DTO.Hotels;
 using Entities.Transports;
-using Logic;
 using UnitsOfWork.Interfaces;
 
 namespace BLL.Services
@@ -21,6 +20,7 @@ namespace BLL.Services
                 cfg.CreateMap<Hotel, HotelDTO>();
                 cfg.CreateMap<HotelRoom, HotelRoomDTO>();
             }).CreateMapper();
+
             this.UoW = UoW;
         }
 
@@ -35,6 +35,7 @@ namespace BLL.Services
                 cfg.CreateMap<Hotel, HotelDTO>();
                 cfg.CreateMap<HotelRoom, HotelRoomDTO>();
             }).CreateMapper();
+
             UoW = DependencyResolver.ResolveUoW();
         }
 
@@ -51,20 +52,32 @@ namespace BLL.Services
         public void AddHotelRoom(int HotelId, HotelRoomDTO NewHotelRoom)
         {
             Hotel hotel = UoW.Hotels.GetAll(x => x.Id == HotelId, x => x.Rooms).FirstOrDefault();
+
             HotelRoom room = HotelLogicMapper.Map<HotelRoomDTO, HotelRoom>(NewHotelRoom);
+
             room.Hotel = hotel;
+
             hotel.Rooms.Add(room);
+
             UoW.Hotels.Modify(hotel.Id, hotel);
         }
 
         public IEnumerable<HotelDTO> GetAllHotels()
         {
-            return HotelLogicMapper.Map<IEnumerable<Hotel>, List<HotelDTO>>(UoW.Hotels.GetAll(h => h.Rooms));
+            return HotelLogicMapper
+                .Map<IEnumerable<Hotel>, List<HotelDTO>>(UoW.
+                Hotels.GetAll(h => 
+                h.Rooms));
         }
 
         public HotelDTO GetHotel(int Id)
         {
-            return HotelLogicMapper.Map<Hotel, HotelDTO>(UoW.Hotels.GetAll(x => x.Id == Id, x => x.Rooms).FirstOrDefault());
+            return HotelLogicMapper
+                .Map<Hotel, HotelDTO>(UoW.Hotels
+                .GetAll(x =>
+                x.Id == Id, x => 
+                x.Rooms)
+                .FirstOrDefault());
         }
     }
 }

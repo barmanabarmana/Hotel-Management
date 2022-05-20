@@ -20,6 +20,7 @@ namespace BLL.Services
                 cfg.CreateMap<Transport, TransportDTO>();
                 cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
             }).CreateMapper();
+
             this.UoW = UoW;
         }
 
@@ -34,6 +35,7 @@ namespace BLL.Services
                     cfg.CreateMap<Transport, TransportDTO>();
                     cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
                 }).CreateMapper();
+
             UoW = DependencyResolver.ResolveUoW();
         }
 
@@ -41,22 +43,36 @@ namespace BLL.Services
         {
             for (int i = 1; i <= AvailibleSeats; i++)
                 NewTransport.TransportPlaces.Add(new TransportPlaceDTO(NewTransport, i, PriceForTicket));
-            UoW.Transports.Add(TransportLogicMapper.Map<TransportDTO, Transport>(NewTransport));
+
+            UoW.Transports
+                .Add(TransportLogicMapper
+                .Map<TransportDTO, Transport>(NewTransport));
         }
 
         public void DeleteTransport(int Id)
         {
-            UoW.Transports.Delete(Id);
+            UoW.Transports
+                .Delete(Id);
         }
 
         public IEnumerable<TransportDTO> GetAllTransport()
         {
-            return TransportLogicMapper.Map<IEnumerable<Transport>, List<TransportDTO>>(UoW.Transports.GetAll(t => t.TransportPlaces));
+            return TransportLogicMapper
+                .Map<IEnumerable<Transport>, List<TransportDTO>>(UoW.
+                Transports.GetAll(t => 
+                t.TransportPlaces));
         }
 
         public TransportDTO GetTransport(int Id)
         {
-            return TransportLogicMapper.Map<Transport, TransportDTO>(UoW.Transports.GetAll(t => t.Id == Id, t => t.TransportPlaces).FirstOrDefault());
+            return TransportLogicMapper.
+                Map<Transport, TransportDTO>(UoW.
+                Transports
+                .GetAll(t =>
+                t.Id == Id, 
+                t =>
+                t.TransportPlaces)
+                .FirstOrDefault());
         }
     }
 }
