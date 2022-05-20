@@ -1,4 +1,4 @@
-﻿using Entities.Transports;
+﻿using Entities.Hotels;
 using Entities.Transports;
 using Microsoft.AspNetCore.Identity;
 

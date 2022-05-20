@@ -14,7 +14,7 @@ namespace Models.Hotels
         public string HotelAddress { get; set; }
         public int HotelRoomNumber { get; set; }
         public int HotelRoomSleepingPlaces { get; set; }
-        public int HotelRoomPrice { get; set; }
+        public decimal HotelRoomPrice { get; set; }
         public string ClientName { get; set; }
         public string ClientSurname { get; set; }
         public DateTimeOffset ArrivalDate { get; set; }

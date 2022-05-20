@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Transports
+namespace Entities.Hotels
 {
     public class HotelRoom
     {
@@ -16,7 +16,7 @@ namespace Entities.Transports
         public virtual Hotel Hotel { get; set; }
         public int Number { get; set; }
         public int SleepingPlaces { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public virtual List<DTOffset> BookedDays { get; set; }
     }
 }

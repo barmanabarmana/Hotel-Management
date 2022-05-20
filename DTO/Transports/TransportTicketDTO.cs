@@ -15,7 +15,7 @@ namespace DTO.Transports
         public string ArrivalPoint { get; set; }
         public DateTimeOffset ArrivalTime { get; set; }
         public int NumberOfSeat { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public string PassangerName { get; set; }
         public string PassangerSurname { get; set; }
     }

@@ -6,12 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Transports
+namespace Entities.Hotels
 {
     public class HotelRoomReservation
     {
         public HotelRoomReservation() { }
-        public HotelRoomReservation(HotelRoom HotelRoom, string ClientName, string ClientSurname, DateTimeOffset ArrivalDate, DateTimeOffset DepartureDate)
+        public HotelRoomReservation(HotelRoom HotelRoom, 
+            string ClientName, 
+            string ClientSurname, 
+            DateTimeOffset ArrivalDate,
+            DateTimeOffset DepartureDate)
         {
             HotelName = HotelRoom.Hotel.Name;
             HotelStars = HotelRoom.Hotel.Stars;
@@ -31,7 +35,7 @@ namespace Entities.Transports
         public string HotelAddress { get; set; }
         public int HotelRoomNumber { get; set; }
         public int HotelRoomSleepingPlaces { get; set; }
-        public int HotelRoomPrice { get; set; }
+        public decimal HotelRoomPrice { get; set; }
         public string ClientName { get; set; }
         public string ClientSurname { get; set; }
         public DateTimeOffset ArrivalDate { get; set; }

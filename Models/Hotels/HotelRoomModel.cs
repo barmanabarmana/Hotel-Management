@@ -13,7 +13,7 @@ namespace Models.Hotels
         public int HotelId { get; set; }
         public int Number { get; set; }
         public int SleepingPlaces { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public List<DTOffsetModel> BookedDays { get; set; }
     }
 }
