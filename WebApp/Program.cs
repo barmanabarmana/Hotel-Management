@@ -1,21 +1,20 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using DAL;
-using Models.Users;
 using Entities.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? 
+var connectionString = builder.Configuration.GetConnectionString("ManagementConnection") ?? 
         throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ManagementDbContext>(options =>
     options.UseSqlServer(connectionString)
     .UseLazyLoadingProxies());
 
-builder.Services.AddDefaultIdentity<CustomerModel>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<Customer>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ManagementDbContext>();;
 
 
