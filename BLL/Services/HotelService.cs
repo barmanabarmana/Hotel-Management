@@ -2,7 +2,7 @@
 using BLL.Interfaces;
 using BLL.Ninject;
 using DTO.Hotels;
-using Entities.Transports;
+using Entities.Hotels;
 using UnitsOfWork.Interfaces;
 
 namespace BLL.Services

@@ -12,6 +12,7 @@ using DTO;
 using DTO.Transports;
 using DTO.Hotels.Times;
 using Entities.Hotels.Times;
+using Entities.Hotels;
 
 namespace BLL.Services
 {

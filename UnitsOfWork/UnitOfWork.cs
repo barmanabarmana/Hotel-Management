@@ -1,6 +1,6 @@
 ﻿using DAL;
 using Entities;
-using Entities.Transports;
+using Entities.Hotels;
 using Entities.Transports;
 using Entities.Users;
 using Repositories.Generic;
@@ -102,7 +102,14 @@ namespace UnitsOfWork
                 return _hotelsroomsreservations;
             } 
         }
-        public IRepository<TransportPlace> TransportsPlace { get { if (_transportsplases == null) _transportsplases = new GenericRepository<TransportPlace>(UsageContext); return _transportsplases; } }
+        public IRepository<TransportPlace> TransportsPlace { 
+            get
+            {
+                if (_transportsplases == null) 
+                    _transportsplases = new GenericRepository<TransportPlace>(UsageContext);
+                return _transportsplases; 
+            } 
+        }
 
         public void DeleteDB()
         {

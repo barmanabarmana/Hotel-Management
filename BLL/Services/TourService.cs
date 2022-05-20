@@ -70,13 +70,13 @@ namespace BLL.Services
         {
             return tours
                 .Where(t => 
-                t.Type == SeachElem || 
                 t.City == SeachElem ||
                 t.Country == SeachElem ||
-                t.Name == SeachElem);
+                t.Title == SeachElem);
         }
         public IEnumerable<TourDTO> FindTourTemplatesByType(IEnumerable<TourDTO> tours, string Type)
         {
+
             return tours
                 .Where(t =>
                 t.Type == Type);

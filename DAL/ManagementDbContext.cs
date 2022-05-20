@@ -1,5 +1,5 @@
 ﻿using Entities;
-using Entities.Transports;
+using Entities.Hotels;
 using Entities.Transports;
 using Entities.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,16 +10,17 @@ namespace DAL
 {
     public class ManagementDbContext : IdentityDbContext<Customer, Role, int>
     {
-        private string _connectionString;
         public ManagementDbContext()
                : base()
         {
-            Database.EnsureCreated();
+            /*Database.EnsureDeleted();
+            Database.EnsureCreated();*/
         }
-        public ManagementDbContext(string connectionString)
-            : base()
+        public ManagementDbContext(DbContextOptions<ManagementDbContext> options)
+               : base(options)
         {
-            _connectionString = connectionString;
+            /*Database.EnsureDeleted();
+            Database.EnsureCreated();*/
         }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
@@ -29,26 +30,18 @@ namespace DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string constring = null;
-            if (_connectionString == null)
-            {
-                var builder = new ConfigurationBuilder();
+            var builder = new ConfigurationBuilder();
 
-                builder.SetBasePath(Directory.GetCurrentDirectory());
+            builder.SetBasePath(Directory.GetCurrentDirectory());
 
-                builder.AddJsonFile("appsettings.json");
+            builder.AddJsonFile("appsettings.json");
 
-                var config = builder.Build();
+            var config = builder.Build();
 
-                constring = config.GetConnectionString("ManagementConnection");
-            }
-            else
-            {
-                constring = _connectionString;
-            }
+            string connectionString = config.GetConnectionString("ManagementConnection");
 
             optionsBuilder
-                .UseSqlServer(constring)
+                .UseSqlServer(connectionString)
                 .UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

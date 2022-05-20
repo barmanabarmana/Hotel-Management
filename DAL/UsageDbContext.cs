@@ -1,5 +1,5 @@
 ﻿using Entities;
-using Entities.Transports;
+using Entities.Hotels;
 using Entities.Transports;
 using Entities.Users;
 using Microsoft.EntityFrameworkCore;
@@ -9,16 +9,17 @@ namespace DAL
 {
     public class UsageDbContext : DbContext
     {
-        private string _connectionString;
         public UsageDbContext()
                : base()
         {
-            Database.EnsureCreated();
+            /*Database.EnsureDeleted();
+            Database.EnsureCreated();*/
         }
-        public UsageDbContext(string connectionString)
-            : base()
+        public UsageDbContext(DbContextOptions<UsageDbContext> options)
+               : base(options)
         {
-            _connectionString = connectionString;
+            /*Database.EnsureDeleted();
+            Database.EnsureCreated();*/
         }
 
         public DbSet<Customer> Users { get; set; }
@@ -28,27 +29,20 @@ namespace DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string constring = null;
-            if (_connectionString == null)
-            {
-                var builder = new ConfigurationBuilder();
 
-                builder.SetBasePath(Directory.GetCurrentDirectory());
+            var builder = new ConfigurationBuilder();
 
-                builder.AddJsonFile("appsettings.json");
+            builder.SetBasePath(Directory.GetCurrentDirectory());
 
-                var config = builder.Build();
+            builder.AddJsonFile("appsettings.json");
 
-                constring = config.GetConnectionString("UsageConnection");
-            }
-            else
-            {
-                constring = _connectionString;
-            }
+            var config = builder.Build();
+
+            string connectionString = config.GetConnectionString("UsageConnection");
 
             optionsBuilder
-                .UseSqlServer(constring)
-                .UseLazyLoadingProxies();
+            .UseSqlServer(connectionString)
+            .UseLazyLoadingProxies();
         }
     }
 }
