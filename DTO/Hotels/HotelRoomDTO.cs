@@ -1,10 +1,11 @@
-﻿using System;
+﻿using DTO.Hotels.Times;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DTO.Transports
+namespace DTO.Hotels
 {
     public class HotelRoomDTO
     {
@@ -14,7 +15,7 @@ namespace DTO.Transports
             this.Number = Number;
             this.SleepingPlaces = SleepingPlaces;
             this.Price = Price;
-            BookedDays = new List<DateTimeOffset>();
+            BookedDays = new List<DTOffsetDTO>();
         }
 
         public int Id { get; set; }
@@ -23,6 +24,6 @@ namespace DTO.Transports
         public int Number { get; set; }
         public int SleepingPlaces { get; set; }
         public int Price { get; set; }
-        public List<DateTimeOffset> BookedDays { get; set; }
+        public List<DTOffsetDTO> BookedDays { get; set; }
     }
 }

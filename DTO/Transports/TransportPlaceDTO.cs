@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DTO.Hotels
+namespace DTO.Transports
 {
     public class TransportPlaceDTO
     {

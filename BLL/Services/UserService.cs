@@ -7,10 +7,10 @@ using DTO.User;
 using Entities.Transports;
 using DTO.Hotels;
 using Entities;
-using DTO.Transports;
-using Entities.Hotels;
+using Entities.Transports;
 using Exceptions;
 using DTO;
+using DTO.Transports;
 
 namespace BLL.Services
 {

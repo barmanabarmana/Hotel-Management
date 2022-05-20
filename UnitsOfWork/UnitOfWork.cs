@@ -1,6 +1,6 @@
 ﻿using DAL;
 using Entities;
-using Entities.Hotels;
+using Entities.Transports;
 using Entities.Transports;
 using Entities.Users;
 using Repositories.Generic;

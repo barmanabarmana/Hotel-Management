@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Ninject;
-using DTO.Transports;
-using Entities.Hotels;
+using DTO.Hotels;
+using Entities.Transports;
 using Logic;
 using UnitsOfWork.Interfaces;
 

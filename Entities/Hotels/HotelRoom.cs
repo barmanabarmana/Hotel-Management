@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Hotels.Times;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Hotels
+namespace Entities.Transports
 {
     public class HotelRoom
     {
@@ -16,6 +17,6 @@ namespace Entities.Hotels
         public int Number { get; set; }
         public int SleepingPlaces { get; set; }
         public int Price { get; set; }
-        public List<DateTimeOffset> BookedDays { get; set; }
+        public virtual List<DTOffset> BookedDays { get; set; }
     }
 }

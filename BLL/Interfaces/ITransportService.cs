@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DTO.Hotels;
+using DTO.Transports;
 using Logic.DTOs;
 
 namespace BLL.Interfaces

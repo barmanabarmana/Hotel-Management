@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using BLL.Ninject;
-using DTO.Hotels;
 using UnitsOfWork.Interfaces;
 using BLL.Interfaces;
 using Entities.Transports;
+using DTO.Transports;
 
 namespace Logic
 {
