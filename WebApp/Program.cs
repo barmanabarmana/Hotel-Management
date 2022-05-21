@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using DAL;
 using Entities.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using WebApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,9 @@ var connectionString = builder.Configuration.GetConnectionString("ManagementConn
         throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ManagementDbContext>(options =>
-    options.UseSqlServer(connectionString)
+    options.UseSqlServer(connectionString,
+                providerOptions =>
+                { providerOptions.EnableRetryOnFailure(); })
     .UseLazyLoadingProxies());
 
 builder.Services.AddIdentity<Customer, Role>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -46,6 +49,13 @@ builder.Services.AddAuthorization(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
