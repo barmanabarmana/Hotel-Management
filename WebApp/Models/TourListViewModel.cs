@@ -5,7 +5,7 @@ namespace WebApp.Models
 {
     public class TourListVM
     {
-        public IEnumerable<TourModel>? TourList { get; set; }
+        public List<TourModel>? TourList { get; set; }
         public SelectList Type { get; set; }
         public string TourType { get; set; }
         public SelectList Country { get; set; }

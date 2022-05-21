@@ -1,8 +1,24 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model HotToursVM
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+	ViewData["Title"] = "Home Page";
+	int i = 0;
+}
+<div class="container" style="display: flex">
+	@foreach(var item in Model.Tours)
+	{
+		@if(i++ == 3)
+		{
+			break;
+		}
+		<div class="card">
+			<img src="@Url.Content(item.Hotel.Images[0].Path)" alt="Hotel" style="width: 100%;">
+			<div class="card-body">
+				<h4>@item.Title</h4>
+				<p class="price">$@item.Price</p>
+				<p>@item.Country, @item.City</p>
+				<a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id">Details</a>
+			</div>
+		</div>
+		}
 </div>

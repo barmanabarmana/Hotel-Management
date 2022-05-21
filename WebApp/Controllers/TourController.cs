@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
-using BLL.Services;
-using DAL;
 using DTO;
-using Microsoft.AspNetCore.Http;
+using DTO.Files;
+using DTO.Hotels;
+using DTO.Transports;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
+using Models.Files;
+using Models.Hotels;
+using Models.Transports;
 using WebApp.Models;
 using WebApp.Ninject;
 
@@ -15,11 +18,6 @@ namespace WebApp.Controllers
     public class TourController : Controller
     {
         private readonly ITourService _tourService;
-
-        public TourController(ITourService tourService)
-        {
-            _tourService = tourService;
-        }
         public TourController()
         {
             _tourService = UIDependencyResolver<ITourService>.ResolveDependency();
@@ -29,13 +27,19 @@ namespace WebApp.Controllers
         {
             cfg.CreateMap<TourDTO, TourModel>();
             cfg.CreateMap<TourModel, TourDTO>();
+            cfg.CreateMap<HotelDTO, HotelModel>();
+            cfg.CreateMap<HotelModel, HotelDTO>();
+            cfg.CreateMap<HotelRoomDTO, HotelRoomModel>();
+            cfg.CreateMap<HotelRoomModel, HotelRoomDTO>();
+            cfg.CreateMap<TransportDTO, TransportModel>();
+            cfg.CreateMap<TransportPlaceDTO, TransportPlaceModel>();
+            cfg.CreateMap<TransportModel, TransportDTO>();
+            cfg.CreateMap<TransportPlaceModel, TransportPlaceDTO>();
+            cfg.CreateMap<ImageDTO, ImageModel>();
+            cfg.CreateMap<ImageModel, ImageDTO>();
         }).CreateMapper();
 
         // GET: TourController
-        public ActionResult TourList()
-        {
-            return View();
-        }
         public ActionResult TourList(string searchString = null,
             decimal MinPrice = 0,
             decimal MaxPrice = decimal.MaxValue,
@@ -88,14 +92,15 @@ namespace WebApp.Controllers
                 Country = new SelectList(filterTypeQuerry.Distinct().ToList()),
                 City = new SelectList(filterTypeQuerry.Distinct().ToList()),
                 TourList = TourControllerMapper
-                .Map<IEnumerable<TourDTO>, IEnumerable<TourModel>>(tours),
+                .Map<IEnumerable<TourDTO>, IEnumerable<TourModel>>(tours).ToList(),
             });
         }
 
         // GET: TourController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var tour = _tourService.GetTour(id);
+            return View(TourControllerMapper.Map<TourDTO, TourModel>(tour));
         }
         // GET: TourController/Edit/5
         public ActionResult Edit(int id)

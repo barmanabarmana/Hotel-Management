@@ -1,0 +1,90 @@
+﻿@model TourModel
+
+@{
+    ViewData["Title"] = "Tour details";
+    int imgCount = 0;
+    if(Model != null)
+    {
+        imgCount = Model.Hotel.Images.Count();
+    }
+}
+
+<div class="detail-name">
+    <div>
+        <h1>@Model.Title</h1>
+        <span class="detail-place">@Model.Country, @Model.City</span>
+    </div>
+</div>
+<div class="details-tour">
+    <div class="tour-gallery">
+        @for(int i = 0; i < imgCount; i++)
+        {
+            <div class="mySlides">
+                <div class="numbertext">@(i+1) / @imgCount</div>
+                <img src="@Url.Content(Model.Hotel.Images[i].Path)" style="width:100%">
+            </div>
+        }
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        <div class="caption-container">
+            <p id="caption"></p>
+        </div>
+
+        <div class="row">
+            @for(int i = 0; i < imgCount; i++)
+            {
+             <div class="column">
+               <img class="demo cursor" src="@Url.Content(Model.Hotel.Images[i].Path)" style="width:100%" onclick="currentSlide(1)" alt="Gallery">
+             </div>
+            }
+        </div>
+        <script src="~/js/Slider.js"></script>
+    </div>
+    <div class="details-tour__info info-box">
+         <div class="info-box__heading">Information about tour</div>
+         <div class="info-box__flex">
+              <div class="info-box__item">
+                  Tour dates: <strong>@Model.TransportIn.ArrivalTime.ToString("dd.MM.yyyy") - @Model.TransportOut.DepartureTime.ToString("dd.MM.yyyy")</strong>
+              </div>
+              <div class="info-box__item">
+                  Duration: <strong>@Model.Duration days</strong>
+              </div>
+              <div class="info-box-transport">
+              @if(@Model.TransportIn != null || @Model.TransportIn.Id != 0)
+              {
+                  <div>Transport <strong>included</strong></div>
+                  <div><strong>In</strong></div>
+                  <div>
+                      Type: <strong>@Model.TransportIn.Type</strong>
+                  </div>
+                  <div>
+                      Departure from: <strong>@Model.TransportIn.DeparturePoint</strong>
+                  </div>
+                    @if(@Model.TransportOut != null || @Model.TransportOut.Id != 0)
+                    {
+                        <div><strong>Out</strong></div>
+                        <div>
+                           Type: <strong>@Model.TransportIn.Type</strong>
+                        </div>
+                        <div>
+                           Departure from: <strong>@Model.TransportIn.DeparturePoint</strong>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div>
+                        Transport <strong>not included</strong>
+                    </div>
+                }
+              </div>
+              <div class="info-box-price-section">
+                  <div class="info-box__price">
+                      @Model.Price$
+                  </div>
+                  <a asp-controller="Booking" asp-action="BookingOnline" asp-route-id="@Model.Id" class="mybtn">Book online</a>
+              </div>
+          </div>
+    </div>
+</div>
