@@ -23,6 +23,7 @@ namespace Models
         public string ClientName { get; set; }
         public string ClientSurname { get; set; }
         public HotelModel Hotel { get; set; }
-        public TransportModel Transport { get; set; }
+        public TransportModel TransportIn { get; set; }
+        public TransportModel TransportOut { get; set; }
     }
 }

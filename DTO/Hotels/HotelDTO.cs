@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTO.Files;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,5 +22,6 @@ namespace DTO.Hotels
         public int Stars { get; set; }
         public virtual List<HotelRoomDTO> Rooms { get; set; }
         public string Address { get; set; }
+        public List<ImageDTO> Images { get; set; }
     }
 }

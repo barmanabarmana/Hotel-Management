@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Files;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace Entities.Hotels
         public int Stars { get; set; }
         public virtual List<HotelRoom> Rooms { get; set; }
         public string Address { get; set; }
+        public virtual List<Image> Images { get; set; }
     }
 }

@@ -25,6 +25,7 @@ namespace DTO.Transports
         public DateTimeOffset DepartureTime { get; set; }
         public string ArrivalPoint { get; set; }
         public DateTimeOffset ArrivalTime { get; set; }
+        public virtual List<TourDTO> Tours { get; set; }
         public virtual List<TransportPlaceDTO> TransportPlaces { get; set; }
     }
 }

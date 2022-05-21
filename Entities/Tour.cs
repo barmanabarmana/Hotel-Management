@@ -23,6 +23,7 @@ namespace Entities
         public string? ClientName { get; set; }
         public string? ClientSurname { get; set; }
         public virtual Hotel Hotel { get; set; }
-        public virtual Transport Transport { get; set; }
+        public virtual Transport TransportIn { get; set; }
+        public virtual Transport TransportOut { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace Entities.Transports
         public DateTimeOffset DepartureTime { get; set; }
         public string ArrivalPoint { get; set; }
         public DateTimeOffset ArrivalTime { get; set; }
+        public virtual List<Tour> Tours { get; set; }
         public virtual List<TransportPlace> TransportPlaces { get; set; }
     }
 }
