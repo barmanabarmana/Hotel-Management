@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Ninject;
+using DTO.Files;
 using DTO.Hotels;
+using Entities.Files;
 using Entities.Hotels;
 using UnitsOfWork.Interfaces;
 
@@ -13,35 +15,27 @@ namespace BLL.Services
 
         public HotelService(IUnitOfWork UoW)
         {
-            HotelLogicMapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<HotelDTO, Hotel>();
-                cfg.CreateMap<HotelRoomDTO, HotelRoom>();
-                cfg.CreateMap<Hotel, HotelDTO>();
-                cfg.CreateMap<HotelRoom, HotelRoomDTO>();
-            }).CreateMapper();
-
             this.UoW = UoW;
         }
 
-        IMapper HotelLogicMapper;
-
         public HotelService()
         {
-            HotelLogicMapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<HotelDTO, Hotel>();
-                cfg.CreateMap<HotelRoomDTO, HotelRoom>();
-                cfg.CreateMap<Hotel, HotelDTO>();
-                cfg.CreateMap<HotelRoom, HotelRoomDTO>();
-            }).CreateMapper();
-
             UoW = DependencyResolver.ResolveUoW();
         }
 
+        IMapper Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<HotelDTO, Hotel>();
+            cfg.CreateMap<HotelRoomDTO, HotelRoom>();
+            cfg.CreateMap<Hotel, HotelDTO>();
+            cfg.CreateMap<HotelRoom, HotelRoomDTO>();
+            cfg.CreateMap<ImageDTO, Image>();
+            cfg.CreateMap<Image, ImageDTO>();
+        }).CreateMapper();
+
         public void AddHotel(HotelDTO NewHotel)
         {
-            UoW.Hotels.Add(HotelLogicMapper.Map<HotelDTO, Hotel>(NewHotel));
+            UoW.Hotels.Add(Mapper.Map<HotelDTO, Hotel>(NewHotel));
         }
 
         public void DeleteHotel(int Id)
@@ -53,7 +47,7 @@ namespace BLL.Services
         {
             Hotel hotel = UoW.Hotels.GetAll(x => x.Id == HotelId, x => x.Rooms).FirstOrDefault();
 
-            HotelRoom room = HotelLogicMapper.Map<HotelRoomDTO, HotelRoom>(NewHotelRoom);
+            HotelRoom room = Mapper.Map<HotelRoomDTO, HotelRoom>(NewHotelRoom);
 
             room.Hotel = hotel;
 
@@ -64,7 +58,7 @@ namespace BLL.Services
 
         public IEnumerable<HotelDTO> GetAllHotels()
         {
-            return HotelLogicMapper
+            return Mapper
                 .Map<IEnumerable<Hotel>, List<HotelDTO>>(UoW.
                 Hotels.GetAll(h => 
                 h.Rooms));
@@ -72,12 +66,24 @@ namespace BLL.Services
 
         public HotelDTO GetHotel(int Id)
         {
-            return HotelLogicMapper
+            return Mapper
                 .Map<Hotel, HotelDTO>(UoW.Hotels
                 .GetAll(x =>
                 x.Id == Id, x => 
                 x.Rooms)
                 .FirstOrDefault());
+        }
+        public void InsertImageHotel(int Id, string Path)
+        {
+            var hotel = Mapper
+                .Map<Hotel, HotelDTO>(
+                UoW.Hotels.Get(Id));
+
+            hotel.Images.Add(
+                new ImageDTO(Path));
+
+            UoW.Hotels.Modify(Id, Mapper
+                .Map<HotelDTO, Hotel>(hotel));
         }
     }
 }

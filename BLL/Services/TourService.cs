@@ -4,6 +4,12 @@ using UnitsOfWork.Interfaces;
 using Entities;
 using BLL.Ninject;
 using DTO;
+using DTO.Hotels;
+using Entities.Hotels;
+using DTO.Transports;
+using Entities.Transports;
+using DTO.Files;
+using Entities.Files;
 
 namespace BLL.Services
 {
@@ -13,29 +19,33 @@ namespace BLL.Services
 
         public TourService(IUnitOfWork UoW)
         {
-            TourLogicMapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<TourDTO, Tour>();
-                cfg.CreateMap<Tour, TourDTO>();
-            }).CreateMapper();
             this.UoW = UoW;
         }
 
-        IMapper TourLogicMapper;
-
         public TourService()
         {
-            TourLogicMapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<TourDTO, Tour>();
-                cfg.CreateMap<Tour, TourDTO>();
-            }).CreateMapper();
             UoW = DependencyResolver.ResolveUoW();
         }
 
+        IMapper Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<TourDTO, Tour>();
+            cfg.CreateMap<Tour, TourDTO>();
+            cfg.CreateMap<HotelDTO, Hotel>();
+            cfg.CreateMap<Hotel, HotelDTO>();
+            cfg.CreateMap<HotelRoomDTO, HotelRoom>();
+            cfg.CreateMap<HotelRoom, HotelRoomDTO>();
+            cfg.CreateMap<TransportDTO, Transport>();
+            cfg.CreateMap<TransportPlaceDTO, TransportPlace>();
+            cfg.CreateMap<Transport, TransportDTO>();
+            cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
+            cfg.CreateMap<ImageDTO, Image>();
+            cfg.CreateMap<Image, ImageDTO>();
+        }).CreateMapper();
+
         public void AddTour(TourDTO NewTour)
         {
-            UoW.ToursTemplates.Add(TourLogicMapper.Map<TourDTO, Tour>(NewTour));
+            UoW.ToursTemplates.Add(Mapper.Map<TourDTO, Tour>(NewTour));
         }
 
         public void DeleteTour(int Id)
@@ -46,14 +56,14 @@ namespace BLL.Services
         public void EditTour(int Id, TourDTO Tour)
         {
             Tour tour = UoW.ToursTemplates.Get(Id);
-            tour = TourLogicMapper.Map<TourDTO, Tour>(Tour);
+            tour = Mapper.Map<TourDTO, Tour>(Tour);
             UoW.ToursTemplates.Modify(Id, tour);
         }
 
         public IEnumerable<TourDTO> GetAllToursTemplates()
         {
-            return TourLogicMapper
-                .Map<IEnumerable<Tour>, List<TourDTO>>(UoW
+            return Mapper
+                .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW
                 .ToursTemplates
                 .GetAll());
         }
@@ -153,9 +163,24 @@ namespace BLL.Services
             }
         }
 
+        public IEnumerable<TourDTO> GetAllHotTourTemplates(IEnumerable<TourDTO> tours = null)
+        {
+            if (tours == null)
+            {
+                return GetAllToursTemplates()
+                    .Where(t =>
+                    t.IsHotOffer == true);
+            }
+            else
+            {
+                return tours
+                    .Where(t =>
+                    t.IsHotOffer == true);
+            }
+        }
         public TourDTO GetTour(int Id)
         {
-            return TourLogicMapper
+            return Mapper
                 .Map<Tour, TourDTO>(UoW
                 .ToursTemplates
                 .Get(Id));

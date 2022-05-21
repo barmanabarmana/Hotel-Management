@@ -27,67 +27,43 @@ namespace BLL.Services
 
         public UserService(IUnitOfWork UoW)
         {
-            UserLogicMapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<CustomerDTO, Customer>();
-                cfg.CreateMap<Customer, CustomerDTO>();
-                cfg.CreateMap<Transport, TransportDTO>();
-                cfg.CreateMap<TransportDTO, Transport>();
-                cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
-                cfg.CreateMap<TransportPlaceDTO, TransportPlace>();
-                cfg.CreateMap<TourDTO, Tour>();
-                cfg.CreateMap<Tour, TourDTO>();
-                cfg.CreateMap<HotelRoomDTO, HotelRoom>();
-                cfg.CreateMap<HotelRoom, HotelRoomDTO>();
-                cfg.CreateMap<HotelRoomReservationDTO, HotelRoomReservation>();
-                cfg.CreateMap<HotelRoomReservation, HotelRoomReservationDTO>();
-
-            }).CreateMapper();
             this.UoW = UoW;
-            HotelRoomToDto = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<HotelRoom, HotelRoomDTO>();
-            }).CreateMapper();
         }
 
-        IMapper UserLogicMapper;
-        IMapper HotelRoomToDto;
+        private IMapper Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<CustomerDTO, Customer>();
+            cfg.CreateMap<Customer, CustomerDTO>();
+            cfg.CreateMap<Transport, TransportDTO>();
+            cfg.CreateMap<TransportDTO, Transport>();
+            cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
+            cfg.CreateMap<TransportPlaceDTO, TransportPlace>();
+            cfg.CreateMap<TourDTO, Tour>();
+            cfg.CreateMap<Tour, TourDTO>();
+            cfg.CreateMap<HotelRoomDTO, HotelRoom>();
+            cfg.CreateMap<HotelRoom, HotelRoomDTO>();
+            cfg.CreateMap<HotelRoomReservationDTO, HotelRoomReservation>();
+            cfg.CreateMap<HotelRoomReservation, HotelRoomReservationDTO>();
+        }).CreateMapper();
+
         public static CustomerDTO CurrentUser;
+
         public UserService()
         {
-            UserLogicMapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<CustomerDTO, Customer>();
-                cfg.CreateMap<Customer, CustomerDTO>();
-                cfg.CreateMap<Transport, TransportDTO>();
-                cfg.CreateMap<TransportDTO, Transport>();
-                cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
-                cfg.CreateMap<TransportPlaceDTO, TransportPlace>();
-                cfg.CreateMap<TourDTO, Tour>();
-                cfg.CreateMap<Tour, TourDTO>();
-                cfg.CreateMap<HotelRoomDTO, HotelRoom>();
-                cfg.CreateMap<HotelRoom, HotelRoomDTO>();
-                cfg.CreateMap<HotelRoomReservationDTO, HotelRoomReservation>();
-                cfg.CreateMap<HotelRoomReservation, HotelRoomReservationDTO>();
-            }).CreateMapper();
-            HotelRoomToDto = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<HotelRoom, HotelRoomDTO>();
-            }).CreateMapper();
             UoW = DependencyResolver.ResolveUoW();
         }
 
         public void AddUser(CustomerDTO NewUser)
         {
             UoW.Customers
-                .Add(UserLogicMapper.
+                .Add(Mapper.
                 Map<CustomerDTO, Customer>(NewUser));
         }
 
         public IEnumerable<CustomerDTO> GetAllUsers()
         {
             UoW.DeleteDB();
-            return UserLogicMapper
+            return Mapper
                 .Map<IEnumerable<Customer>, List<CustomerDTO>>(UoW.
                 Customers.GetAll(u => 
                 u.HotelRoomReservations, u => 
@@ -97,7 +73,7 @@ namespace BLL.Services
 
         public CustomerDTO GetUser(int Id)
         {
-            return UserLogicMapper
+            return Mapper
                 .Map<Customer, CustomerDTO>(UoW.
                 Customers.GetAll(u => 
                 u.Id == Id, u =>
@@ -110,7 +86,7 @@ namespace BLL.Services
         public void EditUser(int Id, 
             CustomerDTO User)
         {
-            UoW.Customers.Modify(Id, UserLogicMapper.Map<CustomerDTO, Customer>(User));
+            UoW.Customers.Modify(Id, Mapper.Map<CustomerDTO, Customer>(User));
         }
 
         public void DeleteUser(int Id)

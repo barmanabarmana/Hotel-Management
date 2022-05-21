@@ -13,31 +13,21 @@ namespace BLL.Services
 
         public TransportService(IUnitOfWork UoW)
         {
-            TransportLogicMapper = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<TransportDTO, Transport>();
-                cfg.CreateMap<TransportPlaceDTO, TransportPlace>();
-                cfg.CreateMap<Transport, TransportDTO>();
-                cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
-            }).CreateMapper();
-
             this.UoW = UoW;
         }
 
-        IMapper TransportLogicMapper;
-
         public TransportService()
         {
-            TransportLogicMapper = new MapperConfiguration(cfg =>
-                {
-                    cfg.CreateMap<TransportDTO, Transport>();
-                    cfg.CreateMap<TransportPlaceDTO, TransportPlace>();
-                    cfg.CreateMap<Transport, TransportDTO>();
-                    cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
-                }).CreateMapper();
-
             UoW = DependencyResolver.ResolveUoW();
         }
+
+        IMapper Mapper = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<TransportDTO, Transport>();
+            cfg.CreateMap<TransportPlaceDTO, TransportPlace>();
+            cfg.CreateMap<Transport, TransportDTO>();
+            cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
+        }).CreateMapper();
 
         public void AddTransport(TransportDTO NewTransport, int AvailibleSeats, int PriceForTicket)
         {
@@ -45,7 +35,7 @@ namespace BLL.Services
                 NewTransport.TransportPlaces.Add(new TransportPlaceDTO(NewTransport, i, PriceForTicket));
 
             UoW.Transports
-                .Add(TransportLogicMapper
+                .Add(Mapper
                 .Map<TransportDTO, Transport>(NewTransport));
         }
 
@@ -57,7 +47,7 @@ namespace BLL.Services
 
         public IEnumerable<TransportDTO> GetAllTransport()
         {
-            return TransportLogicMapper
+            return Mapper
                 .Map<IEnumerable<Transport>, List<TransportDTO>>(UoW.
                 Transports.GetAll(t => 
                 t.TransportPlaces));
@@ -65,7 +55,7 @@ namespace BLL.Services
 
         public TransportDTO GetTransport(int Id)
         {
-            return TransportLogicMapper.
+            return Mapper.
                 Map<Transport, TransportDTO>(UoW.
                 Transports
                 .GetAll(t =>

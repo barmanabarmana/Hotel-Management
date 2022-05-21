@@ -23,5 +23,6 @@ namespace BLL.Interfaces
         IEnumerable<TourDTO> GetAllToursTemplatesOrderedByPrice(IEnumerable<TourDTO> tours = null);
         IEnumerable<TourDTO> GetAllToursTemplatesOrderedByDuration(IEnumerable<TourDTO> tours = null);
         IEnumerable<TourDTO> GetAllToursTemplatesOrderedByCountry(IEnumerable<TourDTO> tours = null);
+        IEnumerable<TourDTO> GetAllHotTourTemplates(IEnumerable<TourDTO> tours = null);
     }
 }
