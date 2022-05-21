@@ -58,7 +58,7 @@ namespace Repositories.Generic
 
         public List<TEntity> GetAll()
         {
-            return DbSet.AsNoTracking().ToList();
+            return DbSet.ToList();
         }
 
         public List<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)
