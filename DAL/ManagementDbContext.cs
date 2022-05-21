@@ -13,7 +13,7 @@ namespace DAL
         public ManagementDbContext()
                : base()
         {
-            /*Database.EnsureDeleted();
+           /* Database.EnsureDeleted();
             Database.EnsureCreated();*/
         }
         public ManagementDbContext(DbContextOptions<ManagementDbContext> options)
@@ -47,16 +47,21 @@ namespace DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Hotel>()
-            .HasMany(r => r.Rooms)
-            .WithOne(h => h.Hotel)
-            .HasForeignKey(h => h.HotelId)
-            .OnDelete(DeleteBehavior.Cascade);
+                .HasMany(r => r.Rooms)
+                .WithOne(h => h.Hotel)
+                .HasForeignKey(h => h.HotelId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Transport>()
-           .HasMany(t => t.TransportPlaces)
-           .WithOne(t => t.Transport)
-           .HasForeignKey(t => t.TransportId)
-           .OnDelete(DeleteBehavior.Cascade);
+                .HasMany(t => t.TransportPlaces)
+                .WithOne(t => t.Transport)
+                .HasForeignKey(t => t.TransportId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Tour>()
+                .HasOne(t => t.TransportIn)
+                .WithMany(t => t.Tours)
+                .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }
