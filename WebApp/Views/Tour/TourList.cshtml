@@ -1,0 +1,23 @@
+﻿@model TourListVM
+
+@{
+    ViewData["Title"] = "Tours";
+}
+
+<h1>Tour View</h1>
+
+@foreach (var item in Model.TourList) 
+{
+    <div class="card-horizontal">
+        <img src="@Url.Content(item.Hotel.Images[0].Path)"alt="Hotel"/>
+        <div class="card-body-left">
+            <h5 class="card-title">@item.Title</h5>
+            <p class="card-text">@item.Country, @item.City</p>
+            <p class="card-text">@item.Description</p>
+        </div>
+        <div class="card-body-right">
+            <div class="card-body-right-price">@item.Price$</div>
+            <a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id">Details</a>
+        </div>
+    </div>
+}

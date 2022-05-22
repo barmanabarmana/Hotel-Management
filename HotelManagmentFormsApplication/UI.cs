@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Hotel_Management.BusinessLogicLayer;
 
-namespace Hotel_Management {
+namespace Hotel_Management
+{
     public partial class UI:Form {
         public static int activeHotelID = -1;
         public UI() {

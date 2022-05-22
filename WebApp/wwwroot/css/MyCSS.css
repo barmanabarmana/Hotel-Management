@@ -1,0 +1,302 @@
+﻿.mybtn {
+    color: black;
+    border: 2px solid black;
+    border-radius: 2px;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    transition: 0.3s;
+}
+    .mybtn:hover {
+        background-color: black; 
+        color: white;
+    }
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    font-family: arial;
+}
+
+.price {
+    color: grey;
+    font-size: 22px;
+}
+.card a {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    margin: auto;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+    .card a:hover {
+        opacity: 0.7;
+    }
+
+.card-horizontal {
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    height: 248px;
+    margin: 12px;
+    font-family: arial;
+}
+    .card-horizontal img {
+        margin-top: auto;
+        margin-bottom: auto;
+        padding: 5px;
+        margin-right: 7px;
+        max-width: 248px;
+    }
+.card-body-left {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    padding-right: 20px;
+    width: 100%;
+}
+.card-body-right {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-pack: end;
+    padding-top: 86px;
+    flex-shrink: 0;
+    width: 186px;
+}
+    .card-body-right a {
+        border: none;
+        outline: 0;
+        padding: 12px;
+        margin-top: auto;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        text-decoration: none;
+    }
+.card-body-right-price {
+    display: block;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    color: #424242;
+    text-align: center;
+}
+.card-title {
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+}
+.card-text {
+    margin-bottom: 0.75rem;
+}
+.details-tour {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 3.75rem;
+    color: #2b3641;
+}
+.detail-name {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+.tour-gallery {
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background: #fff;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    background: #dee6ed;
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+}
+    .tour-gallery img {
+        position: relative;
+        min-height: 100%;
+        overflow: hidden;
+    }
+.detail-place {
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.info-box {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+.details-tour__info {
+    position: relative;
+    padding: 1.25rem 2.5rem 0.9375rem 2.5rem;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    border: solid 1px #dee6ed;
+    background-color: #fff;
+}
+.info-box__heading {
+    margin-bottom: 12px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #2e3b49;
+}
+.info-box__flex {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+.info-box-price-section {
+    margin: 12px 0 0 0;
+    padding-top: 12px;
+    border-top: 1px solid #dee6ed;
+}
+.info-box__price {
+    font-weight: bold;
+    line-height: 1.33;
+    color: #2b3641;
+    font-size: 20px;
+}
+.info-box__item {
+    margin-top: 4px;
+}
+.info-box-transport {
+    margin-top: 1.125rem;
+}
+/* Position the image container (needed to position the left and right arrows) */
+.container {
+    position: relative;
+}
+
+/* Hide the images by default */
+.mySlides {
+    display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+    cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover,
+    .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+/* Number text (1/3 etc) */
+.numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Six columns side by side */
+.column {
+    float: left;
+    width: 16.66%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+    opacity: 0.6;
+}
+
+    .active,
+    .demo:hover {
+        opacity: 1;
+    }
