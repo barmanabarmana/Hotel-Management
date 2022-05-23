@@ -1,67 +1,89 @@
-﻿.mybtn {
-    color: black;
-    border: 2px solid black;
-    border-radius: 2px;
-    color: black;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    width: 100%;
-    transition: 0.3s;
-}
-    .mybtn:hover {
-        background-color: black; 
-        color: white;
-    }
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    max-width: 300px;
-    margin: auto;
-    font-family: arial;
-}
-
-.price {
-    color: grey;
-    font-size: 22px;
-}
-.card a {
-    border: none;
+﻿.linkbtn {
+    border: 1px solid black;
     outline: 0;
     padding: 12px;
-    margin: auto;
-    color: white;
-    background-color: #000;
+    color: black;
+    background-color: white;
     text-align: center;
     cursor: pointer;
     width: 100%;
     font-size: 18px;
     text-decoration: none;
+    transition: 0.4s;
 }
 
-    .card a:hover {
-        opacity: 0.7;
+    .linkbtn:hover {
+        color: white;
+        background-color: black;
+    }
+
+.hot-offers-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card {
+    display:flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 300px;
+    height: 500px;
+    margin: 12px 20px 12px 20px;
+    font-family: arial;
+}
+
+.card-vertical-body {
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-pack: end;
+    flex-shrink: 0;
+}
+
+.card-body-price {
+    margin-top:auto;
+    display: block;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    color: #424242;
+    text-align: center;
+}
+.card img {
+    width: 300px;
+    height: 250px;
+}
+.card-linkbtn-details {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: black;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    text-decoration: none;
+    transition: 0.4s;
+}
+
+    .card-linkbtn-details:hover {
+        color: black;
+        background-color: white;
     }
 
 .card-horizontal {
     display: flex;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    height: 248px;
+    height: 250px;
     margin: 12px;
     font-family: arial;
 }
-    .card-horizontal img {
-        margin-top: auto;
-        margin-bottom: auto;
-        padding: 5px;
-        margin-right: 7px;
-        max-width: 248px;
-    }
 .card-body-left {
     -webkit-box-flex: 1;
     flex-grow: 1;
-    padding-right: 20px;
+    padding: 12px;
     width: 100%;
 }
 .card-body-right {
@@ -86,7 +108,14 @@
         width: 100%;
         font-size: 18px;
         text-decoration: none;
+        transition: 0.4s;
+        border: solid 2px black;
     }
+        .card-body-right a:hover {
+            color: black;
+            background-color: white;
+            border: solid 2px black;
+        }
 .card-body-right-price {
     display: block;
     font-size: 24px;
@@ -102,6 +131,66 @@
 .card-text {
     margin-bottom: 0.75rem;
 }
+.filter-container {
+    border: 1px solid gray;
+    display: flex;
+    width: 100%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.filter-button-apply {
+    width: -webkit-fill-available;
+    border-radius: 3px;
+    background-color: white;
+    color: black;
+    padding: 10px 0 10px 0;
+    transition: 0.7s;
+    margin: 12px 6px 12px 6px;
+}
+
+    .filter-button-apply:hover {
+        background-color: black;
+        color: white;
+    }
+
+.search-filter {
+    box-sizing: border-box;
+    border-radius: 3px;
+    background-color: gainsboro;
+}
+
+#searchinput {
+    width: -webkit-fill-available;
+    font-size: 16px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    margin: 12px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.card-img-link {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+    .card-img-link img {
+        box-shadow: 0 0 2px black;
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-right: 7px;
+        width: 300px;
+        height: 250px;
+        transition: all .2s ease-in-out;
+    }
+
+        .card-img-link img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
 .details-tour {
     display: -webkit-box;
     display: -webkit-flex;
@@ -111,6 +200,7 @@
     margin-bottom: 3.75rem;
     color: #2b3641;
 }
+
 .detail-name {
     display: -webkit-box;
     display: -webkit-flex;
@@ -126,6 +216,7 @@
     align-items: flex-start;
     margin-top: 20px;
 }
+
 .tour-gallery {
     width: 100%;
     max-width: 800px;
@@ -148,11 +239,13 @@
     -webkit-flex-grow: 1;
     flex-grow: 1;
 }
+
     .tour-gallery img {
         position: relative;
         min-height: 100%;
         overflow: hidden;
     }
+
 .detail-place {
     vertical-align: middle;
     font-size: 14px;
@@ -171,6 +264,7 @@
     -ms-flex-direction: column;
     flex-direction: column;
 }
+
 .details-tour__info {
     position: relative;
     padding: 1.25rem 2.5rem 0.9375rem 2.5rem;
@@ -180,12 +274,14 @@
     border: solid 1px #dee6ed;
     background-color: #fff;
 }
+
 .info-box__heading {
     margin-bottom: 12px;
     font-size: 24px;
     font-weight: bold;
     color: #2e3b49;
 }
+
 .info-box__flex {
     -webkit-box-flex: 1;
     -webkit-flex-grow: 1;
@@ -201,25 +297,29 @@
     -ms-flex-direction: column;
     flex-direction: column;
 }
+
 .info-box-price-section {
     margin: 12px 0 0 0;
     padding-top: 12px;
     border-top: 1px solid #dee6ed;
 }
+
 .info-box__price {
     font-weight: bold;
     line-height: 1.33;
     color: #2b3641;
     font-size: 20px;
 }
+
 .info-box__item {
     margin-top: 4px;
 }
+
 .info-box-transport {
     margin-top: 1.125rem;
 }
-/* Position the image container (needed to position the left and right arrows) */
-.container {
+    /* Position the image container (needed to position the left and right arrows) */
+    .container {
     position: relative;
 }
 

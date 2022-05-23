@@ -5,12 +5,14 @@ using DTO.Files;
 using DTO.Hotels;
 using DTO.Transports;
 using DTO.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Files;
 using Models.Hotels;
 using Models.Transports;
 using Models.Users;
+using WebApp.Models;
 using WebApp.Ninject;
 
 namespace WebApp.Controllers
@@ -42,11 +44,15 @@ namespace WebApp.Controllers
             cfg.CreateMap<ImageDTO, ImageModel>();
             cfg.CreateMap<ImageModel, ImageDTO>();
         }).CreateMapper();
-
+        [Authorize]
         public IActionResult BookingOnline(int id)
         {
             var tour = _tourService.GetTour(id);
-            return View();
+            var bookingVM = new BookingOnlineVM()
+            {
+                Tour = TourControllerMapper.Map<TourDTO, TourModel>(tour),
+            };
+            return View(tour);
         }
     }
 }

@@ -3,21 +3,113 @@
 @{
     ViewData["Title"] = "Tours";
 }
-
-<h1>Tour View</h1>
-
-@foreach (var item in Model.TourList) 
-{
-    <div class="card-horizontal">
-        <img src="@Url.Content(item.Hotel.Images[0].Path)"alt="Hotel"/>
-        <div class="card-body-left">
-            <h5 class="card-title">@item.Title</h5>
-            <p class="card-text">@item.Country, @item.City</p>
-            <p class="card-text">@item.Description</p>
-        </div>
-        <div class="card-body-right">
-            <div class="card-body-right-price">@item.Price$</div>
-            <a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id">Details</a>
-        </div>
-    </div>
+<style>
+label {
+    font: 1rem 'Fira Sans', sans-serif;
+    width: 100%; 
+    margin: 0 6px 0 6px;
+    border-radius: 3px;
 }
+label select{
+    width: -webkit-fill-available;
+    padding: 5px 0 5px 0;
+    margin: 5px 0 0 0;
+    border-radius: 3px;
+}
+label input{
+    width: -webkit-fill-available;
+    padding: 5px 0 5px 0;
+    margin: 5px 6px 5px 6px;
+    border-radius: 3px;
+}
+.filter-box{
+    margin-top: 12px;
+    width: 272px;
+    min-height: 1px;
+    position: relative;
+    padding: 0 15px 0 15px;
+}
+</style>
+<h1 class="text-center">Tour View</h1>
+
+<div>
+    <div class="search-filter">
+        <form asp-controller="Tour" asp-action="TourList"  method="get">
+            <input type="text" asp-for="SearchString" id="searchinput" autocomplete="off" placeholder="Search..."/>
+        </form>
+    </div>
+</div>
+<div style="display:flex;">
+    <form asp-controller="Tour" asp-action="TourList"  method="get">
+        <div class="filter-box">
+       <div class="filter-container">
+                <label><strong>Tour type:</strong>
+                    <select asp-for="TourType" asp-items="Model.Types">
+                        <option value="">All</option>
+                    </select>
+                </label>
+       </div>
+       <div class="filter-container">
+                <label><strong>Tour country:</strong>
+                    <select asp-for="TourCountry" asp-items="Model.Arrive">
+                        <option value="">All</option>
+                    </select>
+                </label>
+       </div>
+       <div class="filter-container">
+                <label><strong>Tour departure point:</strong>
+                    <select asp-for="TourDeparturePoint" asp-items="Model.DeparturePoint">
+                        <option value="">All</option>
+                    </select>
+                </label>
+       </div>
+       <div class="filter-container">
+                <label><strong>Order by:</strong>
+                    <select asp-for="OrderBy">
+                        <option value="0">Default</option>
+                        <option value="1">From cheap to expensive</option>
+                        <option value="2">From expensive to cheap</option>
+                        <option value="3">Start date tour</option>
+                        <option value="4">From short to long</option>
+                        <option value="5">From long to short</option>
+                    </select>
+                </label>
+       </div>
+        <div class="filter-container">
+                <label><strong style="margin: 0 6px 0 6px;">Price range:</strong>
+                    <input type="number" asp-for="MinTourPrice" placeholder="@Model.MinTourPrice" step="any"/>
+                    <input type="number" asp-for="MaxTourPrice" placeholder="@Model.MaxTourPrice" step="any" />
+                </label>
+        </div>
+        <div class="filter-container">
+                <label><strong style="margin: 0 6px 0 6px;">Duration range:</strong>
+                    <input type="number" asp-for="MinTourDuration" placeholder="@Model.MinTourDuration"/>
+                    <input type="number" asp-for="MaxTourDuration" placeholder="@Model.MaxTourDuration" />
+                </label>
+        </div>
+        <input type="submit" value="Apply" class="filter-button-apply"/>
+    </div>
+    </form>
+    <div style="width: -webkit-fill-available">
+        @foreach (var item in Model.TourList) 
+        {
+            <div class="card-horizontal">
+                <a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id" class="card-img-link">
+                     <img src="@Url.Content(item.Hotel.Images[0].Path)"alt="Hotel"/>
+                </a>
+                <div class="card-body-left">
+                    <a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id">
+                        <h5 class="card-title">@item.Title</h5>
+                    </a>
+                    <p class="card-text">@item.Country, @item.City</p>
+                    <p class="card-text">@item.Description</p>
+                </div>
+                <div class="card-body-right">
+                    <div class="card-body-right-price">@item.Price$</div>
+                    <a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

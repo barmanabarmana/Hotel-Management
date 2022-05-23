@@ -46,7 +46,7 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
-            var HotTours = from t in _tourService.GetAllHotTourTemplates()
+            var HotTours = from t in _tourService.GetHotTourTemplates()
                            select t;
             var HotToursVM = new HotToursVM()
             {
