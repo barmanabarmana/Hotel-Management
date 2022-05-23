@@ -149,7 +149,6 @@ namespace Hotel_Management
         private void btnAddHotel_Click_1(object sender,EventArgs e) {
             int i;
             if(tbNewDescription.Text==""||tbNewRooms.Text==""||!int.TryParse(tbNewRooms.Text,out i)||tbNewLocation.Text==""||!int.TryParse(tbNewCost.Text, out i)) return; //checking input data
-            BLL.addhotel(tbNewDescription.Text,Convert.ToInt32(tbNewRooms.Text), tbNewLocation.Text, Convert.ToInt32(tbNewCost.Text));
             cbHotels.Items.Add(BLL.hotel[BLL.hotel.Length-1].hotelDescription);
             tbNewDescription.Text="";
             tbNewRooms.Text="";
