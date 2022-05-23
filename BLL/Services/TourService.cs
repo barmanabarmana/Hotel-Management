@@ -79,130 +79,56 @@ namespace BLL.Services
 
         public IEnumerable<TourDTO> FindTourTemplatesByPrice(IEnumerable<TourDTO> tours, decimal MinPrice, decimal MaxPrice)
         {
-            if (tours == null)
-            {
-                return Mapper
-                    .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW
-                    .ToursTemplates.GetAll(t =>
-                    t.Price >= MinPrice &&
-                    t.Price <= MaxPrice));
-            }
-            else
-            {
-
-                return tours
-                    .Where(t =>
-                    t.Price >= MinPrice &&
-                    t.Price <= MaxPrice);
-            }
+            return tours
+                .Where(t =>
+                t.Price >= MinPrice &&
+                t.Price <= MaxPrice);
         }
 
         public IEnumerable<TourDTO> FindTourTemplates(IEnumerable<TourDTO> tours, string SeachElem)
         {
-            if (tours == null)
-            {
-                return Mapper
-                    .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW
-                    .ToursTemplates.GetAll(t =>
-                    t.City.ToUpper().Contains(SeachElem.ToUpper()) ||
-                    t.Country.ToUpper().Contains(SeachElem.ToUpper()) ||
-                    t.Title.ToUpper().Contains(SeachElem.ToUpper())));
-            }
-            else
-            {
-                return tours
-                .Where(t =>
-                t.City.ToUpper().Contains(SeachElem.ToUpper()) ||
-                t.Country.ToUpper().Contains(SeachElem.ToUpper()) ||
-                t.Title.ToUpper().Contains(SeachElem.ToUpper()));
-            }
+            return tours
+            .Where(t =>
+            t.City.ToUpper().Contains(SeachElem.ToUpper()) ||
+            t.Country.ToUpper().Contains(SeachElem.ToUpper()) ||
+            t.Title.ToUpper().Contains(SeachElem.ToUpper()));
         }
         public IEnumerable<TourDTO> FindTourTemplatesByType(IEnumerable<TourDTO> tours, string Type)
         {
-            if (tours == null)
-            {
-                return Mapper
-                    .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW
-                    .ToursTemplates.GetAll(t =>
-                    t.Type.ToUpper() == Type.ToUpper()));
-            }
-            else
-            {
-                return tours
-                    .Where(t =>
-                    t.Type.ToUpper() == Type.ToUpper());
-            }
+            return tours
+                .Where(t =>
+                t.Type.ToUpper() == Type.ToUpper());
         }
 
 
         public IEnumerable<TourDTO> FindTourTemplatesByCity(IEnumerable<TourDTO> tours, string City)
         {
-            if (tours == null)
-            {
-                return Mapper
-                    .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW
-                    .ToursTemplates.GetAll(t =>
-                    t.City.ToUpper() == City.ToUpper()));
-            }
-            else
-            {
-                return tours
-                    .Where(t =>
-                    t.City.ToUpper() == City.ToUpper());
-            }
+            return tours
+                .Where(t =>
+                t.City.ToUpper() == City.ToUpper());
         }
 
         public IEnumerable<TourDTO> FindTourTemplatesByCountry(IEnumerable<TourDTO> tours, string Country)
         {
-            if (tours == null)
-            {
-                return Mapper
-                    .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW
-                    .ToursTemplates.GetAll(t =>
-                    t.Country.ToUpper() == Country.ToUpper()));
-            }
-            else
-            {
-                return tours
-                    .Where(t =>
-                    t.Country.ToUpper() == Country.ToUpper());
-            }
+            return tours
+                .Where(t =>
+                t.Country.ToUpper() == Country.ToUpper());
         }
 
         public IEnumerable<TourDTO> FindTourTemplatesByDuration(IEnumerable<TourDTO> tours, int MinDuration, int MaxDuration)
         {
-            if (tours == null)
-            {
-                return Mapper
-                    .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW
-                    .ToursTemplates.GetAll(t =>
-                    t.Duration >= MinDuration &&
-                    t.Duration <= MaxDuration));
-            }
-            else
-            {
-                return tours
-                    .Where(t =>
-                    t.Duration >= MinDuration &&
-                    t.Duration <= MaxDuration);
-            }
+
+            return tours
+                .Where(t =>
+                t.Duration >= MinDuration &&
+                t.Duration <= MaxDuration);
         }
 
         public IEnumerable<TourDTO> FindTourTemplatesByDeparturePoint(IEnumerable<TourDTO> tours, string DeparturePoint)
         {
-            if (tours == null)
-            {
-                return Mapper
-                    .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW
-                    .ToursTemplates.GetAll(t =>
-                    t.TransportIn.DeparturePoint.ToUpper() == DeparturePoint.ToUpper()));
-            }
-            else
-            {
-                return tours
-                    .Where(t =>
-                    t.TransportIn.DeparturePoint.ToUpper() == DeparturePoint.ToUpper());
-            }
+            return tours
+                .Where(t =>
+                t.TransportIn.DeparturePoint.ToUpper() == DeparturePoint.ToUpper());
         }
 
         public IEnumerable<TourDTO> GetTourTemplatesOrderBy(IEnumerable<TourDTO> tours, int orderby)
@@ -221,74 +147,69 @@ namespace BLL.Services
 
         private IEnumerable<TourDTO> GetToursTemplatesOrderedByStartDay(IEnumerable<TourDTO> tours)
         {
-            if (tours == null)
-            {
-                return GetAllToursTemplates()
-                    .OrderBy(t =>
-                    t.TransportIn.DepartureTime);
-            }
-            else
-            {
-                return tours
-                    .OrderBy(t =>
-                    t.TransportIn.DepartureTime);
-            }
+            return tours
+                .OrderBy(t =>
+                t.TransportIn.DepartureTime);
         }
 
         private IEnumerable<TourDTO> GetToursTemplatesOrderedByPrice(IEnumerable<TourDTO> tours)
         {
-            if(tours == null)
-            {
-                return GetAllToursTemplates()
-                    .OrderBy(t => 
-                    t.Price);
-            }
-            else
-            {
-                return tours
-                    .OrderBy(t => 
-                    t.Price);
-            }
+            return tours
+                .OrderBy(t =>
+                t.Price);
         }
 
         private IEnumerable<TourDTO> GetToursTemplatesOrderedByDuration(IEnumerable<TourDTO> tours)
         {
-            if (tours == null)
-            {
-                return GetAllToursTemplates()
-                    .OrderBy(t =>
-                    t.Duration);
-            }
-            else
-            {
-                return tours
-                    .OrderBy(t =>
-                    t.Duration);
-            }
+            return tours
+                .OrderBy(t =>
+                t.Duration);
         }
         public decimal FindCheapestTourPrice(IEnumerable<TourDTO> tours)
         {
+            if (!ListNotNullAndContainsAnyElement(tours))
+            {
+                return 0;
+            }
             return GetToursTemplatesOrderedByPrice(tours).First().Price;
         }
         public decimal FindExpensivestTourPrice(IEnumerable<TourDTO> tours)
         {
+            if (!ListNotNullAndContainsAnyElement(tours))
+            {
+                return 0;
+            }
             return GetToursTemplatesOrderedByPrice(tours).Last().Price;
         }
-
-        public IEnumerable<TourDTO> GetHotTourTemplates(IEnumerable<TourDTO> tours)
+        public int FindShortestTourDuration(IEnumerable<TourDTO> tours)
         {
-            if (tours == null)
+            if (!ListNotNullAndContainsAnyElement(tours))
             {
-                return GetAllToursTemplates()
-                    .Where(t =>
-                    t.IsHotOffer == true);
+                return 0;
             }
-            else
+            return GetToursTemplatesOrderedByDuration(tours).First().Duration;
+        }
+        public int FindLongestTourDuration(IEnumerable<TourDTO> tours)
+        {
+            if(!ListNotNullAndContainsAnyElement(tours))
             {
-                return tours
-                    .Where(t =>
-                    t.IsHotOffer == true);
+                return 0;
             }
+            return GetToursTemplatesOrderedByDuration(tours).Last().Duration;
+        }
+        public IEnumerable<TourDTO> GetToursStartingOnDate(IEnumerable<TourDTO> tours, DateTime startRange, DateTime endRange)
+        {
+            return tours.Where(t =>
+                t.TransportIn.DepartureTime.Date >= startRange &&
+                t.TransportIn.DepartureTime.Date <= endRange);
+        }
+
+        public IEnumerable<TourDTO> GetHotTourTemplates()
+        {
+            return Mapper
+                .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW.
+                ToursTemplates.GetAll(t =>
+                t.IsHotOffer == true));
         }
         public TourDTO GetTour(int Id)
         {
@@ -296,6 +217,14 @@ namespace BLL.Services
                 .Map<Tour, TourDTO>(UoW
                 .ToursTemplates
                 .Get(Id));
+        }
+        private bool ListNotNullAndContainsAnyElement(IEnumerable<object> list)
+        {
+            if(list != null && list.Any())
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
