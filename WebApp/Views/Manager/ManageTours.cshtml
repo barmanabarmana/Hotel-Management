@@ -1,55 +1,60 @@
-﻿@model IEnumerable<Models.TourModel>
+﻿@model ManageToursVM
 
 @{
-    ViewData["Title"] = "Manage";
+    ViewData["Title"] = "Manage tours";
 }
 
 <h1>Manage</h1>
 
+    <div class="search-filter">
+        <form asp-controller="Manager" asp-action="ManageTours"  method="get">
+            <input type="text" asp-for="SearchString" id="searchinput" autocomplete="off" placeholder="Search..."/>
+        </form>
+    </div>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateTour">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.Tours[0].Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.Tours[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Tours[0].Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type)
+                @Html.DisplayNameFor(model => model.Tours[0].Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Country)
+                @Html.DisplayNameFor(model => model.Tours[0].Country)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                @Html.DisplayNameFor(model => model.Tours[0].City)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Duration)
+                @Html.DisplayNameFor(model => model.Tours[0].Duration)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsHotOffer)
+                @Html.DisplayNameFor(model => model.Tours[0].IsHotOffer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Tours[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClientName)
+                @Html.DisplayNameFor(model => model.Tours[0].ClientName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClientSurname)
+                @Html.DisplayNameFor(model => model.Tours[0].ClientSurname)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Tours) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
@@ -86,8 +91,8 @@
             </td>
             <td>
                 <a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-controller="Tour" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-controller="Tour" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-controller="Manager" asp-action="EditTour" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Manager" asp-action="DeleteTour" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

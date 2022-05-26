@@ -15,8 +15,8 @@ namespace WebApp.Models
         public string SearchString { get; set; }
         public int MinTourDuration { get; set; }
         public int MaxTourDuration { get; set; }
-        public decimal MinTourPrice { get; set; }
-        public decimal MaxTourPrice { get; set; }
+        public string MinTourPrice { get; set; }
+        public string MaxTourPrice { get; set; }
         public int OrderBy { get; set; }
     }
 }

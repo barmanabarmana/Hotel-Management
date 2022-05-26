@@ -5,7 +5,9 @@ using DTO.Files;
 using DTO.Hotels;
 using DTO.Transports;
 using DTO.User;
+using Entities.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Models.Files;
@@ -21,36 +23,26 @@ namespace WebApp.Controllers
     {
         private readonly ITourService _tourService;
         private readonly IUserService _userService;
-        public BookingCotroller()
+        private readonly SignInManager<Customer> _signInManager;
+        private readonly UserManager<Customer> _userManager;
+        public BookingCotroller(SignInManager<Customer> signInManager, UserManager<Customer> userManager)
         {
             _userService = UIDependencyResolver<IUserService>.ResolveDependency();
             _tourService = UIDependencyResolver<ITourService>.ResolveDependency();
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
-
-        IMapper TourControllerMapper = new MapperConfiguration(cfg =>
-        {
-            cfg.CreateMap<CustomerDTO, CustomerModel>();
-            cfg.CreateMap<CustomerModel, CustomerDTO>();
-            cfg.CreateMap<TourDTO, TourModel>();
-            cfg.CreateMap<TourModel, TourDTO>();
-            cfg.CreateMap<HotelDTO, HotelModel>();
-            cfg.CreateMap<HotelModel, HotelDTO>();
-            cfg.CreateMap<HotelRoomDTO, HotelRoomModel>();
-            cfg.CreateMap<HotelRoomModel, HotelRoomDTO>();
-            cfg.CreateMap<TransportDTO, TransportModel>();
-            cfg.CreateMap<TransportPlaceDTO, TransportPlaceModel>();
-            cfg.CreateMap<TransportModel, TransportDTO>();
-            cfg.CreateMap<TransportPlaceModel, TransportPlaceDTO>();
-            cfg.CreateMap<ImageDTO, ImageModel>();
-            cfg.CreateMap<ImageModel, ImageDTO>();
-        }).CreateMapper();
         [Authorize]
         public IActionResult BookingOnline(int id)
         {
             var tour = _tourService.GetTour(id);
             var bookingVM = new BookingOnlineVM()
             {
-                Tour = TourControllerMapper.Map<TourDTO, TourModel>(tour),
+                Tour = Tools.Mapper.Map<TourDTO, TourModel>(tour),
+                Customer = Tools.Mapper
+                .Map<CustomerDTO, CustomerModel>(_userService.
+                GetUser(int.Parse(_userManager
+                .GetUserId(User)))),
             };
             return View(tour);
         }

@@ -9,7 +9,11 @@
 	{
 		<div class="card">
 			<a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id" >
-				<img src="@Url.Content(item.Hotel.Images[0].Path)" alt="Hotel" style="width: 100%;">
+				@if(item.Hotel.Images == null || !item.Hotel.Images.Any()){
+					<img src="~/Files/NoImg.png">
+				}else{
+					<img src="@Url.Content(item.Hotel.Images[0].Path)" alt="Hotel">
+				}
 			</a>
 			<div class="card-vertical-body">
 				<div>
