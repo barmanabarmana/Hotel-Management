@@ -66,22 +66,27 @@ namespace WebApp.Data
 
                 var image1 = new Image()
                 {
+                    Name = "1",
                     Path = "/Files/1.jpg"
                 };
                 var image2 = new Image()
                 {
+                    Name = "2",
                     Path = "/Files/2.jpg"
                 };
                 var image3 = new Image()
                 {
+                    Name = "3",
                     Path = "/Files/3.jpg"
                 };
                 var image4 = new Image()
                 {
+                    Name = "4",
                     Path = "/Files/4.jpg"
                 };
                 var image5 = new Image()
                 {
+                    Name = "5",
                     Path = "/Files/5.jpg"
                 };
 
@@ -129,17 +134,6 @@ namespace WebApp.Data
                 string airType = "Plane";
                 string busType = "Bus";
 
-                var transportPlaces1 = new TransportPlace()
-                {
-                    Number = 1,
-                    Price = 15.49M
-                };
-                var transportPlaces2 = new TransportPlace()
-                {
-                    Number = 1,
-                    Price = 64.09M
-                };
-
                 var transport1 = new Transport()
                 {
                     Type = airType + " " + busType,
@@ -147,7 +141,39 @@ namespace WebApp.Data
                     ArrivalPoint = "Egypt, Hurghada",
                     DepartureTime = new DateTime(2022, 02, 24, 15, 54, 00),
                     ArrivalTime = new DateTime(2022, 02, 25, 03, 22, 00),
-                    TransportPlaces = new List<TransportPlace>() { transportPlaces1, transportPlaces2 }
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
                 }; var transport2 = new Transport()
                 {
                     Type = airType + " " + busType,
@@ -155,7 +181,39 @@ namespace WebApp.Data
                     ArrivalPoint = "Egypt, Hurghada",
                     DepartureTime = new DateTime(2022, 03, 01, 15, 54, 00),
                     ArrivalTime = new DateTime(2022, 03, 02, 03, 22, 00),
-                    TransportPlaces = new List<TransportPlace>() { transportPlaces1, transportPlaces2 }
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
                 };
                 var transport3 = new Transport()
                 {
@@ -164,7 +222,39 @@ namespace WebApp.Data
                     ArrivalPoint = "Egypt, Sharm El Sheikh",
                     DepartureTime = new DateTime(2022, 10, 27, 15, 54, 00),
                     ArrivalTime = new DateTime(2022, 10, 28, 03, 22, 00),
-                    TransportPlaces = new List<TransportPlace>() { transportPlaces1, transportPlaces2 }
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
                 }; 
                 var transport4 = new Transport()
                 {
@@ -173,7 +263,39 @@ namespace WebApp.Data
                     ArrivalPoint = "Egypt, Sharm El Sheikh",
                     DepartureTime = new DateTime(2022, 11, 02, 15, 54, 00),
                     ArrivalTime = new DateTime(2022, 11, 03, 03, 22, 00),
-                    TransportPlaces = new List<TransportPlace>() { transportPlaces1, transportPlaces2 }
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
                 };
                 var transport5 = new Transport()
                 {
@@ -182,7 +304,39 @@ namespace WebApp.Data
                     ArrivalPoint = "somewhere",
                     DepartureTime = new DateTime(2023, 10, 24, 15, 54, 00),
                     ArrivalTime = new DateTime(2023, 10, 25, 03, 22, 00),
-                    TransportPlaces = new List<TransportPlace>() { transportPlaces1 }
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
                 }; var transport6 = new Transport()
                 {
                     Type = airType,
@@ -190,7 +344,201 @@ namespace WebApp.Data
                     ArrivalPoint = "somewhere",
                     DepartureTime = new DateTime(2023, 10, 30, 15, 54, 00),
                     ArrivalTime = new DateTime(2023, 10, 31, 03, 22, 00),
-                    TransportPlaces = new List<TransportPlace>() { transportPlaces1 }
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
+                };
+                var transport7 = new Transport()
+                {
+                    Type = airType,
+                    DeparturePoint = "somewhere",
+                    ArrivalPoint = "somewhere",
+                    DepartureTime = new DateTime(2023, 10, 24, 15, 54, 00),
+                    ArrivalTime = new DateTime(2023, 10, 25, 03, 22, 00),
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
+                }; var transport8 = new Transport()
+                {
+                    Type = airType,
+                    DeparturePoint = "somewhere",
+                    ArrivalPoint = "somewhere",
+                    DepartureTime = new DateTime(2023, 10, 30, 15, 54, 00),
+                    ArrivalTime = new DateTime(2023, 10, 31, 03, 22, 00),
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
+                };
+                var transport9 = new Transport()
+                {
+                    Type = airType,
+                    DeparturePoint = "somewhere",
+                    ArrivalPoint = "somewhere",
+                    DepartureTime = new DateTime(2023, 10, 24, 15, 54, 00),
+                    ArrivalTime = new DateTime(2023, 10, 25, 03, 22, 00),
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
+                }; var transport10 = new Transport()
+                {
+                    Type = airType,
+                    DeparturePoint = "somewhere",
+                    ArrivalPoint = "somewhere",
+                    DepartureTime = new DateTime(2023, 10, 30, 15, 54, 00),
+                    ArrivalTime = new DateTime(2023, 10, 31, 03, 22, 00),
+                    TransportPlaces = new()
+                    {
+                        new TransportPlace()
+                        {
+                            Number = 1,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 2,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 3,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 4,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 5,
+                            Price = 64.09M
+                        },
+                        new TransportPlace()
+                        {
+                            Number = 6,
+                            Price = 64.09M
+                        },
+                    }
                 };
 
                 string description = "some description";
@@ -205,8 +553,10 @@ namespace WebApp.Data
                         Hotel = hotel1,
                         IsHotOffer = true,
                         Price = 599.90m,
-                        TransportIn = transport1,
-                        TransportOut = transport2,
+                        Transports = new()
+                        {
+                            transport1, transport2
+                        },
                         Duration = (transport2.ArrivalTime - transport1.DepartureTime).Days,
                         Description = description,
                     },
@@ -219,8 +569,11 @@ namespace WebApp.Data
                         City = "Sharm El Sheikh",
                         Hotel = hotel2,
                         Price = 2000m,
-                        TransportIn = transport3,
-                        TransportOut = transport4,
+                        Transports = new()
+                        {
+                            transport3,
+                            transport4
+                        },
                         Duration = (transport4.ArrivalTime - transport3.DepartureTime).Days,
                         Description = description,
                     },
@@ -234,8 +587,11 @@ namespace WebApp.Data
                         Hotel = hotel3,
                         IsHotOffer = true,
                         Price = 950.59m,
-                        TransportIn = transport1,
-                        TransportOut = transport2,
+                        Transports = new()
+                        {
+                            transport5,
+                            transport6
+                        },
                         Duration = (transport2.ArrivalTime - transport1.DepartureTime).Days,
                         Description = description,
                     },
@@ -249,8 +605,11 @@ namespace WebApp.Data
                         Hotel = hotel4,
                         IsHotOffer = true,
                         Price = 1300m,
-                        TransportIn = transport5,
-                        TransportOut = transport6,
+                        Transports = new()
+                        {
+                            transport7,
+                            transport8
+                        },
                         Duration = (transport6.ArrivalTime - transport5.DepartureTime).Days,
                         Description = description,
                     },
@@ -262,8 +621,11 @@ namespace WebApp.Data
                         City = "Antalya",
                         Hotel = hotel5,
                         Price = 1500m,
-                        TransportIn = transport5,
-                        TransportOut = transport6,
+                        Transports = new()
+                        {
+                            transport9,
+                            transport10
+                        },
                         Duration = (transport6.ArrivalTime - transport5.DepartureTime).Days,
                         Description = description,
                     }

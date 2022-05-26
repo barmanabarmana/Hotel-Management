@@ -74,12 +74,14 @@ namespace WebApp.Areas.Identity.Pages.Account
         {
             [Required]
             [Display(Name = "Username")]
-            public string UserName { get; set; }
+            public string Username { get; set; }
+
             [Required]
-            [Display(Name = "FirstName")]
-            public string FirstName { get; set; }
+            [Display(Name = "Firstname")]
+            public string Firstname { get; set; }
+
             [Required]
-            [Display(Name = "Lastname")]
+            [Display(Name = "LastName")]
             public string LastName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -124,10 +126,11 @@ namespace WebApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.FirstName = Input.FirstName;
+
+                user.FirstName = Input.Firstname;
                 user.LastName = Input.LastName;
 
-                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

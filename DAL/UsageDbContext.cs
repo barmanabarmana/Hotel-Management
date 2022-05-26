@@ -2,12 +2,13 @@
 using Entities.Hotels;
 using Entities.Transports;
 using Entities.Users;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
-    public class UsageDbContext : DbContext
+    public class UsageDbContext : IdentityDbContext<Customer, Role, int>
     {
         public UsageDbContext()
                : base()
@@ -22,7 +23,6 @@ namespace DAL
             Database.EnsureCreated();*/
         }
 
-        public DbSet<Customer> Users { get; set; }
         public DbSet<HotelRoomReservation> HotelRoomReservations { get; set; }
         public DbSet<TransportTicket> TransportTickets { get; set; }
         public DbSet<Tour> OrderedTours { get; set; }
@@ -43,6 +43,22 @@ namespace DAL
             optionsBuilder
             .UseSqlServer(connectionString)
             .UseLazyLoadingProxies();
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Hotel>()
+                .HasMany(r => r.Rooms)
+                .WithOne(h => h.Hotel)
+                .HasForeignKey(h => h.HotelId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Transport>()
+                .HasMany(t => t.TransportPlaces)
+                .WithOne(t => t.Transport)
+                .HasForeignKey(t => t.TransportId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

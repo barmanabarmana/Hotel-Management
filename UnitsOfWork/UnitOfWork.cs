@@ -1,5 +1,6 @@
 ﻿using DAL;
 using Entities;
+using Entities.Files;
 using Entities.Hotels;
 using Entities.Transports;
 using Entities.Users;
@@ -26,17 +27,26 @@ namespace UnitsOfWork
             this.UsageContext = UsageContext;
         }
 
-
+        private IRepository<Image> _images;
         private IRepository<Hotel> _hotels;
         private IRepository<HotelRoom> _hotelsrooms;
         private IRepository<Tour> _tourstemplates;
         private IRepository<Transport> _transports;
+        private IRepository<TransportPlace> _transportPlaces;
 
         private IRepository<TransportPlace> _transportsplases;
         private IRepository<Customer> _customers;
         private IRepository<Tour> _orderedtours;
         private IRepository<HotelRoomReservation> _hotelsroomsreservations;
-
+        public IRepository<Image> Images
+        {
+            get
+            {
+                if (_images == null)
+                    _images = new GenericRepository<Image>(ManagementContext);
+                return _images;
+            }
+        }
         public IRepository<Hotel> Hotels 
         { 
             get 
@@ -73,6 +83,15 @@ namespace UnitsOfWork
                     _transports = new GenericRepository<Transport>(ManagementContext);
                 return _transports;
             } 
+        }
+        public IRepository<TransportPlace> TransportPlaces
+        {
+            get
+            {
+                if (_transportPlaces == null)
+                    _transportPlaces = new GenericRepository<TransportPlace>(ManagementContext);
+                return _transportPlaces;
+            }
         }
 
         public IRepository<Customer> Customers 

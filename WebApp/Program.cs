@@ -9,17 +9,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("ManagementConnection") ?? 
-        throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+builder.Services.AddDbContext<UsageDbContext>(options =>
+    options.UseSqlServer(builder.Configuration
+    .GetConnectionString("UsageConnection"),
+                providerOptions =>
+                { providerOptions.EnableRetryOnFailure(); })
+    .UseLazyLoadingProxies());
 
 builder.Services.AddDbContext<ManagementDbContext>(options =>
-    options.UseSqlServer(connectionString,
+    options.UseSqlServer(builder.Configuration
+    .GetConnectionString("ManagementConnection"),
                 providerOptions =>
                 { providerOptions.EnableRetryOnFailure(); })
     .UseLazyLoadingProxies());
 
 builder.Services.AddIdentity<Customer, Role>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<ManagementDbContext>()
+    .AddEntityFrameworkStores<UsageDbContext>()
     .AddDefaultUI()
     .AddTokenProvider<DataProtectorTokenProvider<Customer>>(TokenOptions.DefaultProvider);
 

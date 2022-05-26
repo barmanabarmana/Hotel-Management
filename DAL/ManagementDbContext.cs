@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Entities.Files;
 using Entities.Hotels;
 using Entities.Transports;
 using Entities.Users;
@@ -8,12 +9,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
-    public class ManagementDbContext : IdentityDbContext<Customer, Role, int>
+    public class ManagementDbContext : DbContext
     {
         public ManagementDbContext()
                : base()
         {
-           /* Database.EnsureDeleted();
+            /*Database.EnsureDeleted();
             Database.EnsureCreated();*/
         }
         public ManagementDbContext(DbContextOptions<ManagementDbContext> options)
@@ -22,6 +23,7 @@ namespace DAL
             /*Database.EnsureDeleted();
             Database.EnsureCreated();*/
         }
+        public DbSet<Image> Images { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<HotelRoom> HotelRooms { get; set; }
         public DbSet<Tour> TourTemplates { get; set; }
@@ -57,11 +59,6 @@ namespace DAL
                 .WithOne(t => t.Transport)
                 .HasForeignKey(t => t.TransportId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Tour>()
-                .HasOne(t => t.TransportIn)
-                .WithMany(t => t.Tours)
-                .OnDelete(DeleteBehavior.NoAction);
 
             base.OnModelCreating(modelBuilder);
         }
