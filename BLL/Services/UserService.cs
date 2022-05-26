@@ -46,7 +46,7 @@ namespace BLL.Services
             cfg.CreateMap<HotelRoomReservation, HotelRoomReservationDTO>();
         }).CreateMapper();
 
-        public static CustomerDTO CurrentUser;
+        private static CustomerDTO CurrentUser;
 
         public UserService()
         {

@@ -10,7 +10,7 @@ namespace BLL.Interfaces
     public interface ITourService
     {
         void AddTour(TourDTO NewTour);
-        void EditTour(int Id, TourDTO Tour);
+        void UpdateTour(int Id, TourDTO Tour);
         IEnumerable<TourDTO> GetAllToursTemplates();
         TourDTO GetTour(int Id);
         void DeleteTour(int Id);

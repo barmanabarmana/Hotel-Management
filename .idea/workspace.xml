@@ -2,19 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25e28b27-33aa-49ba-b643-80ca218a0601" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/BLL/Interfaces/ITourService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Interfaces/ITourService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Interfaces/IHotelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Interfaces/IHotelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Interfaces/ITransportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Interfaces/ITransportService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Services/HotelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Services/HotelService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BLL/Services/TourService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Services/TourService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HotelManagmentFormsApplication/UI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/HotelManagmentFormsApplication/UI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Services/TransportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Services/TransportService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/ManagementDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/ManagementDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/UsageDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/UsageDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DTO/TourDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DTO/TourDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DTO/Transports/TransportDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DTO/Transports/TransportDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DTO/Transports/TransportPlaceDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DTO/Transports/TransportPlaceDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Tour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Tour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/TourModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/TourModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Transports/TransportModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Transports/TransportModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Login.cshtml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/Controllers/BookingCotroller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/BookingCotroller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/ManagerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/ManagerController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/Controllers/TourController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/TourController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Models/TourListViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Models/TourListViewModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Data/SeedData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Data/SeedData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Manager/Manage.cshtml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/Views/Tour/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Tour/Details.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/Views/Tour/TourList.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Tour/TourList.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebApp/web.config" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/web.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/_ViewImports.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/_ViewImports.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApp/wwwroot/css/MyCSS.css" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/wwwroot/css/MyCSS.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

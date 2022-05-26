@@ -62,7 +62,7 @@ namespace BLL.Services
             UoW.ToursTemplates.Delete(Id);
         }
 
-        public void EditTour(int Id, TourDTO Tour)
+        public void UpdateTour(int Id, TourDTO Tour)
         {
             Tour tour = UoW.ToursTemplates.Get(Id);
             tour = Mapper.Map<TourDTO, Tour>(Tour);
@@ -128,7 +128,8 @@ namespace BLL.Services
         {
             return tours
                 .Where(t =>
-                t.TransportIn.DeparturePoint.ToUpper() == DeparturePoint.ToUpper());
+                t.Transports.Any(t => 
+                t.DeparturePoint == DeparturePoint));
         }
 
         public IEnumerable<TourDTO> GetTourTemplatesOrderBy(IEnumerable<TourDTO> tours, int orderby)
@@ -149,7 +150,7 @@ namespace BLL.Services
         {
             return tours
                 .OrderBy(t =>
-                t.TransportIn.DepartureTime);
+                t.Transports[0].DepartureTime);
         }
 
         private IEnumerable<TourDTO> GetToursTemplatesOrderedByPrice(IEnumerable<TourDTO> tours)
@@ -200,8 +201,8 @@ namespace BLL.Services
         public IEnumerable<TourDTO> GetToursStartingOnDate(IEnumerable<TourDTO> tours, DateTime startRange, DateTime endRange)
         {
             return tours.Where(t =>
-                t.TransportIn.DepartureTime.Date >= startRange &&
-                t.TransportIn.DepartureTime.Date <= endRange);
+                t.Transports[0].DepartureTime.Date >= startRange &&
+                t.Transports[0].DepartureTime.Date <= endRange);
         }
 
         public IEnumerable<TourDTO> GetHotTourTemplates()

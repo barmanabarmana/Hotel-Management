@@ -43,6 +43,17 @@ namespace BLL.Services
             UoW.Hotels.Delete(Id);
         }
 
+        public void UpdateHotelAndHotelRooms(int HotelId, HotelDTO Hotel, List<HotelRoomDTO> Rooms)
+        {
+            foreach (var HotelRoom in Rooms)
+            {
+                HotelRoom.HotelId = HotelId;
+                UoW.HotelsRooms.Modify(HotelRoom.Id,
+                    Mapper.Map<HotelRoomDTO, HotelRoom>(HotelRoom));
+            }
+            UoW.Hotels.Modify(HotelId, Mapper.Map<HotelDTO, Hotel>(Hotel));
+        }
+
         public void AddHotelRoom(int HotelId, HotelRoomDTO NewHotelRoom)
         {
             Hotel hotel = UoW.Hotels.GetAll(x => x.Id == HotelId, x => x.Rooms).FirstOrDefault();
@@ -73,17 +84,14 @@ namespace BLL.Services
                 x.Rooms)
                 .FirstOrDefault());
         }
-        public void InsertImageHotel(int Id, string Path)
+        public void InsertImageHotel(int HotelId, string Name ,string Path)
         {
             var hotel = Mapper
                 .Map<Hotel, HotelDTO>(
-                UoW.Hotels.Get(Id));
+                UoW.Hotels.Get(HotelId));
 
-            hotel.Images.Add(
-                new ImageDTO(Path));
-
-            UoW.Hotels.Modify(Id, Mapper
-                .Map<HotelDTO, Hotel>(hotel));
+            UoW.Images.Add(Mapper.Map<ImageDTO, Image>(
+                new ImageDTO(Name, Path, hotel.Id)));
         }
     }
 }

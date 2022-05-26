@@ -9,6 +9,7 @@ namespace BLL.Interfaces
         IEnumerable<HotelDTO> GetAllHotels();
         HotelDTO GetHotel(int Id);
         void DeleteHotel(int Id);
-        void InsertImageHotel(int Id, string Path);
+        void InsertImageHotel(int Id, string Name, string Path);
+        void UpdateHotelAndHotelRooms(int HotelId, HotelDTO Hotel, List<HotelRoomDTO> Rooms);
     }
 }
