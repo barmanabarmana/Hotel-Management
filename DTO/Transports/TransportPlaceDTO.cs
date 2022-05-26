@@ -10,11 +10,11 @@ namespace DTO.Transports
     public class TransportPlaceDTO
     {
         public TransportPlaceDTO() { }
-        public TransportPlaceDTO(TransportDTO Transport, int Number, int Price)
+        public TransportPlaceDTO(int TransportId, int Number, decimal Price)
         {
-            this.Transport = Transport;
             this.Number = Number;
             this.Price = Price;
+            this.TransportId = TransportId;
             IsBooked = false;
         }
 
