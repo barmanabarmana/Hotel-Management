@@ -25,7 +25,8 @@ namespace DAL
 
         public DbSet<HotelRoomReservation> HotelRoomReservations { get; set; }
         public DbSet<TransportTicket> TransportTickets { get; set; }
-        public DbSet<Tour> OrderedTours { get; set; }
+        public DbSet<Tour> TourTemplates { get; set; }
+        public DbSet<Bill> Bills { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -57,6 +58,31 @@ namespace DAL
                 .WithOne(t => t.Transport)
                 .HasForeignKey(t => t.TransportId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Transport>()
+                .HasOne(t => t.Tour)
+                .WithOne(t => t.TransportIn)
+                .HasForeignKey<Tour>(t => t.TransportInId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Tour>()
+                .HasOne(t => t.TransportIn)
+                .WithOne(t => t.Tour)
+                .HasForeignKey<Tour>(t => t.TransportInId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Customer>()
+                .HasOne(c => c.PassportData)
+                .WithOne(p => p.Customer)
+                .HasForeignKey<PassportData>(p => p.CustomerId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Bill>()
+                .HasOne(c => c.CustomerWhoBook)
+                .WithMany(p => p.Bills)
+                .HasForeignKey(p => p.CustomerWhoBookId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             base.OnModelCreating(modelBuilder);
         }

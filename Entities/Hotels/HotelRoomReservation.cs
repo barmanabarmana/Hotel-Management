@@ -20,6 +20,7 @@ namespace Entities.Hotels
             HotelName = HotelRoom.Hotel.Name;
             HotelStars = HotelRoom.Hotel.Stars;
             HotelAddress = HotelRoom.Hotel.Address;
+            HotelRoomName = HotelRoom.Name;
             HotelRoomNumber = HotelRoom.Number;
             HotelRoomSleepingPlaces = HotelRoom.SleepingPlaces;
             HotelRoomPrice = HotelRoom.Price;
@@ -33,6 +34,7 @@ namespace Entities.Hotels
         public string HotelName { get; set; }
         public int HotelStars { get; set; }
         public string HotelAddress { get; set; }
+        public string HotelRoomName { get; set; }
         public int HotelRoomNumber { get; set; }
         public int HotelRoomSleepingPlaces { get; set; }
         public decimal HotelRoomPrice { get; set; }

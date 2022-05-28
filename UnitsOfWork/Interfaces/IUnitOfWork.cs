@@ -21,11 +21,9 @@ namespace UnitsOfWork.Interfaces
         IRepository<Tour> ToursTemplates { get; }
         IRepository<Transport> Transports { get; }
         IRepository<TransportPlace> TransportPlaces { get; }
-
         IRepository<Customer> Customers { get; }
-        IRepository<Tour> OrderedTours { get; }
         IRepository<HotelRoomReservation> HotelsRoomsReservations { get; }
-        IRepository<TransportPlace> TransportsPlace { get; }
+        IRepository<Bill> Bills { get; }
 
         void DeleteDB();
     }

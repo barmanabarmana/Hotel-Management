@@ -36,45 +36,27 @@ namespace BLL.Services
             UoW = DependencyResolver.ResolveUoW();
         }
 
-        IMapper Mapper = new MapperConfiguration(cfg =>
+        public async Task AddTour(TourDTO NewTour)
         {
-            cfg.CreateMap<TourDTO, Tour>();
-            cfg.CreateMap<Tour, TourDTO>();
-            cfg.CreateMap<HotelDTO, Hotel>();
-            cfg.CreateMap<Hotel, HotelDTO>();
-            cfg.CreateMap<HotelRoomDTO, HotelRoom>();
-            cfg.CreateMap<HotelRoom, HotelRoomDTO>();
-            cfg.CreateMap<TransportDTO, Transport>();
-            cfg.CreateMap<TransportPlaceDTO, TransportPlace>();
-            cfg.CreateMap<Transport, TransportDTO>();
-            cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
-            cfg.CreateMap<ImageDTO, Image>();
-            cfg.CreateMap<Image, ImageDTO>();
-        }).CreateMapper();
-
-        public void AddTour(TourDTO NewTour)
-        {
-            UoW.ToursTemplates.Add(Mapper.Map<TourDTO, Tour>(NewTour));
+            await UoW.ToursTemplates.Add(Tools.Mapper.Map<Tour>(NewTour));
         }
 
-        public void DeleteTour(int Id)
+        public async Task DeleteTour(int Id)
         {
-            UoW.ToursTemplates.Delete(Id);
+           await UoW.ToursTemplates.DeleteAsync(Id);
         }
 
-        public void UpdateTour(int Id, TourDTO Tour)
+        public async Task UpdateTour(int Id, TourDTO Tour)
         {
-            Tour tour = UoW.ToursTemplates.Get(Id);
-            tour = Mapper.Map<TourDTO, Tour>(Tour);
-            UoW.ToursTemplates.Modify(Id, tour);
+            await UoW.ToursTemplates.ModifyAsync(Id, Tools.Mapper.Map<Tour>(Tour));
         }
 
-        public IEnumerable<TourDTO> GetAllToursTemplates()
+        public async Task<IEnumerable<TourDTO>> GetAllToursTemplates()
         {
-            return Mapper
-                .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW
+            return Tools.Mapper
+                .Map<IEnumerable<TourDTO>>(await UoW
                 .ToursTemplates
-                .GetAll());
+                .GetAllAsync());
         }
 
         public IEnumerable<TourDTO> FindTourTemplatesByPrice(IEnumerable<TourDTO> tours, decimal MinPrice, decimal MaxPrice)
@@ -128,8 +110,7 @@ namespace BLL.Services
         {
             return tours
                 .Where(t =>
-                t.Transports.Any(t => 
-                t.DeparturePoint == DeparturePoint));
+                t.TransportIn.DeparturePoint == DeparturePoint);
         }
 
         public IEnumerable<TourDTO> GetTourTemplatesOrderBy(IEnumerable<TourDTO> tours, int orderby)
@@ -150,7 +131,7 @@ namespace BLL.Services
         {
             return tours
                 .OrderBy(t =>
-                t.Transports[0].DepartureTime);
+                t.TransportIn.DepartureTime);
         }
 
         private IEnumerable<TourDTO> GetToursTemplatesOrderedByPrice(IEnumerable<TourDTO> tours)
@@ -201,23 +182,23 @@ namespace BLL.Services
         public IEnumerable<TourDTO> GetToursStartingOnDate(IEnumerable<TourDTO> tours, DateTime startRange, DateTime endRange)
         {
             return tours.Where(t =>
-                t.Transports[0].DepartureTime.Date >= startRange &&
-                t.Transports[0].DepartureTime.Date <= endRange);
+                t.TransportIn.DepartureTime.Date >= startRange &&
+                t.TransportIn.DepartureTime.Date <= endRange);
         }
 
         public IEnumerable<TourDTO> GetHotTourTemplates()
         {
-            return Mapper
-                .Map<IEnumerable<Tour>, IEnumerable<TourDTO>>(UoW.
+            return Tools.Mapper
+                .Map<IEnumerable<TourDTO>>(UoW.
                 ToursTemplates.GetAll(t =>
                 t.IsHotOffer == true));
         }
-        public TourDTO GetTour(int Id)
+        public async Task<TourDTO> GetTourAsync(int Id)
         {
-            return Mapper
-                .Map<Tour, TourDTO>(UoW
+            return Tools.Mapper
+                .Map<TourDTO>(await UoW
                 .ToursTemplates
-                .Get(Id));
+                .GetAsync(Id));
         }
         private bool ListNotNullAndContainsAnyElement(IEnumerable<object> list)
         {

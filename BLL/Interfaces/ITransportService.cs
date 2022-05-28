@@ -12,9 +12,9 @@ namespace BLL.Interfaces
             TransportDTO transportOut,
             int AvailibleSeatsOut,
             decimal PriceForTcketOut);
-        IEnumerable<TransportDTO> GetAllTransport();
-        TransportDTO GetTransport(int Id);
-        void DeleteTransport(int Id);
-        void ApplyNewPriceForTicketAndUpdateTransport(TransportDTO tour, decimal PriceForTicket);
+        IEnumerable<TransportDTO> GetAllTransportAsync();
+        Task<TransportDTO> GetTransportAsync(int Id);
+        Task DeleteTransportAsync(int Id);
+        Task ApplyNewPriceForTicketAndUpdateTransportAsync(TransportDTO tour, decimal PriceForTicket);
     }
 }

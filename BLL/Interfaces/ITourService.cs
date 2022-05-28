@@ -9,11 +9,11 @@ namespace BLL.Interfaces
 {
     public interface ITourService
     {
-        void AddTour(TourDTO NewTour);
-        void UpdateTour(int Id, TourDTO Tour);
-        IEnumerable<TourDTO> GetAllToursTemplates();
-        TourDTO GetTour(int Id);
-        void DeleteTour(int Id);
+        Task AddTour(TourDTO NewTour);
+        Task UpdateTour(int Id, TourDTO Tour);
+        Task<IEnumerable<TourDTO>> GetAllToursTemplates();
+        Task<TourDTO> GetTourAsync(int Id);
+        Task DeleteTour(int Id);
         IEnumerable<TourDTO> FindTourTemplatesByPrice(IEnumerable<TourDTO> tours, decimal MinPrice, decimal MaxPrice);
         IEnumerable<TourDTO> FindTourTemplates(IEnumerable<TourDTO> tours, string SeachElem);
         IEnumerable<TourDTO> FindTourTemplatesByType(IEnumerable<TourDTO> tours, string type);

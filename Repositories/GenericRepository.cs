@@ -20,54 +20,49 @@ namespace Repositories.Generic
             DbSet = Context.Set<TEntity>();
         }
 
-        public void Clear()
+        public async Task ClearAsync()
         {
             DbSet.RemoveRange(DbSet);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
         }
-        public void Delete(int Id)
+        public async Task DeleteAsync(int Id)
         {
-            DbSet.Remove(DbSet.Find(Id));
-            Context.SaveChanges();
+            DbSet.Remove(await DbSet.FindAsync(Id));
+            await Context.SaveChangesAsync();
         }
-        public void Delete(TEntity Item)
+        public async Task DeleteAsync(TEntity Item)
         {
             Context.Entry(Item).State = EntityState.Deleted;
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
-        public void Add(TEntity Item)
+        public async Task Add(TEntity Item)
         {
             DbSet.Add(Item);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
-        public void Modify(int Id, TEntity Item)
+        public async Task ModifyAsync(int Id, TEntity Item)
         {
-            Context.Entry(Context.Set<TEntity>().Find(Id)).CurrentValues.SetValues(Item);
-            Context.SaveChanges();
+            Context.Entry(await Context.Set<TEntity>().FindAsync(Id)).CurrentValues.SetValues(Item);
+            await Context.SaveChangesAsync();
         }
-        public TEntity Get(int Id)
+        public async Task<TEntity> GetAsync(int Id)
         {
-            return DbSet.Find(Id);
+            return await DbSet.FindAsync(Id);
         }
 
-        public TEntity GetByPosition(int Position)
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return DbSet.ToList()[Position];
+            return await DbSet.ToListAsync();
         }
 
-        public List<TEntity> GetAll()
-        {
-            return DbSet.ToList();
-        }
-
-        public List<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)
+        public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)
         {
             IQueryable<TEntity> query = DbSet;
             return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty)).ToList();
         }
 
-        public List<TEntity> GetAll(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
+        public IEnumerable<TEntity> GetAll(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var query = DbSet.Where(predicate).AsQueryable();
             return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty)).ToList();
