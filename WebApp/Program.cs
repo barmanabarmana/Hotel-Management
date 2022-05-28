@@ -16,13 +16,6 @@ builder.Services.AddDbContext<UsageDbContext>(options =>
                 { providerOptions.EnableRetryOnFailure(); })
     .UseLazyLoadingProxies());
 
-builder.Services.AddDbContext<ManagementDbContext>(options =>
-    options.UseSqlServer(builder.Configuration
-    .GetConnectionString("ManagementConnection"),
-                providerOptions =>
-                { providerOptions.EnableRetryOnFailure(); })
-    .UseLazyLoadingProxies());
-
 builder.Services.AddIdentity<Customer, Role>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<UsageDbContext>()
     .AddDefaultUI()

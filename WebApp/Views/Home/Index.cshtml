@@ -22,9 +22,11 @@
 					</a>
 					<p>@item.Country, @item.City</p>
 				</div>
-				
 			</div>
-			<div class="card-body-price">$@item.Price</div>
+			<div class="card-bottom">
+				<div class="card-body-price">@item.Price$</div>
+				<div style="font-size:11px;">Tour price (@item.AviablePeopleCount Adult(-s))</div>
+			</div>
 				<a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id" class="card-linkbtn-details">Details</a>
 		</div>
 	}

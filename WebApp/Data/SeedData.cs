@@ -12,8 +12,8 @@ namespace WebApp.Data
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context
-                = new ManagementDbContext(serviceProvider
-                .GetRequiredService<DbContextOptions<ManagementDbContext>>()))
+                = new UsageDbContext(serviceProvider
+                .GetRequiredService<DbContextOptions<UsageDbContext>>()))
             {
                 // Look for any movies.
                 if (context.TourTemplates.Any())
@@ -23,45 +23,56 @@ namespace WebApp.Data
                 string BeachTourType = "Beach tours";
                 string VacationWithCheldrenType = "Vacation with children";
                 string FamilyVacationType = "Family vacation";
-
-                var room1 = new HotelRoom() {
+                string AllInclusive = "All inclusive";
+                string WithoutMeal = "Without meal";
+                var room1 = new HotelRoom() 
+                {
+                    Name = "SUPER ECO CLASS",
                     Number = 100,
                     SleepingPlaces = 4,
                     Price = 99.90m
                 };
 
-                var room2 = new HotelRoom() {
-                        Number = 101,
+                var room2 = new HotelRoom()
+                {
+                    Name = "SUPER ECO CLASS",
+                    Number = 101,
                         SleepingPlaces = 4,
                         Price = 99.90m
                     };
 
-                var room3 = new HotelRoom() {
-                        Number = 102,
+                var room3 = new HotelRoom()
+                {
+                    Name = "ULLTRA FIRST CLASS",
+                    Number = 102,
                         SleepingPlaces = 4,
-                        Price = 99.90m
+                        Price = 199.90m
                     };
 
-                var room4 = new HotelRoom() {
-                        Number = 103,
+                var room4 = new HotelRoom()
+                {
+                    Name = "MEGA STANDART",
+                    Number = 103,
                         SleepingPlaces = 4,
-                        Price = 99.90m
+                        Price = 199.90m
                     };
                 var room5 = new HotelRoom()
                 {
+                    Name = "MEGA STANDART",
                     Number = 104,
                     SleepingPlaces = 4,
                     Price = 99.90m
                 }; 
                 var room6 = new HotelRoom()
                 {
+                    Name = "ULLTRA FIRST CLASS",
                     Number = 105,
                     SleepingPlaces = 4,
                     Price = 199.90m
                 };
                 var DefaultHotelRooms = new List<HotelRoom>()
                 {
-                    room1, room2, room3, room4
+                    room1, room2, room3, room4, room5, room6
                 };
 
                 var image1 = new Image()
@@ -136,7 +147,7 @@ namespace WebApp.Data
 
                 var transport1 = new Transport()
                 {
-                    Type = airType + " " + busType,
+                    Type = busType,
                     DeparturePoint = "Ukraine, Kiev",
                     ArrivalPoint = "Egypt, Hurghada",
                     DepartureTime = new DateTime(2022, 02, 24, 15, 54, 00),
@@ -176,7 +187,7 @@ namespace WebApp.Data
                     }
                 }; var transport2 = new Transport()
                 {
-                    Type = airType + " " + busType,
+                    Type = busType,
                     DeparturePoint = "Ukraine, Kiev",
                     ArrivalPoint = "Egypt, Hurghada",
                     DepartureTime = new DateTime(2022, 03, 01, 15, 54, 00),
@@ -217,7 +228,7 @@ namespace WebApp.Data
                 };
                 var transport3 = new Transport()
                 {
-                    Type = airType + " " + busType,
+                    Type = airType,
                     DeparturePoint = "Ukraine, Kiev",
                     ArrivalPoint = "Egypt, Sharm El Sheikh",
                     DepartureTime = new DateTime(2022, 10, 27, 15, 54, 00),
@@ -258,7 +269,7 @@ namespace WebApp.Data
                 }; 
                 var transport4 = new Transport()
                 {
-                    Type = airType + " " + busType,
+                    Type = airType,
                     DeparturePoint = "Ukraine, Kiev",
                     ArrivalPoint = "Egypt, Sharm El Sheikh",
                     DepartureTime = new DateTime(2022, 11, 02, 15, 54, 00),
@@ -299,7 +310,7 @@ namespace WebApp.Data
                 };
                 var transport5 = new Transport()
                 {
-                    Type = airType,
+                    Type = busType,
                     DeparturePoint = "somewhere",
                     ArrivalPoint = "somewhere",
                     DepartureTime = new DateTime(2023, 10, 24, 15, 54, 00),
@@ -339,7 +350,7 @@ namespace WebApp.Data
                     }
                 }; var transport6 = new Transport()
                 {
-                    Type = airType,
+                    Type = busType,
                     DeparturePoint = "somewhere",
                     ArrivalPoint = "somewhere",
                     DepartureTime = new DateTime(2023, 10, 30, 15, 54, 00),
@@ -550,13 +561,17 @@ namespace WebApp.Data
                         Type = VacationWithCheldrenType, 
                         Country = "Egypt",
                         City = "Hurghada",
+                        Meal = AllInclusive,
+                        AviablePeopleCount = 1,
                         Hotel = hotel1,
                         IsHotOffer = true,
                         Price = 599.90m,
-                        Transports = new()
+                        TransportIn = transport1,
+                        TransportOut = transport2,
+                        /*Transports = new()
                         {
                             transport1, transport2
-                        },
+                        },*/
                         Duration = (transport2.ArrivalTime - transport1.DepartureTime).Days,
                         Description = description,
                     },
@@ -567,13 +582,17 @@ namespace WebApp.Data
                         Type = BeachTourType,
                         Country = "Egypt",
                         City = "Sharm El Sheikh",
+                        Meal = WithoutMeal,
+                        AviablePeopleCount = 1,
                         Hotel = hotel2,
                         Price = 2000m,
-                        Transports = new()
+                        TransportIn = transport3,
+                        TransportOut = transport4,
+                        /*Transports = new()
                         {
                             transport3,
                             transport4
-                        },
+                        },*/
                         Duration = (transport4.ArrivalTime - transport3.DepartureTime).Days,
                         Description = description,
                     },
@@ -584,15 +603,19 @@ namespace WebApp.Data
                         Type = FamilyVacationType,
                         Country = "Germany",
                         City = "Dusseldorf",
+                        Meal = AllInclusive,
+                        AviablePeopleCount = 1,
                         Hotel = hotel3,
                         IsHotOffer = true,
                         Price = 950.59m,
-                        Transports = new()
+                        TransportIn = transport5,
+                        TransportOut = transport6,
+                        /*Transports = new()
                         {
                             transport5,
                             transport6
-                        },
-                        Duration = (transport2.ArrivalTime - transport1.DepartureTime).Days,
+                        },*/
+                        Duration = (transport6.ArrivalTime - transport5.DepartureTime).Days,
                         Description = description,
                     },
 
@@ -602,15 +625,19 @@ namespace WebApp.Data
                         Type = VacationWithCheldrenType,
                         Country = "Italy",
                         City = "Pisa",
+                        Meal = WithoutMeal,
+                        AviablePeopleCount = 2,
                         Hotel = hotel4,
                         IsHotOffer = true,
                         Price = 1300m,
-                        Transports = new()
+                        TransportIn = transport7,
+                        TransportOut = transport8,
+                        /*Transports = new()
                         {
                             transport7,
                             transport8
-                        },
-                        Duration = (transport6.ArrivalTime - transport5.DepartureTime).Days,
+                        },*/
+                        Duration = (transport6.ArrivalTime - transport7.DepartureTime).Days,
                         Description = description,
                     },
                     new Tour
@@ -619,14 +646,18 @@ namespace WebApp.Data
                         Type = BeachTourType,
                         Country = "Turkey",
                         City = "Antalya",
+                        Meal = AllInclusive,
+                        AviablePeopleCount = 2,
                         Hotel = hotel5,
                         Price = 1500m,
-                        Transports = new()
+                        TransportIn = transport9,
+                        TransportOut = transport10,
+                        /*Transports = new()
                         {
                             transport9,
                             transport10
-                        },
-                        Duration = (transport6.ArrivalTime - transport5.DepartureTime).Days,
+                        },*/
+                        Duration = (transport10.ArrivalTime - transport9.DepartureTime).Days,
                         Description = description,
                     }
                 );

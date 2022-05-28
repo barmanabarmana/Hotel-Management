@@ -127,8 +127,8 @@ namespace WebApp.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.FirstName = Input.Firstname;
-                user.LastName = Input.LastName;
+                user.Firstname = Input.Firstname;
+                user.Lastname = Input.LastName;
 
                 await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

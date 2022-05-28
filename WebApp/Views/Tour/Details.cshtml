@@ -38,35 +38,35 @@
         <script src="~/js/Slider.js"></script>
     </div>
     <div class="details-tour__info info-box">
-         <div class="info-box__heading">Information about tour</div>
+         <div class="info-box__heading">Tour info</div>
          <div class="info-box__flex">
               <div class="info-box__item">
-                  Tour dates: <strong>@Model.Transports.FirstOrDefault().ArrivalTime.ToString("dd.MM.yyyy") - @Model.Transports.LastOrDefault().DepartureTime.ToString("dd.MM.yyyy")</strong>
+                  Tour dates: <strong>@Model.TransportIn.ArrivalTime.ToString("dd.MM.yyyy") - @Model.TransportOut.DepartureTime.ToString("dd.MM.yyyy")</strong>
               </div>
               <div class="info-box__item">
                   Duration: <strong>@Model.Duration days</strong>
               </div>
               <div class="info-box-transport">
-              @if(@Model.Transports.FirstOrDefault() != null || @Model.Transports.FirstOrDefault().Id != 0)
+              @if(@Model.TransportIn != null || @Model.TransportInId != 0)
               {
                   <div>Transport <strong>included</strong></div>
                   <div><strong>In</strong></div>
                   <div>
-                      Type: <strong>@Model.Transports.FirstOrDefault().Type</strong>
+                      Type: <strong>@Model.TransportIn.Type</strong>
                   </div>
                   <div>
-                      Departure from: <strong>@Model.Transports.FirstOrDefault().DeparturePoint</strong>
+                        Departure from: <strong>@Model.TransportIn.DeparturePoint</strong>
                   </div>
-                    @if(@Model.Transports[1] != null || @Model.Transports[1].Id != 0)
-                    {
-                        <div><strong>Out</strong></div>
-                        <div>
-                           Type: <strong>@Model.Transports.LastOrDefault().Type</strong>
-                        </div>
-                        <div>
-                           Departure from: <strong>@Model.Transports.LastOrDefault().DeparturePoint</strong>
-                        </div>
-                    }
+                        @if(@Model.TransportOut != null || @Model.TransportOutId != 0)
+                        {
+                            <div><strong>Out</strong></div>
+                            <div>
+                               Type: <strong>@Model.TransportOut.Type</strong>
+                            </div>
+                            <div>
+                               Departure from: <strong>@Model.TransportOut.DeparturePoint</strong>
+                            </div>
+                        }
                 }
                 else
                 {
@@ -76,9 +76,11 @@
                 }
               </div>
               <div class="info-box-price-section">
+                  <p>Tour price (@Model.AviablePeopleCount Adults):</p>
                   <div class="info-box__price">
                       @Model.Price$
                   </div>
+                  <small>*the price may vary depending on the chosen room</small>
               </div>
               <a asp-controller="Booking" asp-action="BookingOnline" asp-route-id="@Model.Id" class="linkbtn">Book online</a>
           </div>
@@ -92,5 +94,6 @@
     </div>
     <br />
     <h3>About Hotel</h3>
+    <p><strong>Meal:</strong> @Model.Meal</p>
     <p><strong>Address:</strong> @Model.Hotel.Address</p>
 </div>

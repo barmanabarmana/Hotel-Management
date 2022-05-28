@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="TourPrice" class="control-label"></label>
-                <input asp-for="TourPrice" class="form-control" step="0,01" step="0.01" autocomplete="off" placeholder="@Model.Tour.Price"/>
+                <input asp-for="TourPrice" class="form-control" step="0.01 0,01" autocomplete="off" placeholder="@Model.Tour.Price"/>
                 <span asp-validation-for="TourPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -72,6 +72,16 @@
                 <label asp-for="Tour.City" class="control-label"></label>
                 <input asp-for="Tour.City" class="form-control" autocomplete="off"/>
                 <span asp-validation-for="Tour.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.AviablePeopleCount" class="control-label"></label>
+                <input asp-for="Tour.AviablePeopleCount" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.AviablePeopleCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.Meal" class="control-label"></label>
+                <input asp-for="Tour.Meal" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.Meal" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Tour.Duration" class="control-label"></label>
@@ -129,7 +139,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PriceForTicketIn" class="control-label">Transport place price</label>
-                <input asp-for="PriceForTicketIn" class="form-control" step="0,01" step="0.01" placeholder="@Model.PriceForTicketOut"/>
+                <input asp-for="PriceForTicketIn" class="form-control" step="0.01 0,01" placeholder="@Model.PriceForTicketOut"/>
                 <span asp-validation-for="PriceForTicketIn" class="text-danger"></span>
         </div>
     </div>
@@ -163,7 +173,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PriceForTicketOut" class="control-label">Transport place price</label>
-                <input asp-for="PriceForTicketOut" class="form-control" step="0,01" step="0.01" placeholder="@Model.PriceForTicketOut"/>
+                <input asp-for="PriceForTicketOut" class="form-control" step="0.01" placeholder="@Model.PriceForTicketOut"/>
                 <span asp-validation-for="PriceForTicketOut" class="text-danger"></span>
             </div>
     </div>
@@ -197,20 +207,22 @@
                 <label asp-for="Rooms" class="control-label">Room @Model.Rooms[i].Number</label>
                 <div class="form-group hotel-rooms">
                     <input asp-for="Rooms[i].Id" value="@Model.Rooms[i].Id" hidden />
-                    <input asp-for="Rooms[i].Number" class="form-control" type="number" placeholder="Room number"/>
-                    <input asp-for="Rooms[i].Price" class="form-control" type="number" placeholder="Price"/>
+                    <input asp-for="Rooms[i].Name" class="form-control" placeholder="Name"/>
+                    <input asp-for="Rooms[i].Number" class="form-control" type="number" placeholder="Number"/>
+                    <input asp-for="Rooms[i].Price" class="form-control" type="number" step="any" placeholder="Price"/>
                     <input asp-for="Rooms[i].SleepingPlaces" class="form-control" type="number" placeholder="Sleeping places"/>
                 </div>
             }
                 <div id="newRoom">
                     <label asp-for="NewRoom" class="control-label"></label>
                     <div class="form-group hotel-rooms">
-                        <input asp-for="NewRoom.Number" class="form-control" type="number" placeholder="Room number"/>
-                        <input asp-for="NewRoom.Price" class="form-control" type="number" placeholder="Room price"/>
-                        <input asp-for="NewRoom.SleepingPlaces" class="form-control" type="number" placeholder="Sleeping places"/>
+                        <input asp-for="NewRoom.Name" class="form-control" placeholder="Name"/>
+                        <input asp-for="NewRoom.Number" class="form-control" type="number" placeholder="number"/>
+                        <input asp-for="NewRoom.Price" class="form-control"type="number" step="any" placeholder="price"/>
+                        <input asp-for="NewRoom.SleepingPlaces" class="form-control" type="number" placeholder="S places"/>
                     </div>
                 </div>
-                <button class="btn-primary btn" style="width: 100%; margin-top: 12px;" onclick="toggleNewHotel()" id="toggleButton">Create new</button>
+                <button type="button" class="btn-primary btn" style="width: 100%; margin-top: 12px;" onclick="toggleNewHotel()" id="toggleButton">Create new</button>
             </div>
         </div>
         <div class="col-md-4">
@@ -222,10 +234,11 @@
             }
             </div>
             <div  id="newImage">
+                <strong style="color: red">Highly recommended picture resolution 720x540!</strong>
                 <input asp-for="UploadedFile" name="UploadedFile" type="file" class="form-control" />
                 <input type="submit" value="Upload" class="btn btn-primary" style="width: 100%; margin-top: 12px;"/>
             </div>
-            <button class="btn-primary btn" style="width: 100%; margin-top: 12px;" onclick="toggleNewImage()" id="toggleButton2">Create new</button>
+            <button type="button" class="btn-primary btn" style="width: 100%; margin-top: 12px;" onclick="toggleNewImage()" id="toggleButton2">Create new</button>
         </div>
             <script>
         function toggleNewHotel() {
@@ -241,14 +254,14 @@
                 }
             }
             function toggleNewImage() {
-            var newRoom = document.getElementById('newImage');
-            var displaySetting = newRoom.style.display;
+            var newImage = document.getElementById('newImage');
+            var displaySetting = newImage.style.display;
             var clockButton = document.getElementById('toggleButton2');
             if (displaySetting == 'block') {
-                newRoom.style.display = 'none';
+                newImage.style.display = 'none';
                 }
             else {
-                newRoom.style.display = 'block';
+                newImage.style.display = 'block';
                 clockButton.style.display = 'none';
                 }
             }

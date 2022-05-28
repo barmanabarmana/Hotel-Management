@@ -96,7 +96,7 @@ label input{
                     <p class="card-text">@item.Description</p>
                 </div>
                 <div class="card-body-right">
-                    <div class="card-body-right-price">@item.Price$</div>
+                    <div class="card-body-right-price"><p style="font-size:14px">Tour price (@item.AviablePeopleCount Adult(-s)):</p>@item.Price$</div>
                     <a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id">Details</a>
                 </div>
             </div>

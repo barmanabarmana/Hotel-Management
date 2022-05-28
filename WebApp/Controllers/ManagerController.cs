@@ -38,9 +38,9 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult ManageTours(string SearchString)
+        public async Task<IActionResult> ManageTours(string SearchString)
         {
-            var tours = _tourService.
+            var tours = await _tourService.
                 GetAllToursTemplates();
             if (!string.IsNullOrEmpty(SearchString))
             {
@@ -61,11 +61,11 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateTour(TourVM tourModel)
+        public async Task<IActionResult> CreateTour(TourVM tourModel)
         {
             var tour = tourModel.Tour;
 
-            tour.Price = tourModel.TourPrice.ParsingString();
+            tour.Price = int.Parse(tourModel.TourPrice);
 
             tour.Hotel = tourModel.Hotel;
 
@@ -74,25 +74,25 @@ namespace WebApp.Controllers
                 .AddTransportToTour(Tools.Mapper.Map<TourModel, TourDTO>(tourModel.Tour),
                 Tools.Mapper.Map<TransportModel, TransportDTO>(tourModel.TransportIn),
                 tourModel.AvailibleSeatsOut,
-                tourModel.PriceForTicketIn.ParsingString(), 
+                tourModel.PriceForTicketIn.ToDecimal(), 
                 Tools.Mapper.Map<TransportModel, TransportDTO>(tourModel.TransportOut),
                 tourModel.AvailibleSeatsOut,
-                tourModel.PriceForTicketOut.ParsingString()));
+                tourModel.PriceForTicketOut.ToDecimal()));
 
-            _tourService.AddTour(Tools.Mapper
+            await _tourService.AddTour(Tools.Mapper
                 .Map<TourModel, TourDTO>(tour));
 
             return RedirectToAction(nameof(ManageTours));
         }
 
-        public ActionResult EditTour(int id)
+        public async Task<IActionResult> EditTour(int id)
         {
             if (id < 0)
             {
                 return NotFound();
             }
 
-            var tour = Tools.Mapper.Map<TourDTO, TourModel>(_tourService.GetTour(id));
+            var tour = Tools.Mapper.Map<TourDTO, TourModel>(await _tourService.GetTourAsync(id));
             if (tour == null)
             {
                 return NotFound();
@@ -103,33 +103,38 @@ namespace WebApp.Controllers
                 TourPrice = tour.Price.ToString(),
                 Hotel = tour.Hotel,
                 Rooms = tour.Hotel.Rooms,
-                TransportIn = tour.Transports.FirstOrDefault(),
-                PriceForTicketIn = tour.Transports.FirstOrDefault().TransportPlaces[0].Price.ToString(),
-                TransportOut = tour.Transports.LastOrDefault(),
-                PriceForTicketOut = tour.Transports.FirstOrDefault().TransportPlaces[0].Price.ToString(),
+                TransportIn = tour.TransportIn,
+                PriceForTicketIn = tour.TransportIn.TransportPlaces[0].Price.ToString(),
+                TransportOut = tour.TransportOut,
+                PriceForTicketOut = tour.TransportOut.TransportPlaces[0].Price.ToString(),
             };
             return View(tourModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditTour(int id, TourVM tourModel)
+        public async Task<IActionResult> EditTour(int id, TourVM tourModel)
         {
-            UploadFile(tourModel.Hotel.Id, tourModel.UploadedFile);
+
+            await UploadFile(tourModel.Hotel.Id, tourModel.UploadedFile);
             if (tourModel.TourPrice != null)
             {
-                tourModel.Tour.Price = tourModel.TourPrice.ParsingString();
+                tourModel.Tour.Price = int.Parse(tourModel.TourPrice);
             }
 
             tourModel.Tour.Hotel = tourModel.Hotel;
 
-            _transportService.ApplyNewPriceForTicketAndUpdateTransport(Tools.Mapper
-                .Map<TransportModel, TransportDTO>(tourModel.TransportIn),
-                tourModel.PriceForTicketIn.ParsingString());
+            tourModel.Tour.TransportInId = tourModel.TransportIn.Id;
 
-            _transportService.ApplyNewPriceForTicketAndUpdateTransport(Tools.Mapper
+            tourModel.Tour.TransportOutId = tourModel.TransportOut.Id;
+
+            await _transportService.ApplyNewPriceForTicketAndUpdateTransportAsync(Tools.Mapper
+                .Map<TransportModel, TransportDTO>(tourModel.TransportIn),
+                tourModel.PriceForTicketIn.ToDecimal());
+
+            await _transportService.ApplyNewPriceForTicketAndUpdateTransportAsync(Tools.Mapper
                 .Map<TransportModel, TransportDTO>(tourModel.TransportOut),
-                tourModel.PriceForTicketOut.ParsingString());
+                tourModel.PriceForTicketOut.ToDecimal());
 
             if (tourModel.Rooms != null && tourModel.Rooms.Count > 0)
             {
@@ -137,17 +142,19 @@ namespace WebApp.Controllers
                     Map<HotelModel, HotelDTO>(tourModel.Hotel), Tools.Mapper.
                     Map<List<HotelRoomModel>, List<HotelRoomDTO>>(tourModel.Rooms));
             }
-            if (tourModel.NewRoom.Number != 0)
+
+            if (tourModel.NewRoom.Number != 0 || !string.IsNullOrEmpty(tourModel.NewRoom.Name))
             {
                 _hotelService.AddHotelRoom(tourModel.Hotel.Id,
                     Tools.Mapper.Map<HotelRoomModel, HotelRoomDTO>(tourModel.NewRoom));
             }
 
-            _tourService.UpdateTour(id,
+            await _tourService.UpdateTour(id,
                 Tools.Mapper.Map<TourModel, TourDTO>(tourModel.Tour));
+
             return RedirectToAction(nameof(EditTour));
         }
-        public void UploadFile(int HotelId, IFormFile uploadedFile)
+        public async Task UploadFile(int HotelId, IFormFile uploadedFile)
         {
 
             if (uploadedFile != null)
@@ -155,20 +162,20 @@ namespace WebApp.Controllers
                 string path = "/Files/" + uploadedFile.FileName;
                 using (var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
                 {
-                    uploadedFile.CopyTo(fileStream);
+                    await uploadedFile.CopyToAsync(fileStream);
                 }
-                _hotelService.InsertImageHotel(HotelId, uploadedFile.FileName, path);
+                await _hotelService.InsertImageHotel(HotelId, uploadedFile.FileName, path);
             }
         }
 
-        public ActionResult DeleteTour(int id)
+        public async Task<IActionResult> DeleteTour(int id)
         {
             if (id < 0)
             {
                 return NotFound();
             }
 
-            var tourModel = _tourService.GetTour(id);
+            var tourModel = await _tourService.GetTourAsync(id);
             if (tourModel == null)
             {
                 return NotFound();
@@ -179,14 +186,14 @@ namespace WebApp.Controllers
 
         [HttpPost, ActionName("DeleteTour")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteTourConfirmed(int id)
+        public async Task<IActionResult> DeleteTourConfirmed(int id)
         {
-            if (_tourService.GetTour(id) == null)
+            if (_tourService.GetTourAsync(id) == null)
             {
                 return NotFound();
             }
 
-            _tourService.DeleteTour(id);
+            await _tourService.DeleteTour(id);
 
             return RedirectToAction(nameof(ManageTours));
         }

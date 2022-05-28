@@ -26,7 +26,7 @@ namespace WebApp.Controllers
 
         // GET: TourController
         [HttpGet]
-        public ActionResult TourList(string searchString,
+        public async Task<IActionResult> TourList(string searchString,
             string TourType,
             string TourCountry,
             string TourDeparturePoint,
@@ -36,7 +36,7 @@ namespace WebApp.Controllers
             int TourMinDuration = 0,
             int TourMaxDuration = int.MaxValue)
         {
-            var tours = from t in _tourService.GetAllToursTemplates()
+            var tours = from t in await _tourService.GetAllToursTemplates()
                         select t;
 
             IQueryable<string> filterTypeQuerry = (from tour in tours
@@ -48,7 +48,7 @@ namespace WebApp.Controllers
                                                       select tour.Country)
                                                    .AsQueryable();
             var intermediateTransportQuerry = (from tour in tours
-                                        select tour.Transports.FirstOrDefault())
+                                        select tour.TransportIn)
                                         .AsQueryable();
             IQueryable<string> filterDeparturePointQuerry = (from transport in intermediateTransportQuerry
                                                             orderby transport.DeparturePoint
@@ -79,18 +79,18 @@ namespace WebApp.Controllers
 
             if (MinTourPrice != null)
             {
-                inputMinPriceFilter = MinTourPrice.ParsingString();
+                inputMinPriceFilter = MinTourPrice.ToDecimal();
             }
 
             decimal inputMaxPriceFilter = decimal.MaxValue;
 
             if(MaxTourPrice != null)
             {
-                inputMaxPriceFilter = MaxTourPrice.ParsingString();
+                inputMaxPriceFilter = MaxTourPrice.ToDecimal();
             }
 
-            var minTourPriceFound = _tourService.FindCheapestTourPrice(tours);
-            var maxTourPriceFound = _tourService.FindExpensivestTourPrice(tours);
+            int minTourPriceFound = (int)_tourService.FindCheapestTourPrice(tours);
+            int maxTourPriceFound = (int)_tourService.FindExpensivestTourPrice(tours);
             if (inputMinPriceFilter > minTourPriceFound || inputMaxPriceFilter < maxTourPriceFound)
             {
                 tours = _tourService.FindTourTemplatesByPrice(tours, inputMinPriceFilter, inputMaxPriceFilter);
@@ -119,9 +119,9 @@ namespace WebApp.Controllers
         }
 
         // GET: TourController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var tour = _tourService.GetTour(id);
+            var tour = await _tourService.GetTourAsync(id);
             return View(Tools.Mapper.Map<TourDTO, TourModel>(tour));
         }
     }
