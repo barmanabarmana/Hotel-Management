@@ -10,6 +10,7 @@ using Models;
 using Models.Files;
 using Models.Hotels;
 using Models.Transports;
+using System.Globalization;
 using WebApp.Models;
 using WebApp.Ninject;
 
@@ -23,31 +24,19 @@ namespace WebApp.Controllers
             _tourService = UIDependencyResolver<ITourService>.ResolveDependency();
         }
 
-        IMapper TourControllerMapper = new MapperConfiguration(cfg =>
-        {
-            cfg.CreateMap<TourDTO, TourModel>();
-            cfg.CreateMap<TourModel, TourDTO>();
-            cfg.CreateMap<HotelDTO, HotelModel>();
-            cfg.CreateMap<HotelModel, HotelDTO>();
-            cfg.CreateMap<HotelRoomDTO, HotelRoomModel>();
-            cfg.CreateMap<HotelRoomModel, HotelRoomDTO>();
-            cfg.CreateMap<TransportDTO, TransportModel>();
-            cfg.CreateMap<TransportPlaceDTO, TransportPlaceModel>();
-            cfg.CreateMap<TransportModel, TransportDTO>();
-            cfg.CreateMap<TransportPlaceModel, TransportPlaceDTO>();
-            cfg.CreateMap<ImageDTO, ImageModel>();
-            cfg.CreateMap<ImageModel, ImageDTO>();
-        }).CreateMapper();
-
         // GET: TourController
-        public ActionResult TourList(string searchString = null,
-            decimal MinPrice = 0,
-            decimal MaxPrice = decimal.MaxValue,
-            string type = null,
-            string country = null,
-            string city = null)
+        [HttpGet]
+        public async Task<IActionResult> TourList(string searchString,
+            string TourType,
+            string TourCountry,
+            string TourDeparturePoint,
+            int OrderBy,
+            string MinTourPrice,
+            string MaxTourPrice,
+            int TourMinDuration = 0,
+            int TourMaxDuration = int.MaxValue)
         {
-            var tours = from t in _tourService.GetAllToursTemplates()
+            var tours = from t in await _tourService.GetAllToursTemplates()
                         select t;
 
             IQueryable<string> filterTypeQuerry = (from tour in tours
@@ -58,10 +47,13 @@ namespace WebApp.Controllers
                                                       orderby tour.Country
                                                       select tour.Country)
                                                    .AsQueryable();
-            IQueryable<string> filterCityQuerry = (from tour in tours
-                                                   orderby tour.City
-                                                   select tour.City)
-                                                   .AsQueryable();
+            var intermediateTransportQuerry = (from tour in tours
+                                        select tour.TransportIn)
+                                        .AsQueryable();
+            IQueryable<string> filterDeparturePointQuerry = (from transport in intermediateTransportQuerry
+                                                            orderby transport.DeparturePoint
+                                                            select transport.DeparturePoint)
+                                                            .AsQueryable();
 
 
             if (!string.IsNullOrEmpty(searchString))
@@ -69,79 +61,68 @@ namespace WebApp.Controllers
                 tours = _tourService.FindTourTemplates(tours, searchString);
             }
 
-            if (!string.IsNullOrEmpty(type))
+            if (!string.IsNullOrEmpty(TourType))
             {
-                tours = _tourService.FindTourTemplatesByType(tours, type);
+                tours = _tourService.FindTourTemplatesByType(tours, TourType);
             }
 
-            if (!string.IsNullOrEmpty(country))
+            if (!string.IsNullOrEmpty(TourCountry))
             {
-                tours = _tourService.FindTourTemplatesByCountry(tours, country);
+                tours = _tourService.FindTourTemplatesByCountry(tours, TourCountry);
             }
-            if (!string.IsNullOrEmpty(city))
+            if (!string.IsNullOrEmpty(TourDeparturePoint))
             {
-                tours = _tourService.FindTourTemplatesByCity(tours, city);
+                tours = _tourService.FindTourTemplatesByCity(tours, TourDeparturePoint);
             }
-            if(MinPrice > 0 || MaxPrice < decimal.MaxValue)
+
+            decimal inputMinPriceFilter = 0;
+
+            if (MinTourPrice != null)
             {
-                tours = _tourService.FindTourTemplatesByPrice(tours, MinPrice, MaxPrice);
+                inputMinPriceFilter = MinTourPrice.ToDecimal();
             }
+
+            decimal inputMaxPriceFilter = decimal.MaxValue;
+
+            if(MaxTourPrice != null)
+            {
+                inputMaxPriceFilter = MaxTourPrice.ToDecimal();
+            }
+
+            int minTourPriceFound = (int)_tourService.FindCheapestTourPrice(tours);
+            int maxTourPriceFound = (int)_tourService.FindExpensivestTourPrice(tours);
+            if (inputMinPriceFilter > minTourPriceFound || inputMaxPriceFilter < maxTourPriceFound)
+            {
+                tours = _tourService.FindTourTemplatesByPrice(tours, inputMinPriceFilter, inputMaxPriceFilter);
+            }
+            var minTourDurationFound = _tourService.FindShortestTourDuration(tours);
+            var maxTourDurationFound = _tourService.FindLongestTourDuration(tours);
+            if (TourMinDuration > minTourDurationFound || TourMaxDuration < maxTourDurationFound)
+            {
+                tours = _tourService.FindTourTemplatesByDuration(tours, TourMinDuration, TourMaxDuration);
+            }
+
+            tours = _tourService.GetTourTemplatesOrderBy(tours, OrderBy);
+
             return View(new TourListVM()
             {
-                Type = new SelectList(filterTypeQuerry.Distinct().ToList()),
-                Country = new SelectList(filterTypeQuerry.Distinct().ToList()),
-                City = new SelectList(filterTypeQuerry.Distinct().ToList()),
-                TourList = TourControllerMapper
+                Types = new SelectList(filterTypeQuerry.Distinct().ToList()),
+                Arrive = new SelectList(filterCountryQuerry.Distinct().ToList()),
+                DeparturePoint = new SelectList(filterDeparturePointQuerry.Distinct().ToList()),
+                TourList = Tools.Mapper
                 .Map<IEnumerable<TourDTO>, IEnumerable<TourModel>>(tours).ToList(),
+                MinTourPrice = minTourPriceFound.ToString(),
+                MaxTourPrice = maxTourPriceFound.ToString(),
+                MinTourDuration = minTourDurationFound,
+                MaxTourDuration = maxTourDurationFound,
             });
         }
 
         // GET: TourController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var tour = _tourService.GetTour(id);
-            return View(TourControllerMapper.Map<TourDTO, TourModel>(tour));
-        }
-        // GET: TourController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: TourController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: TourController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: TourController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var tour = await _tourService.GetTourAsync(id);
+            return View(Tools.Mapper.Map<TourDTO, TourModel>(tour));
         }
     }
 }

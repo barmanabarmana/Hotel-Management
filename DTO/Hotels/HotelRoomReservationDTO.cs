@@ -12,6 +12,7 @@ namespace DTO.Hotels
         public string HotelName { get; set; }
         public int HotelStars { get; set; }
         public string HotelAddress { get; set; }
+        public string HotelRoomName { get; set; }
         public int HotelRoomNumber { get; set; }
         public int HotelRoomSleepingPlaces { get; set; }
         public int HotelRoomPrice { get; set; }

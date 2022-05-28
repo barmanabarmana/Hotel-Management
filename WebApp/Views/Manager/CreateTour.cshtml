@@ -1,0 +1,184 @@
+﻿@model TourVM
+
+@{
+    ViewData["Title"] = "Create tour";
+}
+
+<h1>Create tour</h1>
+<hr />
+<div >
+  <form asp-action="CreateTour" class="row">
+    <div class="col-md-4">
+        <h2>Tour</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tour.Title" class="control-label"></label>
+                <input asp-for="Tour.Title" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TourPrice" class="control-label">Tour Price</label>
+                <input asp-for="TourPrice" class="form-control"  type="number" step="0.01 0,01" autocomplete="off"/>
+                <span asp-validation-for="TourPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.Type" class="control-label"></label>
+                <input asp-for="Tour.Type" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.Country" class="control-label"></label>
+                <input asp-for="Tour.Country" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.City" class="control-label"></label>
+                <input asp-for="Tour.City" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.AviablePeopleCount" class="control-label"></label>
+                <input asp-for="Tour.AviablePeopleCount" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.AviablePeopleCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.Meal" class="control-label"></label>
+                <input asp-for="Tour.Meal" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.Meal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.Duration" class="control-label"></label>
+                <input asp-for="Tour.Duration" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input checked="checked" class="form-check-input" asp-for="Tour.IsHotOffer" /> @Html.DisplayNameFor(model => model.Tour.IsHotOffer)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.Description" class="control-label"></label>
+                <input asp-for="Tour.Description" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.ClientName" class="control-label"></label>
+                <input asp-for="Tour.ClientName" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.ClientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tour.ClientSurname" class="control-label"></label>
+                <input asp-for="Tour.ClientSurname" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="Tour.ClientSurname" class="text-danger"></span>
+            </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Transport in</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TransportIn.Type" class="control-label"></label>
+                <input asp-for="TransportIn.Type" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="TransportIn.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportIn.DeparturePoint" class="control-label"></label>
+                <input asp-for="TransportIn.DeparturePoint" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="TransportIn.DeparturePoint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportIn.DepartureTime" class="control-label"></label>
+                <input asp-for="TransportIn.DepartureTime" class="form-control" type="date" autocomplete="off"/>
+                <span asp-validation-for="TransportIn.DepartureTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportIn.ArrivalPoint" class="control-label"></label>
+                <input asp-for="TransportIn.ArrivalPoint" class="form-control" autocomplete="off"/>
+                <span asp-validation-for="TransportIn.ArrivalPoint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportIn.ArrivalTime" class="control-label"></label>
+                <input asp-for="TransportIn.ArrivalTime" class="form-control"  type="date" autocomplete="off"/>
+                <span asp-validation-for="TransportIn.ArrivalTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AvailibleSeatsIn" class="control-label">Transport availible seats</label>
+                <input asp-for="AvailibleSeatsIn" class="form-control" type="number" step="0.01 0,01" autocomplete="off" />
+                <span asp-validation-for="AvailibleSeatsIn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriceForTicketIn" class="control-label">Transport place price</label>
+                <input asp-for="PriceForTicketIn" class="form-control" type="number" step="0.01 0,01" autocomplete="off" />
+                <span asp-validation-for="PriceForTicketIn" class="text-danger"></span>
+            </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Transport out</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TransportOut.Type" class="control-label"></label>
+                <input asp-for="TransportOut.Type" class="form-control" autocomplete="off" />
+                <span asp-validation-for="TransportOut.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportOut.DeparturePoint" class="control-label"></label>
+                <input asp-for="TransportOut.DeparturePoint" class="form-control" autocomplete="off" />
+                <span asp-validation-for="TransportOut.DeparturePoint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportOut.DepartureTime" class="control-label"></label>
+                <input asp-for="TransportOut.DepartureTime" class="form-control"  type="date" autocomplete="off" />
+                <span asp-validation-for="TransportOut.DepartureTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportOut.ArrivalPoint" class="control-label"></label>
+                <input asp-for="TransportOut.ArrivalPoint" class="form-control" autocomplete="off" />
+                <span asp-validation-for="TransportOut.ArrivalPoint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportOut.ArrivalTime" class="control-label"></label>
+                <input asp-for="TransportOut.ArrivalTime" class="form-control"  type="date" autocomplete="off" />
+                <span asp-validation-for="TransportOut.ArrivalTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AvailibleSeatsOut" class="control-label">Transport availible seats</label>
+                <input asp-for="AvailibleSeatsOut" class="form-control" type="number" step="0.01 0,01" autocomplete="off" />
+                <span asp-validation-for="AvailibleSeatsOut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriceForTicketOut" class="control-label">Transport place price</label>
+                <input asp-for="PriceForTicketOut" class="form-control" type="number" step="0.01 0,01" autocomplete="off" />
+                <span asp-validation-for="PriceForTicketOut" class="text-danger"></span>
+            </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Hotel</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Hotel.Name" class="control-label"></label>
+                <input asp-for="Hotel.Name" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Hotel.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hotel.Stars" class="control-label"></label>
+                <input asp-for="Hotel.Stars" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Hotel.Stars" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hotel.Address" class="control-label"></label>
+                <input asp-for="Hotel.Address" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Hotel.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+    </div>
+  </form>
+</div>
+
+<div>
+    <a asp-action="ManageTours">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

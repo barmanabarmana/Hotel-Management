@@ -4,6 +4,14 @@ using UnitsOfWork.Interfaces;
 using BLL.Interfaces;
 using Entities.Transports;
 using DTO.Transports;
+using DTO.User;
+using Entities.Users;
+using DTO;
+using Entities;
+using DTO.Hotels;
+using Entities.Hotels;
+using DTO.Files;
+using Entities.Files;
 
 namespace BLL.Services
 {
@@ -21,48 +29,72 @@ namespace BLL.Services
             UoW = DependencyResolver.ResolveUoW();
         }
 
-        IMapper Mapper = new MapperConfiguration(cfg =>
+        public TourDTO AddTransportToTour(TourDTO tour, 
+            TransportDTO transportIn, 
+            int AvailibleSeatsIn,
+            decimal PriceForTcketIn,
+            TransportDTO transportOut,
+            int AvailibleSeatsOut,
+            decimal PriceForTcketOut)
         {
-            cfg.CreateMap<TransportDTO, Transport>();
-            cfg.CreateMap<TransportPlaceDTO, TransportPlace>();
-            cfg.CreateMap<Transport, TransportDTO>();
-            cfg.CreateMap<TransportPlace, TransportPlaceDTO>();
-        }).CreateMapper();
-
-        public void AddTransport(TransportDTO NewTransport, int AvailibleSeats, int PriceForTicket)
-        {
-            for (int i = 1; i <= AvailibleSeats; i++)
-                NewTransport.TransportPlaces.Add(new TransportPlaceDTO(NewTransport, i, PriceForTicket));
-
-            UoW.Transports
-                .Add(Mapper
-                .Map<TransportDTO, Transport>(NewTransport));
+            tour.TransportIn = BuildTransport(transportIn, AvailibleSeatsIn, PriceForTcketIn);
+            tour.TransportOut = BuildTransport(transportOut, AvailibleSeatsOut, PriceForTcketOut);
+            return tour;
         }
-
-        public void DeleteTransport(int Id)
+        public async Task ApplyNewPriceForTicketAndUpdateTransportAsync(TransportDTO Transport,
+            decimal PriceForTicket)
         {
-            UoW.Transports
-                .Delete(Id);
+            TransportDTO transport = Tools.Mapper
+                .Map<Transport, TransportDTO>(await UoW.Transports.GetAsync(Transport.Id));
+
+            if (transport.TransportPlaces != null && transport.TransportPlaces.Count != 0 &&
+                transport.TransportPlaces.FirstOrDefault().Price != PriceForTicket)
+            {
+                await ApplyTicketPriceForEachPlaceInTransportAsync(
+                      transport, PriceForTicket);
+            }
+
+            await UoW.Transports.ModifyAsync(transport.Id,
+                Tools.Mapper.Map<TransportDTO, Transport>(Transport));
         }
-
-        public IEnumerable<TransportDTO> GetAllTransport()
+        public async Task DeleteTransportAsync(int Id)
         {
-            return Mapper
+            await UoW.Transports
+                .DeleteAsync(Id);
+        }
+        public IEnumerable<TransportDTO> GetAllTransportAsync()
+        {
+            return Tools.Mapper
                 .Map<IEnumerable<Transport>, List<TransportDTO>>(UoW.
                 Transports.GetAll(t => 
                 t.TransportPlaces));
         }
 
-        public TransportDTO GetTransport(int Id)
+        public async Task<TransportDTO> GetTransportAsync(int Id)
         {
-            return Mapper.
-                Map<Transport, TransportDTO>(UoW.
-                Transports
-                .GetAll(t =>
-                t.Id == Id, 
-                t =>
-                t.TransportPlaces)
-                .FirstOrDefault());
+            return Tools.Mapper
+                .Map<Transport, TransportDTO>(await UoW.
+                Transports.GetAsync(Id));
+        }
+
+        private TransportDTO BuildTransport(TransportDTO transport, 
+            int availibleSeats, 
+            decimal Price)
+        {
+            for(int i = 1; i <= availibleSeats; i++)
+            {
+                transport.TransportPlaces.Add(new TransportPlaceDTO(transport.Id, i, Price));
+            }
+            return transport;
+        }
+        private async Task ApplyTicketPriceForEachPlaceInTransportAsync(TransportDTO transport, decimal newPrice)
+        {
+            foreach(var place in transport.TransportPlaces)
+            {
+                place.Price = newPrice;
+                await UoW.TransportPlaces.ModifyAsync(place.Id, Tools.Mapper
+                    .Map<TransportPlaceDTO, TransportPlace>(place));
+            }
         }
     }
 }

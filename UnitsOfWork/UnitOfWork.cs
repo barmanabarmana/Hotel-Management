@@ -1,5 +1,6 @@
 ﻿using DAL;
 using Entities;
+using Entities.Files;
 using Entities.Hotels;
 using Entities.Transports;
 using Entities.Users;
@@ -11,38 +12,45 @@ namespace UnitsOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private ManagementDbContext ManagementContext;
         private UsageDbContext UsageContext;
 
         public UnitOfWork()
         {
-            ManagementContext = new ManagementDbContext();
             UsageContext = new UsageDbContext();
         }
 
-        public UnitOfWork(ManagementDbContext ManagementContext, UsageDbContext UsageContext)
+        public UnitOfWork(UsageDbContext UsageContext)
         {
-            this.ManagementContext = ManagementContext;
             this.UsageContext = UsageContext;
         }
 
-
+        private IRepository<Image> _images;
         private IRepository<Hotel> _hotels;
         private IRepository<HotelRoom> _hotelsrooms;
         private IRepository<Tour> _tourstemplates;
         private IRepository<Transport> _transports;
+        private IRepository<TransportPlace> _transportPlaces;
 
         private IRepository<TransportPlace> _transportsplases;
         private IRepository<Customer> _customers;
         private IRepository<Tour> _orderedtours;
         private IRepository<HotelRoomReservation> _hotelsroomsreservations;
-
+        private IRepository<Bill> _bills;
+        public IRepository<Image> Images
+        {
+            get
+            {
+                if (_images == null)
+                    _images = new GenericRepository<Image>(UsageContext);
+                return _images;
+            }
+        }
         public IRepository<Hotel> Hotels 
         { 
             get 
             { 
                 if (_hotels == null) 
-                    _hotels = new GenericRepository<Hotel>(ManagementContext); 
+                    _hotels = new GenericRepository<Hotel>(UsageContext); 
                 return _hotels; 
             } 
         }
@@ -52,7 +60,7 @@ namespace UnitsOfWork
             get
             { 
                 if (_hotelsrooms == null)
-                    _hotelsrooms = new GenericRepository<HotelRoom>(ManagementContext); 
+                    _hotelsrooms = new GenericRepository<HotelRoom>(UsageContext); 
                 return _hotelsrooms; 
             } 
         }
@@ -61,7 +69,7 @@ namespace UnitsOfWork
             get
             {
                 if (_tourstemplates == null)
-                    _tourstemplates = new GenericRepository<Tour>(ManagementContext); 
+                    _tourstemplates = new GenericRepository<Tour>(UsageContext); 
                 return _tourstemplates;
             } 
         }
@@ -70,9 +78,18 @@ namespace UnitsOfWork
             get 
             { 
                 if (_transports == null) 
-                    _transports = new GenericRepository<Transport>(ManagementContext);
+                    _transports = new GenericRepository<Transport>(UsageContext);
                 return _transports;
             } 
+        }
+        public IRepository<TransportPlace> TransportPlaces
+        {
+            get
+            {
+                if (_transportPlaces == null)
+                    _transportPlaces = new GenericRepository<TransportPlace>(UsageContext);
+                return _transportPlaces;
+            }
         }
 
         public IRepository<Customer> Customers 
@@ -84,15 +101,6 @@ namespace UnitsOfWork
                 return _customers;
             } 
         }
-        public IRepository<Tour> OrderedTours 
-        { 
-            get 
-            {
-                if (_orderedtours == null) 
-                    _orderedtours = new GenericRepository<Tour>(UsageContext); 
-                return _orderedtours;
-            } 
-        }
         public IRepository<HotelRoomReservation> HotelsRoomsReservations 
         { 
             get
@@ -102,20 +110,19 @@ namespace UnitsOfWork
                 return _hotelsroomsreservations;
             } 
         }
-        public IRepository<TransportPlace> TransportsPlace { 
+        public IRepository<Bill> Bills
+        {
             get
             {
-                if (_transportsplases == null) 
-                    _transportsplases = new GenericRepository<TransportPlace>(UsageContext);
-                return _transportsplases; 
-            } 
+                if (_bills == null)
+                    _bills = new GenericRepository<Bill>(UsageContext);
+                return _bills;
+            }
         }
 
         public void DeleteDB()
         {
-            ManagementContext.Database.EnsureDeleted();
             UsageContext.Database.EnsureDeleted();
-            ManagementContext.Database.EnsureCreated();
             UsageContext.Database.EnsureCreated();
         }
 
@@ -127,7 +134,7 @@ namespace UnitsOfWork
             {
                 if (disposing)
                 {
-                    ManagementContext.Dispose();
+                    UsageContext.Dispose();
                 }
             }
             this.disposed = true;

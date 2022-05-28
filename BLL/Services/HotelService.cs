@@ -23,67 +23,60 @@ namespace BLL.Services
             UoW = DependencyResolver.ResolveUoW();
         }
 
-        IMapper Mapper = new MapperConfiguration(cfg =>
-        {
-            cfg.CreateMap<HotelDTO, Hotel>();
-            cfg.CreateMap<HotelRoomDTO, HotelRoom>();
-            cfg.CreateMap<Hotel, HotelDTO>();
-            cfg.CreateMap<HotelRoom, HotelRoomDTO>();
-            cfg.CreateMap<ImageDTO, Image>();
-            cfg.CreateMap<Image, ImageDTO>();
-        }).CreateMapper();
-
         public void AddHotel(HotelDTO NewHotel)
         {
-            UoW.Hotels.Add(Mapper.Map<HotelDTO, Hotel>(NewHotel));
+            UoW.Hotels.Add(Tools.Mapper.Map<Hotel>(NewHotel));
         }
 
         public void DeleteHotel(int Id)
         {
-            UoW.Hotels.Delete(Id);
+             UoW.Hotels.DeleteAsync(Id);
         }
 
-        public void AddHotelRoom(int HotelId, HotelRoomDTO NewHotelRoom)
+        public void UpdateHotelAndHotelRooms(int HotelId, HotelDTO Hotel, List<HotelRoomDTO> Rooms)
         {
-            Hotel hotel = UoW.Hotels.GetAll(x => x.Id == HotelId, x => x.Rooms).FirstOrDefault();
+            foreach (var HotelRoom in Rooms)
+            {
+                HotelRoom.HotelId = HotelId;
+                UoW.HotelsRooms.ModifyAsync(HotelRoom.Id,
+                    Tools.Mapper.Map<HotelRoom>(HotelRoom));
+            }
+            UoW.Hotels.ModifyAsync(HotelId, Tools.Mapper.Map<Hotel>(Hotel));
+        }
 
-            HotelRoom room = Mapper.Map<HotelRoomDTO, HotelRoom>(NewHotelRoom);
+        public async void AddHotelRoom(int HotelId, HotelRoomDTO NewHotelRoom)
+        {
+            HotelRoom room = Tools.Mapper.Map<HotelRoom>(
+                new HotelRoomDTO(NewHotelRoom.Name,
+                NewHotelRoom.Number, 
+                NewHotelRoom.SleepingPlaces,
+                NewHotelRoom.Price,
+                HotelId));
 
-            room.Hotel = hotel;
-
-            hotel.Rooms.Add(room);
-
-            UoW.Hotels.Modify(hotel.Id, hotel);
+            await UoW.HotelsRooms.Add(room);
         }
 
         public IEnumerable<HotelDTO> GetAllHotels()
         {
-            return Mapper
-                .Map<IEnumerable<Hotel>, List<HotelDTO>>(UoW.
-                Hotels.GetAll(h => 
+            return Tools.Mapper
+                .Map<List<HotelDTO>>(UoW.Hotels.GetAll(h => 
                 h.Rooms));
         }
 
-        public HotelDTO GetHotel(int Id)
+        public async Task<HotelDTO> GetHotel(int Id)
         {
-            return Mapper
-                .Map<Hotel, HotelDTO>(UoW.Hotels
-                .GetAll(x =>
-                x.Id == Id, x => 
-                x.Rooms)
-                .FirstOrDefault());
+            return Tools.Mapper
+                .Map<HotelDTO>(await UoW.Hotels
+                .GetAsync(Id));
         }
-        public void InsertImageHotel(int Id, string Path)
+        public async Task InsertImageHotel(int HotelId, string Name ,string Path)
         {
-            var hotel = Mapper
-                .Map<Hotel, HotelDTO>(
-                UoW.Hotels.Get(Id));
+            var hotel = Tools.Mapper
+                .Map<HotelDTO>(await
+                UoW.Hotels.GetAsync(HotelId));
 
-            hotel.Images.Add(
-                new ImageDTO(Path));
-
-            UoW.Hotels.Modify(Id, Mapper
-                .Map<HotelDTO, Hotel>(hotel));
+            await UoW.Images.Add(Tools.Mapper.Map<Image>(
+                new ImageDTO(Name, Path, hotel.Id)));
         }
     }
 }

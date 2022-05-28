@@ -1,26 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25e28b27-33aa-49ba-b643-80ca218a0601" name="Changes" comment="" />
+    <list default="true" id="25e28b27-33aa-49ba-b643-80ca218a0601" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Interfaces/IHotelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Interfaces/IHotelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Interfaces/ITourService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Interfaces/ITourService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Interfaces/ITransportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Interfaces/ITransportService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Interfaces/IUserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Interfaces/IUserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Services/HotelService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Services/HotelService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Services/TourService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Services/TourService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Services/TransportService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Services/TransportService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BLL/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BLL/Services/UserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/ManagementDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/ManagementDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DAL/UsageDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DAL/UsageDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DTO/Hotels/HotelRoomDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DTO/Hotels/HotelRoomDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DTO/Hotels/HotelRoomReservationDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DTO/Hotels/HotelRoomReservationDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DTO/TourDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DTO/TourDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DTO/Transports/TransportDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DTO/Transports/TransportDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DTO/User/CustomerDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DTO/User/CustomerDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Hotels/HotelRoom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Hotels/HotelRoom.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Hotels/HotelRoomReservation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Hotels/HotelRoomReservation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Tour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Tour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Transports/Transport.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Transports/Transport.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Users/Customer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Hotels/HotelRoomModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Hotels/HotelRoomModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Hotels/HotelRoomReservationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Hotels/HotelRoomReservationModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/TourModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/TourModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Transports/TransportModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Transports/TransportModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/Users/CustomerModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/Users/CustomerModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/GenericRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/GenericRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Repositories/Interface/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Repositories/Interface/IRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnitsOfWork/Interfaces/IUnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UnitsOfWork/Interfaces/IUnitOfWork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnitsOfWork/UnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UnitsOfWork/UnitOfWork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Areas/Identity/Pages/Account/Register.cshtml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/BookingCotroller.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/ManagerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/ManagerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Controllers/TourController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Controllers/TourController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Data/SeedData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Data/SeedData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Models/BookingOnlineVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Models/BookingOnlineVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Models/ManageToursVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Models/ManageToursVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Models/TourListViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Models/TourListViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Models/TourVM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Models/TourVM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Tools.cs" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Tools.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Booking/BookingOnline.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Booking/BookingOnline.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Manager/CreateTour.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Manager/CreateTour.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Manager/EditTour.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Manager/EditTour.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml.css" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Shared/_Layout.cshtml.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Tour/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Tour/Details.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/Views/Tour/TourList.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/Views/Tour/TourList.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/wwwroot/css/MyCSS.css" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/wwwroot/css/MyCSS.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApp/wwwroot/css/MySlider.css" beforeDir="false" afterPath="$PROJECT_DIR$/WebApp/wwwroot/css/MySlider.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
   </component>
   <component name="ProjectId" id="29Cnk8hJKsI8Eh5lml6YjS7P9YJ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Hotel-Management-master",
-    "vue.rearranger.settings.migration": "true"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/Software development workshop/HomeWorkWorkshop" />
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

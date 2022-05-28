@@ -1,0 +1,100 @@
+﻿@model ManageToursVM
+
+@{
+    ViewData["Title"] = "Manage tours";
+}
+
+<h1>Manage</h1>
+
+    <div class="search-filter">
+        <form asp-controller="Manager" asp-action="ManageTours"  method="get">
+            <input type="text" asp-for="SearchString" id="searchinput" autocomplete="off" placeholder="Search..."/>
+        </form>
+    </div>
+<p>
+    <a asp-action="CreateTour">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].IsHotOffer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].ClientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tours[0].ClientSurname)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Tours) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsHotOffer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientSurname)
+            </td>
+            <td>
+                <a asp-controller="Tour" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-controller="Manager" asp-action="EditTour" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Manager" asp-action="DeleteTour" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

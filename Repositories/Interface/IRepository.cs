@@ -9,15 +9,14 @@ namespace Repositories.Interface
 {
     public interface IRepository<TEntity> : IDisposable
     {
-        void Clear();
-        void Delete(int Id);
-        void Delete(TEntity Entity);
-        void Add(TEntity Entity);
-        void Modify(int Id, TEntity NewItem);
-        TEntity Get(int Id);
-        TEntity GetByPosition(int Position);
-        List<TEntity> GetAll();
-        List<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties);
-        List<TEntity> GetAll(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties);
+        Task ClearAsync();
+        Task DeleteAsync(int Id);
+        Task DeleteAsync(TEntity Entity);
+        Task Add(TEntity Entity);
+        Task ModifyAsync(int Id, TEntity NewItem);
+        Task<TEntity> GetAsync(int Id);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties);
+        IEnumerable<TEntity> GetAll(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties);
     }
 }
