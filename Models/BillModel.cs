@@ -21,6 +21,6 @@ namespace Models
         public List<TransportTicketModel> Tickets { get; set; }
         public int CustomerWhoBookId { get; set; }
         public CustomerModel CustomerWhoBook { get; set; }
-        public List<CustomerModel> Tourists { get; set; }
+        public List<CustomerModel>? Tourists { get; set; }
     }
 }

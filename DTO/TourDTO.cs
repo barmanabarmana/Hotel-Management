@@ -25,9 +25,9 @@ namespace DTO
         public string? ClientName { get; set; }
         public string? ClientSurname { get; set; }
         public HotelDTO Hotel { get; set; }
-        public int TransportInId { get; set; }
-        public TransportDTO TransportIn { get; set; }
-        public int TransportOutId { get; set; }
-        public TransportDTO TransportOut { get; set; }
+        public int? TransportInId { get; set; }
+        public TransportDTO? TransportIn { get; set; }
+        public int? TransportOutId { get; set; }
+        public TransportDTO? TransportOut { get; set; }
     }
 }

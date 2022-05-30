@@ -16,6 +16,6 @@ namespace DTO
         public List<TransportTicketDTO> Tickets { get; set; }
         public int CustomerWhoBookId { get; set; }
         public CustomerDTO CustomerWhoBook { get; set; }
-        public List<CustomerDTO> Tourists { get; set; }
+        public List<CustomerDTO>? Tourists { get; set; }
     }
 }
