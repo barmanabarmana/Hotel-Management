@@ -1,11 +1,6 @@
 ﻿using Models.Hotels;
 using Models.Transports;
 using Models.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models
 {
@@ -21,6 +16,6 @@ namespace Models
         public List<TransportTicketModel> Tickets { get; set; }
         public int CustomerWhoBookId { get; set; }
         public CustomerModel CustomerWhoBook { get; set; }
-        public List<CustomerModel> Tourists { get; set; }
+        public List<CustomerModel>? Tourists { get; set; }
     }
 }

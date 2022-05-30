@@ -1,11 +1,5 @@
 ﻿using Models.Hotels;
 using Models.Transports;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models
 {
@@ -25,9 +19,9 @@ namespace Models
         public string ClientName { get; set; }
         public string ClientSurname { get; set; }
         public HotelModel Hotel { get; set; }
-        public int TransportInId { get; set; }
-        public TransportModel TransportIn { get; set; }
-        public int TransportOutId { get; set; }
-        public TransportModel TransportOut { get; set; }
+        public int? TransportInId { get; set; }
+        public TransportModel? TransportIn { get; set; }
+        public int? TransportOutId { get; set; }
+        public TransportModel? TransportOut { get; set; }
     }
 }

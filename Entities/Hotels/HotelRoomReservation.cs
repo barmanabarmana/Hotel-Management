@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities.Hotels
+﻿namespace Entities.Hotels
 {
     public class HotelRoomReservation
     {
         public HotelRoomReservation() { }
-        public HotelRoomReservation(HotelRoom HotelRoom, 
-            string ClientName, 
-            string ClientSurname, 
+        public HotelRoomReservation(HotelRoom HotelRoom,
+            string ClientName,
+            string ClientSurname,
             DateTimeOffset ArrivalDate,
             DateTimeOffset DepartureDate)
         {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DTO;
+﻿using DTO;
 
 namespace BLL.Interfaces
 {
@@ -20,7 +15,7 @@ namespace BLL.Interfaces
         IEnumerable<TourDTO> FindTourTemplatesByDuration(IEnumerable<TourDTO> tours, int MinDuration, int MaxDuration);
         IEnumerable<TourDTO> FindTourTemplatesByCity(IEnumerable<TourDTO> tours, string City);
         IEnumerable<TourDTO> FindTourTemplatesByCountry(IEnumerable<TourDTO> tours, string Country);
-        IEnumerable<TourDTO> GetHotTourTemplates();
+        Task<IEnumerable<TourDTO>> GetHotTourTemplatesAsync();
         IEnumerable<TourDTO> FindTourTemplatesByDeparturePoint(IEnumerable<TourDTO> tours, string DeparturePoint = null);
         IEnumerable<TourDTO> GetTourTemplatesOrderBy(IEnumerable<TourDTO> tours, int orderby);
         decimal FindCheapestTourPrice(IEnumerable<TourDTO> tours);

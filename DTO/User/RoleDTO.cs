@@ -2,7 +2,7 @@
 
 namespace DTO.User
 {
-    public class RoleDTO:IdentityRole<int>
+    public class RoleDTO : IdentityRole<int>
     {
     }
 }

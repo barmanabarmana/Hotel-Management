@@ -2,9 +2,9 @@
 using UnitsOfWork;
 using UnitsOfWork.Interfaces;
 
-namespace BLL.Ninject
+namespace LogicTests
 {
-    public class UoWBinder : NinjectModule
+    public class TestBinder : NinjectModule
     {
         public override void Load()
         {

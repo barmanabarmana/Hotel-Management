@@ -1,12 +1,6 @@
-﻿using DAL;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Repositories.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Generic
 {
@@ -36,14 +30,14 @@ namespace Repositories.Generic
             Context.Entry(Item).State = EntityState.Deleted;
             await Context.SaveChangesAsync();
         }
-        public async Task Add(TEntity Item)
+        public async Task AddAsync(TEntity Item)
         {
             DbSet.Add(Item);
             await Context.SaveChangesAsync();
         }
         public async Task ModifyAsync(int Id, TEntity Item)
         {
-            Context.Entry(await Context.Set<TEntity>().FindAsync(Id)).CurrentValues.SetValues(Item);
+            Context.Entry<TEntity>(await Context.Set<TEntity>().FindAsync(Id)).CurrentValues.SetValues(Item);
             await Context.SaveChangesAsync();
         }
         public async Task<TEntity> GetAsync(int Id)
@@ -56,16 +50,9 @@ namespace Repositories.Generic
             return await DbSet.ToListAsync();
         }
 
-        public IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            IQueryable<TEntity> query = DbSet;
-            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty)).ToList();
-        }
-
-        public IEnumerable<TEntity> GetAll(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            var query = DbSet.Where(predicate).AsQueryable();
-            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty)).ToList();
+            return await DbSet.Where(predicate).ToListAsync();
         }
 
         public void Dispose()

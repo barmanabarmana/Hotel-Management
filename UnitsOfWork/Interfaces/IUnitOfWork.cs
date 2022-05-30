@@ -3,13 +3,7 @@ using Entities.Files;
 using Entities.Hotels;
 using Entities.Transports;
 using Entities.Users;
-using Repositories.Generic;
 using Repositories.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitsOfWork.Interfaces
 {

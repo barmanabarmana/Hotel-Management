@@ -1,20 +1,20 @@
 ﻿using AutoMapper;
-using Entities.Users;
-using DTO.User;
-using Entities.Transports;
-using DTO.Hotels;
-using Entities;
 using DTO;
-using DTO.Transports;
-using Entities.Hotels;
 using DTO.Files;
-using Entities.Files;
-using Entities.Hotels.Times;
+using DTO.Hotels;
 using DTO.Hotels.Times;
+using DTO.Transports;
+using DTO.User;
+using Entities;
+using Entities.Files;
+using Entities.Hotels;
+using Entities.Hotels.Times;
+using Entities.Transports;
+using Entities.Users;
 
 namespace BLL
 {
-    internal static class Tools
+    public static class Tools
     {
         public static IMapper Mapper = new MapperConfiguration(cfg =>
         {

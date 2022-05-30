@@ -4,12 +4,12 @@ namespace BLL.Interfaces
 {
     public interface IHotelService
     {
-        void AddHotel(HotelDTO NewHotel);
-        void AddHotelRoom(int HotelId, HotelRoomDTO NewHotelRoom);
-        IEnumerable<HotelDTO> GetAllHotels();
+        Task AddHotelAsync(HotelDTO NewHotel);
+        Task AddHotelRoomAsync(int HotelId, HotelRoomDTO NewHotelRoom);
+        Task<IEnumerable<HotelDTO>> GetAllHotelsAsync();
         Task<HotelDTO> GetHotel(int Id);
-        void DeleteHotel(int Id);
+        Task DeleteHotelAsync(int Id);
         Task InsertImageHotel(int Id, string Name, string Path);
-        void UpdateHotelAndHotelRooms(int HotelId, HotelDTO Hotel, List<HotelRoomDTO> Rooms);
+        Task UpdateHotelAndHotelRoomsAsync(int HotelId, HotelDTO Hotel, List<HotelRoomDTO> Rooms);
     }
 }

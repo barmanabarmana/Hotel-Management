@@ -1,27 +1,21 @@
-﻿using AutoMapper;
+﻿using BLL.Interfaces;
 using BLL.Ninject;
-using BLL.Interfaces;
-using UnitsOfWork.Interfaces;
-using Entities.Users;
-using DTO.User;
-using Entities.Transports;
-using DTO.Hotels;
-using Entities;
-using Exceptions;
 using DTO;
+using DTO.Hotels;
 using DTO.Transports;
-using DTO.Hotels.Times;
-using Entities.Hotels.Times;
+using DTO.User;
+using Entities;
 using Entities.Hotels;
+using Entities.Hotels.Times;
+using Entities.Transports;
+using Entities.Users;
+using Exceptions;
+using UnitsOfWork.Interfaces;
 
 namespace BLL.Services
 {
     public class UserService : IUserService
     {
-        static UserService()
-        {
-            CurrentUser = null;
-        }
 
         IUnitOfWork UoW;
 
@@ -30,28 +24,23 @@ namespace BLL.Services
             this.UoW = UoW;
         }
 
-        
-
-        private static CustomerDTO CurrentUser;
-
         public UserService()
         {
             UoW = DependencyResolver.ResolveUoW();
         }
 
-        public void AddUser(CustomerDTO NewUser)
+        public async Task AddUserAsync(CustomerDTO NewUser)
         {
-            UoW.Customers
-                .Add(Tools.Mapper.
+            await UoW.Customers
+                .AddAsync(Tools.Mapper.
                 Map<CustomerDTO, Customer>(NewUser));
         }
 
-        public IEnumerable<CustomerDTO> GetAllUsers()
+        public async Task<IEnumerable<CustomerDTO>> GetAllUsersAsync()
         {
             return Tools.Mapper
-                .Map<IEnumerable<Customer>, List<CustomerDTO>>(UoW.
-                Customers.GetAll(u => 
-                u.Bills));
+                .Map<IEnumerable<Customer>, List<CustomerDTO>>(await UoW.
+                Customers.GetAllAsync());
         }
 
         public async Task<CustomerDTO> GetUserAsync(int Id)
@@ -61,18 +50,17 @@ namespace BLL.Services
                 Customers.GetAsync(Id));
         }
 
-        public async Task EditUserAsync(int Id, 
+        public async Task EditUserAsync(int Id,
             CustomerDTO User)
         {
-             await UoW.Customers.ModifyAsync(Id, Tools.Mapper.Map<CustomerDTO, Customer>(User));
+            await UoW.Customers.ModifyAsync(Id, Tools.Mapper.Map<CustomerDTO, Customer>(User));
         }
 
         public async Task DeleteUserAsync(int Id)
         {
             await UoW.Customers.DeleteAsync(Id);
         }
-
-        public async Task<BillDTO> BuildBillAsync(int CustomerWhoBookId, 
+        public async Task<BillDTO> BuildBillAsync(CustomerDTO customer,
             List<CustomerDTO> AdditionalTourists,
             decimal DepositAmount,
             int TourId,
@@ -83,9 +71,47 @@ namespace BLL.Services
 
             var tourists = new List<CustomerDTO>();
 
-            if(AdditionalTourists != null && AdditionalTourists.Any())
+            if (AdditionalTourists != null && AdditionalTourists.Any())
             {
-                foreach(var item in AdditionalTourists)
+                foreach (var item in AdditionalTourists)
+                {
+                    tourists.Add(item);
+                }
+            }
+
+            BillDTO bill = new()
+            {
+                CustomerWhoBook = customer,
+                Tourists = tourists,
+                DepositAmount = DepositAmount,
+                Created = DateTime.Now,
+                Status = "Sent",
+            };
+
+            var Tour = Tools.Mapper.Map<TourDTO>(await UoW.ToursTemplates.GetAsync(TourId));
+
+            bill = ReserveTour(bill, Tour);
+            bill = await ReserveRoomAsync(bill, customer, HotelRoomName, ArrivalDate, DepartureDate);
+            bill = await ReserveTicketAsync(bill, AdditionalTourists, Tour.TransportIn.Id, Tour.TransportOut.Id);
+
+            await UoW.Bills.AddAsync(Tools.Mapper.Map<Bill>(bill));
+
+            return bill;
+        }
+        public async Task<BillDTO> BuildBillAsync(int CustomerWhoBookId,
+            List<CustomerDTO> AdditionalTourists,
+            decimal DepositAmount,
+            int TourId,
+            string HotelRoomName,
+            DateTimeOffset ArrivalDate,
+            DateTimeOffset DepartureDate)
+        {
+
+            var tourists = new List<CustomerDTO>();
+
+            if (AdditionalTourists != null && AdditionalTourists.Any())
+            {
+                foreach (var item in AdditionalTourists)
                 {
                     tourists.Add(item);
                 }
@@ -103,15 +129,15 @@ namespace BLL.Services
             var Tour = Tools.Mapper.Map<TourDTO>(await UoW.ToursTemplates.GetAsync(TourId));
 
             bill = ReserveTour(bill, Tour);
-            bill = await ReserveRoomAsync(bill, CustomerWhoBookId, HotelRoomName, ArrivalDate, DepartureDate);
+            bill = await ReserveRoomAsync(bill, await GetUserAsync(CustomerWhoBookId), HotelRoomName, ArrivalDate, DepartureDate);
             bill = await ReserveTicketAsync(bill, AdditionalTourists, Tour.TransportIn.Id, Tour.TransportOut.Id);
 
-            await UoW.Bills.Add(Tools.Mapper.Map<Bill>(bill));
+            await UoW.Bills.AddAsync(Tools.Mapper.Map<Bill>(bill));
 
             return bill;
         }
 
-        private BillDTO ReserveTour(BillDTO bill, 
+        private BillDTO ReserveTour(BillDTO bill,
             TourDTO Tour)
         {
             bill.TourId = Tour.Id;
@@ -119,14 +145,13 @@ namespace BLL.Services
         }
 
         private async Task<BillDTO> ReserveRoomAsync(BillDTO bill,
-            int CustomerId, 
-            string HotelRoomName, 
+            CustomerDTO Customer,
+            string HotelRoomName,
             DateTimeOffset ArrivalDate,
             DateTimeOffset DepartureDate)
         {
-            CustomerDTO user = await GetUserAsync(CustomerId);
             var hotelroom = (await UoW.HotelsRooms
-                .GetAllAsync()).FirstOrDefault(r => 
+                .GetAllAsync()).FirstOrDefault(r =>
                 r.Name.ToUpper() == HotelRoomName.ToUpper());
 
 
@@ -138,21 +163,21 @@ namespace BLL.Services
                 while (FakeArrival.CompareTo(FakeDeparture) < 0)
                 {
                     if (d.Time.Date.CompareTo(FakeArrival.Date) == 0)
-                        //throw new AlreadyBookedItemException($"Rooms \"{HotelRoomName}\" are not aviable for {d.Time.Day}.{d.Time.Month}.{d.Time.Year}");
-                        Console.WriteLine($"Rooms \"{HotelRoomName}\" are not aviable for {d.Time.Day}.{d.Time.Month}.{d.Time.Year}");
+                        throw new AlreadyBookedItemException($"Rooms \"{HotelRoomName}\" are not aviable for {d.Time.Day}.{d.Time.Month}.{d.Time.Year}");
+                    /*Console.WriteLine($"Rooms \"{HotelRoomName}\" are not aviable for {d.Time.Day}.{d.Time.Month}.{d.Time.Year}");*/
                     FakeArrival = FakeArrival.AddDays(1);
                 }
             }
 
-            var reserv = new HotelRoomReservation(hotelroom, 
-                user.Firstname,
-                user.Lastname,
+            var reserv = new HotelRoomReservation(hotelroom,
+                Customer.Firstname,
+                Customer.Lastname,
                 ArrivalDate.Date,
                 DepartureDate.Date);
 
             while (ArrivalDate.CompareTo(DepartureDate) < 0)
             {
-                hotelroom.BookedDays.Add(new DTOffset { Time = ArrivalDate.Date});
+                hotelroom.BookedDays.Add(new DTOffset { Time = ArrivalDate.Date });
                 ArrivalDate = ArrivalDate.AddDays(1);
             }
 
@@ -169,29 +194,29 @@ namespace BLL.Services
             int TransportOutId)
         {
 
-            if(TransportInId != 0)
+            if (TransportInId != 0)
             {
                 Transport transportIn = await UoW.Transports
                     .GetAsync(TransportInId);
 
-                bill = await AddTicketAsync(bill, 
-                    transportIn, 
+                bill = await AddTicketAsync(bill,
+                    transportIn,
                     Tools.Mapper.Map<List<Customer>>(tourists));
             }
             if (TransportOutId != 0)
             {
-                Transport transportOut =await UoW.Transports
+                Transport transportOut = await UoW.Transports
                     .GetAsync(TransportOutId);
 
                 bill = await AddTicketAsync(bill,
-                    transportOut, 
+                    transportOut,
                     Tools.Mapper.Map<List<Customer>>(tourists));
             }
 
             return bill;
         }
-        private async Task<BillDTO> AddTicketAsync(BillDTO bill, 
-            Transport transport, 
+        private async Task<BillDTO> AddTicketAsync(BillDTO bill,
+            Transport transport,
             List<Customer> tourists)
         {
 
@@ -200,7 +225,7 @@ namespace BLL.Services
                 .FindAll(p =>
                 !p.IsBooked);
 
-            if(FreeTransportPlaces.Count < tourists.Count)
+            if (FreeTransportPlaces.Count < tourists.Count)
             {
                 throw new AlreadyBookedItemException($"For this transport {transport.Id} aviable only {FreeTransportPlaces} seat(-s)!");
             }
@@ -224,9 +249,9 @@ namespace BLL.Services
                 return bill;
             }
         }
-        public async Task<List<BillDTO>> GetBills(int CustomerId)
+        public async Task<List<BillDTO>> GetBillsAsync(int CustomerId)
         {
-            return Tools.Mapper.Map<List<BillDTO>>((await GetUserAsync(CustomerId)).Bills);
+            return Tools.Mapper.Map<List<BillDTO>>(await UoW.Bills.GetAllAsync(b => b.CustomerWhoBookId == CustomerId));
         }
     }
 }

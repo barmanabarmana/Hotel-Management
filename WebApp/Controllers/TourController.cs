@@ -1,16 +1,8 @@
-﻿using AutoMapper;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using DTO;
-using DTO.Files;
-using DTO.Hotels;
-using DTO.Transports;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
-using Models.Files;
-using Models.Hotels;
-using Models.Transports;
-using System.Globalization;
 using WebApp.Models;
 using WebApp.Ninject;
 
@@ -48,11 +40,11 @@ namespace WebApp.Controllers
                                                       select tour.Country)
                                                    .AsQueryable();
             var intermediateTransportQuerry = (from tour in tours
-                                        select tour.TransportIn)
+                                               select tour.TransportIn)
                                         .AsQueryable();
             IQueryable<string> filterDeparturePointQuerry = (from transport in intermediateTransportQuerry
-                                                            orderby transport.DeparturePoint
-                                                            select transport.DeparturePoint)
+                                                             orderby transport.DeparturePoint
+                                                             select transport.DeparturePoint)
                                                             .AsQueryable();
 
 
@@ -84,7 +76,7 @@ namespace WebApp.Controllers
 
             decimal inputMaxPriceFilter = decimal.MaxValue;
 
-            if(MaxTourPrice != null)
+            if (MaxTourPrice != null)
             {
                 inputMaxPriceFilter = MaxTourPrice.ToDecimal();
             }

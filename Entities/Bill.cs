@@ -16,6 +16,6 @@ namespace Entities
         public virtual List<TransportTicket> Tickets { get; set; }
         public int CustomerWhoBookId { get; set; }
         public virtual Customer CustomerWhoBook { get; set; }
-        public virtual List<Customer> Tourists { get; set; }
+        public virtual List<Customer>? Tourists { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace WebApp.Data
                 string FamilyVacationType = "Family vacation";
                 string AllInclusive = "All inclusive";
                 string WithoutMeal = "Without meal";
-                var room1 = new HotelRoom() 
+                var room1 = new HotelRoom()
                 {
                     Name = "SUPER ECO CLASS",
                     Number = 100,
@@ -37,32 +37,32 @@ namespace WebApp.Data
                 {
                     Name = "SUPER ECO CLASS",
                     Number = 101,
-                        SleepingPlaces = 4,
-                        Price = 99.90m
-                    };
+                    SleepingPlaces = 4,
+                    Price = 99.90m
+                };
 
                 var room3 = new HotelRoom()
                 {
                     Name = "ULLTRA FIRST CLASS",
                     Number = 102,
-                        SleepingPlaces = 4,
-                        Price = 199.90m
-                    };
+                    SleepingPlaces = 4,
+                    Price = 199.90m
+                };
 
                 var room4 = new HotelRoom()
                 {
                     Name = "MEGA STANDART",
                     Number = 103,
-                        SleepingPlaces = 4,
-                        Price = 199.90m
-                    };
+                    SleepingPlaces = 4,
+                    Price = 199.90m
+                };
                 var room5 = new HotelRoom()
                 {
                     Name = "MEGA STANDART",
                     Number = 104,
                     SleepingPlaces = 4,
                     Price = 99.90m
-                }; 
+                };
                 var room6 = new HotelRoom()
                 {
                     Name = "ULLTRA FIRST CLASS",
@@ -266,7 +266,7 @@ namespace WebApp.Data
                             Price = 64.09M
                         },
                     }
-                }; 
+                };
                 var transport4 = new Transport()
                 {
                     Type = airType,
@@ -558,7 +558,7 @@ namespace WebApp.Data
                     new Tour
                     {
                         Title = "Mercure Hurghada Hotel with great views",
-                        Type = VacationWithCheldrenType, 
+                        Type = VacationWithCheldrenType,
                         Country = "Egypt",
                         City = "Hurghada",
                         Meal = AllInclusive,

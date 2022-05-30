@@ -2,7 +2,7 @@
 
 namespace Models.Users
 {
-    public class CustomerModel:IdentityUser<int>
+    public class CustomerModel : IdentityUser<int>
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }

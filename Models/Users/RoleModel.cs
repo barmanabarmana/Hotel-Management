@@ -2,7 +2,7 @@
 
 namespace Models.Users
 {
-    public class RoleModel:IdentityRole<int>
+    public class RoleModel : IdentityRole<int>
     {
     }
 }

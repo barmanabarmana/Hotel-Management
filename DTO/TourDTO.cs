@@ -1,11 +1,5 @@
 ﻿using DTO.Hotels;
 using DTO.Transports;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DTO
 {
@@ -25,9 +19,9 @@ namespace DTO
         public string? ClientName { get; set; }
         public string? ClientSurname { get; set; }
         public HotelDTO Hotel { get; set; }
-        public int TransportInId { get; set; }
-        public TransportDTO TransportIn { get; set; }
-        public int TransportOutId { get; set; }
-        public TransportDTO TransportOut { get; set; }
+        public int? TransportInId { get; set; }
+        public TransportDTO? TransportIn { get; set; }
+        public int? TransportOutId { get; set; }
+        public TransportDTO? TransportOut { get; set; }
     }
 }
