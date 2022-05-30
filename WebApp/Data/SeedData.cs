@@ -572,7 +572,7 @@ namespace WebApp.Data
                         {
                             transport1, transport2
                         },*/
-                        Duration = (transport2.ArrivalTime - transport1.DepartureTime).Days,
+                        Duration = (transport2.DepartureTime - transport1.ArrivalTime).Days,
                         Description = description,
                     },
 
@@ -593,7 +593,7 @@ namespace WebApp.Data
                             transport3,
                             transport4
                         },*/
-                        Duration = (transport4.ArrivalTime - transport3.DepartureTime).Days,
+                        Duration = (transport4.DepartureTime - transport3.ArrivalTime).Days,
                         Description = description,
                     },
 
@@ -615,7 +615,7 @@ namespace WebApp.Data
                             transport5,
                             transport6
                         },*/
-                        Duration = (transport6.ArrivalTime - transport5.DepartureTime).Days,
+                        Duration = (transport6.DepartureTime - transport5.ArrivalTime).Days,
                         Description = description,
                     },
 
@@ -637,7 +637,7 @@ namespace WebApp.Data
                             transport7,
                             transport8
                         },*/
-                        Duration = (transport6.ArrivalTime - transport7.DepartureTime).Days,
+                        Duration = (transport8.DepartureTime - transport7.ArrivalTime).Days,
                         Description = description,
                     },
                     new Tour
@@ -657,7 +657,7 @@ namespace WebApp.Data
                             transport9,
                             transport10
                         },*/
-                        Duration = (transport10.ArrivalTime - transport9.DepartureTime).Days,
+                        Duration = (transport10.DepartureTime - transport9.ArrivalTime).Days,
                         Description = description,
                     }
                 );

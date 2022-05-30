@@ -22,8 +22,8 @@ namespace WebApp
     {
         public static IMapper Mapper = new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<Bill, BillDTO>();
             cfg.CreateMap<BillDTO, BillModel>();
+            cfg.CreateMap<BillModel, BillDTO>();
             cfg.CreateMap<PassportDataDTO, PassportDataModel>();
             cfg.CreateMap<PassportDataModel, PassportDataDTO>();
             cfg.CreateMap<Customer, CustomerModel>();

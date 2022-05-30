@@ -57,8 +57,8 @@ namespace WebApp.Controllers
             {
                 Tour = Tools.Mapper.Map<TourDTO, TourModel>(tour),
                 CustomerWhoBook = Tools.Mapper
-                .Map<CustomerModel>(await _userManager
-                .GetUserAsync(User)),
+                .Map<CustomerModel>(await _userService
+                .GetUserAsync(int.Parse(_userManager.GetUserId(User)))),
                 HotelRoomNames = new SelectList(hotelRoomNames.Distinct().ToList()),
                 AdditionalTourist = additionalTourists,
                 DepositAmount = (tour.Price / 4).ToString(),
