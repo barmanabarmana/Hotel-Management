@@ -5,7 +5,6 @@ using DTO.Hotels;
 using DTO.Hotels.Times;
 using DTO.Transports;
 using DTO.User;
-using Entities;
 using Entities.Users;
 using Models;
 using Models.Files;
@@ -14,7 +13,6 @@ using Models.Hotels.Times;
 using Models.Transports;
 using Models.Users;
 using System.Globalization;
-using WebApp.Models;
 
 namespace WebApp
 {

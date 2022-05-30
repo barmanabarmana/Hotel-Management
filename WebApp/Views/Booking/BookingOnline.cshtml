@@ -64,6 +64,15 @@
                     </div>
                     <small>*the price may vary depending on the chosen room</small>
                 </div>
+                <div>
+                    
+                    @if(!Model.HotelRoomNames.Any())
+                    {
+                        <div><strong>There is no available rooms. 
+                            please contact with the manager for the availability of rooms
+                            in the hotel.</strong> +38(063)973-74-49</div>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -130,19 +139,10 @@
     @if (Model.HotelRoomNames.Any())
     {
         <form class="filling-form" asp-controller="Booking" asp-action="BookingOnline" method="post" ><div class="select-room">
-                    @if(Model.HotelRoomNames.Any())
-                    {
+                        <label asp-for="RoomName"></label>
                         <select asp-for="RoomName" asp-items="@Model.HotelRoomNames">
-                            <option value=''>Select available rooms</option>
                         </select>
                         <span asp-validation-for="RoomName" class="text-danger"></span>
-                    }
-                    else
-                    {
-                        <div><strong>There is no available rooms. 
-                            please contact with the manager for the availability of rooms
-                            in the hotel.</strong> +38(063)973-74-49</div>
-                    }
                     </div>
             <input asp-for="Tour.Id" value="@Model.Tour.Id" hidden/>
             <input asp-for="Tour.TransportIn.ArrivalTime" value="@Model.Tour.TransportIn.ArrivalTime" hidden/>
@@ -161,21 +161,21 @@
                     </div>
                     <div class="user-form-group">
                         <label asp-for="CustomerWhoBook.Sex" class="control-label"></label>
-                        <input  asp-for="CustomerWhoBook.Sex" class="form-control" />
+                        <input asp-for="CustomerWhoBook.Sex" class="form-control" required />
                         <span asp-validation-for="CustomerWhoBook.Sex" class="text-danger"></span>
                     </div>
                     <div class="user-form-group">
                         <label class="control-label">Series and number</label>
                         <div class="series_number">
-                            <input asp-for="CustomerWhoBook.Passport.Series" id="series" class="form-control" />
+                            <input asp-for="CustomerWhoBook.Passport.Series" id="series" class="form-control" required />
                             <span asp-validation-for="CustomerWhoBook.Passport.Series" class="text-danger"></span>
-                            <input asp-for="CustomerWhoBook.Passport.Number" id="number" class="form-control" />
+                            <input asp-for="CustomerWhoBook.Passport.Number" id="number" class="form-control" required />
                             <span asp-validation-for="CustomerWhoBook.Passport.Number" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="user-form-group">
                         <label asp-for="CustomerWhoBook.Passport.Nationality" class="control-label"></label>
-                        <input  asp-for="CustomerWhoBook.Passport.Nationality" class="form-control" />
+                        <input  asp-for="CustomerWhoBook.Passport.Nationality" class="form-control" required />
                         <span asp-validation-for="CustomerWhoBook.Passport.Nationality" class="text-danger"></span>
                     </div>
                 </div>
@@ -186,31 +186,31 @@
                         <div class="user-data">
                             <div class="user-form-group">
                                 <label asp-for="@tourist.Firstname" class="control-label"></label>
-                                <input  asp-for="@tourist.Firstname" class="form-control" />
+                                <input  asp-for="@tourist.Firstname" class="form-control" required />
                                 <span asp-validation-for="@tourist.Firstname" class="text-danger"></span>
                             </div>
                             <div class="user-form-group">
                                 <label asp-for="@tourist.Lastname" class="control-label"></label>
-                                <input  asp-for="@tourist.Lastname" class="form-control" />
+                                <input  asp-for="@tourist.Lastname" class="form-control" required />
                                 <span asp-validation-for="@tourist.Lastname" class="text-danger"></span>
                             </div>
                             <div class="user-form-group">
                                 <label asp-for="@tourist.Sex" class="control-label"></label>
-                                <input  asp-for="@tourist.Sex" class="form-control" />
+                                <input  asp-for="@tourist.Sex" class="form-control" required />
                                 <span asp-validation-for="@tourist.Sex" class="text-danger"></span>
                             </div>
                             <div class="user-form-group">
                                 <label class="control-label">Series and number</label>
                                 <div class="series_number">
-                                    <input asp-for="@tourist.Passport.Series" id="series" class="form-control" />
+                                    <input asp-for="@tourist.Passport.Series" id="series" class="form-control" required />
                                     <span asp-validation-for="@tourist.Passport.Series" class="text-danger"></span>
-                                    <input asp-for="@tourist.Passport.Number" id="number" class="form-control" />
+                                    <input asp-for="@tourist.Passport.Number" id="number" class="form-control" required />
                                     <span asp-validation-for="@tourist.Passport.Number" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="user-form-group">
                                 <label asp-for="@tourist.Passport.Nationality" class="control-label"></label>
-                                <input  asp-for="@tourist.Passport.Nationality" class="form-control" />
+                                <input  asp-for="@tourist.Passport.Nationality" class="form-control" required />
                                 <span asp-validation-for="@tourist.Passport.Nationality" class="text-danger"></span>
                             </div>
                         </div>

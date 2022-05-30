@@ -16,7 +16,7 @@ namespace WebApp.Models
 
         public List<HotelRoomModel> Rooms { get; set; }
 
-        [Display(Name="New room")]
+        [Display(Name = "New room")]
         public HotelRoomModel NewRoom { get; set; }
 
         [Display(Name = "Image")]

@@ -19,9 +19,9 @@ namespace WebApp.Controllers
             _tourService = UIDependencyResolver<ITourService>.ResolveDependency();
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var HotTours = from t in _tourService.GetHotTourTemplates()
+            var HotTours = from t in await _tourService.GetHotTourTemplatesAsync()
                            select t;
             var HotToursVM = new HotToursVM()
             {

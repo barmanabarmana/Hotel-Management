@@ -1,18 +1,12 @@
-﻿using AutoMapper;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using DTO;
-using DTO.Files;
 using DTO.Hotels;
 using DTO.Transports;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Models;
-using Models.Files;
 using Models.Hotels;
 using Models.Transports;
-using System.Globalization;
 using WebApp.Models;
 using WebApp.Ninject;
 
@@ -74,7 +68,7 @@ namespace WebApp.Controllers
                 .AddTransportToTour(Tools.Mapper.Map<TourModel, TourDTO>(tourModel.Tour),
                 Tools.Mapper.Map<TransportModel, TransportDTO>(tourModel.TransportIn),
                 tourModel.AvailibleSeatsOut,
-                tourModel.PriceForTicketIn.ToDecimal(), 
+                tourModel.PriceForTicketIn.ToDecimal(),
                 Tools.Mapper.Map<TransportModel, TransportDTO>(tourModel.TransportOut),
                 tourModel.AvailibleSeatsOut,
                 tourModel.PriceForTicketOut.ToDecimal()));
@@ -138,14 +132,14 @@ namespace WebApp.Controllers
 
             if (tourModel.Rooms != null && tourModel.Rooms.Count > 0)
             {
-                _hotelService.UpdateHotelAndHotelRooms(tourModel.Hotel.Id, Tools.Mapper.
+                await _hotelService.UpdateHotelAndHotelRoomsAsync(tourModel.Hotel.Id, Tools.Mapper.
                     Map<HotelModel, HotelDTO>(tourModel.Hotel), Tools.Mapper.
                     Map<List<HotelRoomModel>, List<HotelRoomDTO>>(tourModel.Rooms));
             }
 
             if (tourModel.NewRoom.Number != 0 || !string.IsNullOrEmpty(tourModel.NewRoom.Name))
             {
-                _hotelService.AddHotelRoom(tourModel.Hotel.Id,
+                await _hotelService.AddHotelRoomAsync(tourModel.Hotel.Id,
                     Tools.Mapper.Map<HotelRoomModel, HotelRoomDTO>(tourModel.NewRoom));
             }
 

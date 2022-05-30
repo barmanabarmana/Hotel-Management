@@ -45,42 +45,42 @@ namespace UnitsOfWork
                 return _images;
             }
         }
-        public IRepository<Hotel> Hotels 
-        { 
-            get 
-            { 
-                if (_hotels == null) 
-                    _hotels = new GenericRepository<Hotel>(UsageContext); 
-                return _hotels; 
-            } 
+        public IRepository<Hotel> Hotels
+        {
+            get
+            {
+                if (_hotels == null)
+                    _hotels = new GenericRepository<Hotel>(UsageContext);
+                return _hotels;
+            }
         }
 
         public IRepository<HotelRoom> HotelsRooms
-        { 
+        {
             get
-            { 
+            {
                 if (_hotelsrooms == null)
-                    _hotelsrooms = new GenericRepository<HotelRoom>(UsageContext); 
-                return _hotelsrooms; 
-            } 
+                    _hotelsrooms = new GenericRepository<HotelRoom>(UsageContext);
+                return _hotelsrooms;
+            }
         }
-        public IRepository<Tour> ToursTemplates 
+        public IRepository<Tour> ToursTemplates
         {
             get
             {
                 if (_tourstemplates == null)
-                    _tourstemplates = new GenericRepository<Tour>(UsageContext); 
+                    _tourstemplates = new GenericRepository<Tour>(UsageContext);
                 return _tourstemplates;
-            } 
+            }
         }
-        public IRepository<Transport> Transports 
-        { 
-            get 
-            { 
-                if (_transports == null) 
+        public IRepository<Transport> Transports
+        {
+            get
+            {
+                if (_transports == null)
                     _transports = new GenericRepository<Transport>(UsageContext);
                 return _transports;
-            } 
+            }
         }
         public IRepository<TransportPlace> TransportPlaces
         {
@@ -92,23 +92,23 @@ namespace UnitsOfWork
             }
         }
 
-        public IRepository<Customer> Customers 
-        { 
-            get 
-            { 
-                if (_customers == null) 
-                    _customers = new GenericRepository<Customer>(UsageContext); 
-                return _customers;
-            } 
-        }
-        public IRepository<HotelRoomReservation> HotelsRoomsReservations 
-        { 
+        public IRepository<Customer> Customers
+        {
             get
-            { 
-                if (_hotelsroomsreservations == null) 
+            {
+                if (_customers == null)
+                    _customers = new GenericRepository<Customer>(UsageContext);
+                return _customers;
+            }
+        }
+        public IRepository<HotelRoomReservation> HotelsRoomsReservations
+        {
+            get
+            {
+                if (_hotelsroomsreservations == null)
                     _hotelsroomsreservations = new GenericRepository<HotelRoomReservation>(UsageContext);
                 return _hotelsroomsreservations;
-            } 
+            }
         }
         public IRepository<Bill> Bills
         {

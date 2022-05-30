@@ -1,6 +1,4 @@
-﻿using Entities.Hotels;
-using Entities.Transports;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Entities.Users
 {

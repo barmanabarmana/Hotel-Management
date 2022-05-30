@@ -1,17 +1,9 @@
-﻿using AutoMapper;
+﻿using BLL.Interfaces;
 using BLL.Ninject;
-using UnitsOfWork.Interfaces;
-using BLL.Interfaces;
-using Entities.Transports;
-using DTO.Transports;
-using DTO.User;
-using Entities.Users;
 using DTO;
-using Entities;
-using DTO.Hotels;
-using Entities.Hotels;
-using DTO.Files;
-using Entities.Files;
+using DTO.Transports;
+using Entities.Transports;
+using UnitsOfWork.Interfaces;
 
 namespace BLL.Services
 {
@@ -29,8 +21,8 @@ namespace BLL.Services
             UoW = DependencyResolver.ResolveUoW();
         }
 
-        public TourDTO AddTransportToTour(TourDTO tour, 
-            TransportDTO transportIn, 
+        public TourDTO AddTransportToTour(TourDTO tour,
+            TransportDTO transportIn,
             int AvailibleSeatsIn,
             decimal PriceForTcketIn,
             TransportDTO transportOut,
@@ -62,12 +54,11 @@ namespace BLL.Services
             await UoW.Transports
                 .DeleteAsync(Id);
         }
-        public IEnumerable<TransportDTO> GetAllTransportAsync()
+        public async Task<IEnumerable<TransportDTO>> GetAllTransportAsync()
         {
             return Tools.Mapper
-                .Map<IEnumerable<Transport>, List<TransportDTO>>(UoW.
-                Transports.GetAll(t => 
-                t.TransportPlaces));
+                .Map<IEnumerable<Transport>, List<TransportDTO>>(await UoW.
+                Transports.GetAllAsync());
         }
 
         public async Task<TransportDTO> GetTransportAsync(int Id)
@@ -77,11 +68,11 @@ namespace BLL.Services
                 Transports.GetAsync(Id));
         }
 
-        private TransportDTO BuildTransport(TransportDTO transport, 
-            int availibleSeats, 
+        private TransportDTO BuildTransport(TransportDTO transport,
+            int availibleSeats,
             decimal Price)
         {
-            for(int i = 1; i <= availibleSeats; i++)
+            for (int i = 1; i <= availibleSeats; i++)
             {
                 transport.TransportPlaces.Add(new TransportPlaceDTO(transport.Id, i, Price));
             }
@@ -89,7 +80,7 @@ namespace BLL.Services
         }
         private async Task ApplyTicketPriceForEachPlaceInTransportAsync(TransportDTO transport, decimal newPrice)
         {
-            foreach(var place in transport.TransportPlaces)
+            foreach (var place in transport.TransportPlaces)
             {
                 place.Price = newPrice;
                 await UoW.TransportPlaces.ModifyAsync(place.Id, Tools.Mapper

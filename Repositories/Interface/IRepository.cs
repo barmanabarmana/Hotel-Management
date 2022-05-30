@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace Repositories.Interface
 {
@@ -12,11 +7,10 @@ namespace Repositories.Interface
         Task ClearAsync();
         Task DeleteAsync(int Id);
         Task DeleteAsync(TEntity Entity);
-        Task Add(TEntity Entity);
+        Task AddAsync(TEntity Entity);
         Task ModifyAsync(int Id, TEntity NewItem);
         Task<TEntity> GetAsync(int Id);
         Task<IEnumerable<TEntity>> GetAllAsync();
-        IEnumerable<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includeProperties);
-        IEnumerable<TEntity> GetAll(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties);
+        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

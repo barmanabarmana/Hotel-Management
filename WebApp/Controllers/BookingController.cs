@@ -1,19 +1,13 @@
-﻿using AutoMapper;
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using DTO;
-using DTO.Files;
-using DTO.Hotels;
-using DTO.Transports;
 using DTO.User;
 using Entities.Users;
+using Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
-using Models.Files;
-using Models.Hotels;
-using Models.Transports;
 using Models.Users;
 using WebApp.Models;
 using WebApp.Ninject;
@@ -43,10 +37,10 @@ namespace WebApp.Controllers
                                   orderby room.Price
                                   select room.Name).AsQueryable();
 
-            List<CustomerModel> additionalTourists = new ();
+            List<CustomerModel> additionalTourists = new();
 
-            if(tour.AviablePeopleCount > 1) 
-            { 
+            if (tour.AviablePeopleCount > 1)
+            {
                 for (int i = 1; i < tour.AviablePeopleCount; i++)
                 {
                     additionalTourists.Add(new CustomerModel());
@@ -68,27 +62,41 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> BookingOnline(BookingOnlineVM booking)
         {
-            var bill = Tools.Mapper.Map<BillModel>(await _userService
-                .BuildBillAsync(booking.CustomerWhoBook.Id,
-                Tools.Mapper.Map<List<CustomerDTO>>(booking.AdditionalTourist),
-                booking.DepositAmount.ToDecimal(),
-                booking.Tour.Id,
-                booking.RoomName,
-                booking.Tour.TransportIn.ArrivalTime,
-                booking.Tour.TransportOut.DepartureTime));
+            try
+            {
 
-            return View(Order(bill));
+                Tools.Mapper.Map<BillModel>(await _userService
+                    .BuildBillAsync(booking.CustomerWhoBook.Id,
+                    Tools.Mapper.Map<List<CustomerDTO>>(booking.AdditionalTourist),
+                    booking.DepositAmount.ToDecimal(),
+                    booking.Tour.Id,
+                    booking.RoomName,
+                    booking.Tour.TransportIn.ArrivalTime,
+                    booking.Tour.TransportOut.DepartureTime));
+            }
+            catch (AlreadyBookedItemException ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return RedirectToAction(nameof(Order));
         }
-        public IActionResult Order(BillModel bill)
+        [HttpGet]
+        public async Task<IActionResult> Order()
         {
-            return View(bill);
+            var lastOrder = Tools.Mapper.Map<List<BillModel>>(await _userService
+                .GetBillsAsync((await _userManager
+                .GetUserAsync(User)).Id)).LastOrDefault();
+
+            return View(lastOrder);
         }
 
+        [HttpGet]
         public async Task<IActionResult> ShowBills()
         {
             var bills = Tools
                 .Mapper.Map<List<BillModel>>(await _userService
-                .GetBills((await _userManager.GetUserAsync(User)).Id));
+                .GetBillsAsync((await _userManager.GetUserAsync(User)).Id));
 
             return View(bills);
         }

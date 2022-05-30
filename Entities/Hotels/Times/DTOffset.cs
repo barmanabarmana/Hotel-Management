@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Hotels.Times
 {
-    [Table ("BookedDays")]
+    [Table("BookedDays")]
     public class DTOffset
     {
         public int Id { get; set; }

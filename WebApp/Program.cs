@@ -1,8 +1,10 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using DAL;
 using Entities.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using UnitsOfWork;
+using UnitsOfWork.Interfaces;
 using WebApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,7 @@ builder.Services.AddIdentity<Customer, Role>(options => options.SignIn.RequireCo
     .AddDefaultUI()
     .AddTokenProvider<DataProtectorTokenProvider<Customer>>(TokenOptions.DefaultProvider);
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

@@ -1,15 +1,8 @@
-﻿using AutoMapper;
-using BLL.Interfaces;
-using UnitsOfWork.Interfaces;
-using Entities;
+﻿using BLL.Interfaces;
 using BLL.Ninject;
 using DTO;
-using DTO.Hotels;
-using Entities.Hotels;
-using DTO.Transports;
-using Entities.Transports;
-using DTO.Files;
-using Entities.Files;
+using Entities;
+using UnitsOfWork.Interfaces;
 
 namespace BLL.Services
 {
@@ -38,12 +31,12 @@ namespace BLL.Services
 
         public async Task AddTour(TourDTO NewTour)
         {
-            await UoW.ToursTemplates.Add(Tools.Mapper.Map<Tour>(NewTour));
+            await UoW.ToursTemplates.AddAsync(Tools.Mapper.Map<Tour>(NewTour));
         }
 
         public async Task DeleteTour(int Id)
         {
-           await UoW.ToursTemplates.DeleteAsync(Id);
+            await UoW.ToursTemplates.DeleteAsync(Id);
         }
 
         public async Task UpdateTour(int Id, TourDTO Tour)
@@ -173,7 +166,7 @@ namespace BLL.Services
         }
         public int FindLongestTourDuration(IEnumerable<TourDTO> tours)
         {
-            if(!ListNotNullAndContainsAnyElement(tours))
+            if (!ListNotNullAndContainsAnyElement(tours))
             {
                 return 0;
             }
@@ -186,11 +179,11 @@ namespace BLL.Services
                 t.TransportIn.DepartureTime.Date <= endRange);
         }
 
-        public IEnumerable<TourDTO> GetHotTourTemplates()
+        public async Task<IEnumerable<TourDTO>> GetHotTourTemplatesAsync()
         {
             return Tools.Mapper
-                .Map<IEnumerable<TourDTO>>(UoW.
-                ToursTemplates.GetAll(t =>
+                .Map<IEnumerable<TourDTO>>(await UoW.
+                ToursTemplates.GetAllAsync(t =>
                 t.IsHotOffer == true));
         }
         public async Task<TourDTO> GetTourAsync(int Id)
@@ -202,7 +195,7 @@ namespace BLL.Services
         }
         private bool ListNotNullAndContainsAnyElement(IEnumerable<object> list)
         {
-            if(list != null && list.Any())
+            if (list != null && list.Any())
             {
                 return true;
             }
